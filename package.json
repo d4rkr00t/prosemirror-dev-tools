@@ -1,0 +1,20 @@
+{
+  "name": "prosemirror-dev-tools",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "aik example/index.js -r"
+  },
+  "keywords": [],
+  "author": "Stanislav Sysoev <@d4rkr00t>",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2"
+  },
+  "devDependencies": {
+    "aik": "^0.14.0"
+  }
+}
