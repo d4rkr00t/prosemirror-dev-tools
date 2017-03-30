@@ -1,0 +1,357 @@
+.ProseMirror {
+    position: relative;
+}
+
+.ProseMirror {
+    padding: 6px 0;
+
+    white-space: pre-wrap;
+    word-wrap: break-word;
+
+    border-bottom: 1px solid silver;
+}
+
+.ProseMirror:focus {
+    outline: none;
+}
+
+.ProseMirror p {
+    margin: 0;
+}
+.ProseMirror p + .ProseMirror p {
+    margin: 0 0 1em;
+}
+
+.ProseMirror ul,
+.ProseMirror ol {
+    padding-left: 30px;
+
+    cursor: default;
+}
+
+.ProseMirror blockquote {
+    margin-right: 0;
+    margin-left: 0;
+    padding-left: 1em;
+
+    border-left: 3px solid #eee;
+}
+
+.ProseMirror pre {
+    white-space: pre-wrap;
+}
+
+.ProseMirror li {
+    position: relative;
+
+    pointer-events: none; /* Don't do weird stuff with marker clicks */
+}
+.ProseMirror li > * {
+    pointer-events: auto;
+}
+
+.ProseMirror-hideselection *::selection {
+    background: transparent;
+}
+.ProseMirror-hideselection *::-moz-selection {
+    background: transparent;
+}
+
+.ProseMirror-selectednode {
+    outline: 2px solid #8cf;
+}
+
+/* Make sure li selections wrap around markers */
+
+li.ProseMirror-selectednode {
+    outline: none;
+}
+
+li.ProseMirror-selectednode:after {
+    position: absolute;top: -2px;
+    right: -2px; bottom: -2px;
+    left: -32px;
+
+    content: '';
+    pointer-events: none;
+
+    border: 2px solid #8cf;
+}
+.ProseMirror-textblock-dropdown {
+    min-width: 3em;
+}
+
+.ProseMirror-menu {
+    line-height: 1;
+
+    margin: 0 -4px;
+}
+
+.ProseMirror-tooltip .ProseMirror-menu {
+    width: -webkit-fit-content;
+    width:         fit-content;
+
+    white-space: pre;
+}
+
+.ProseMirror-menuitem {
+    display: inline-block;
+
+    margin-right: 3px;
+}
+
+.ProseMirror-menuseparator {
+    margin-right: 3px;
+
+    border-right: 1px solid #ddd;
+}
+
+.ProseMirror-menu-dropdown,
+.ProseMirror-menu-dropdown-menu {
+    font-size: 90%;
+
+    white-space: nowrap;
+}
+
+.ProseMirror-menu-dropdown {
+    position: relative;
+
+    padding-right: 15px;
+
+    cursor: pointer;
+    vertical-align: 1px;
+}
+
+.ProseMirror-menu-dropdown-wrap {
+    position: relative;
+
+    display: inline-block;
+
+    padding: 1px 0 1px 4px;
+}
+
+.ProseMirror-menu-dropdown:after {
+    position: absolute;
+    top: calc(50% - 2px);
+    right: 4px;
+
+    content: '';
+
+    opacity: .6;
+    border-top: 4px solid currentColor;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+}
+
+.ProseMirror-menu-dropdown-menu,
+.ProseMirror-menu-submenu {
+    position: absolute;
+
+    padding: 2px;
+
+    color: #666;
+    border: 1px solid #aaa;
+    background: white;
+}
+
+.ProseMirror-menu-dropdown-menu {
+    z-index: 15;
+
+    min-width: 6em;
+}
+
+.ProseMirror-menu-dropdown-item {
+    padding: 2px 8px 2px 4px;
+
+    cursor: pointer;
+}
+
+.ProseMirror-menu-dropdown-item:hover {
+    background: #f2f2f2;
+}
+
+.ProseMirror-menu-submenu-wrap {
+    position: relative;
+
+    margin-right: -4px;
+}
+
+.ProseMirror-menu-submenu-label:after {
+    position: absolute;
+    top: calc(50% - 4px);
+    right: 4px;
+
+    content: '';
+
+    opacity: .6;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-left: 4px solid currentColor;
+}
+
+.ProseMirror-menu-submenu {
+    top: -3px;
+    left: 100%;
+
+    display: none;
+
+    min-width: 4em;
+}
+
+.ProseMirror-menu-active {
+    border-radius: 4px;
+    background: #eee;
+}
+
+.ProseMirror-menu-active {
+    border-radius: 4px;
+    background: #eee;
+}
+
+.ProseMirror-menu-disabled {
+    opacity: .3;
+}
+
+.ProseMirror-menu-submenu-wrap:hover .ProseMirror-menu-submenu,
+.ProseMirror-menu-submenu-wrap-active .ProseMirror-menu-submenu {
+    display: block;
+}
+
+.ProseMirror-menubar {
+    position: relative;
+    z-index: 10;
+    top: 0; right: 0;left: 0;
+
+    overflow: visible;
+
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    min-height: 1em;
+    padding: 1px 6px;
+
+    color: #666;
+    border-bottom: 1px solid silver;
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+    background: white;
+}
+
+.ProseMirror-icon {
+    line-height: .8;
+
+    display: inline-block;
+
+    padding: 2px 8px;
+
+    cursor: pointer;
+    vertical-align: -2px; /* Compensate for padding */
+}
+
+.ProseMirror-icon svg {
+    height: 1em;
+
+    fill: currentColor;
+}
+
+.ProseMirror-icon span {
+    vertical-align: text-top;
+}
+/* Add space around the hr to make clicking it easier */
+
+.ProseMirror-example-setup-style hr {
+    position: relative;
+
+    height: 6px;
+
+    border: none;
+}
+
+.ProseMirror-example-setup-style hr:after {
+    position: absolute;
+    top: 2px;
+    right: 10px;
+    left: 10px;
+
+    content: '';
+
+    border-top: 2px solid silver;
+}
+
+.ProseMirror-example-setup-style img {
+    cursor: default;
+}
+
+.ProseMirror-example-setup-style table {
+    border-collapse: collapse;
+}
+
+.ProseMirror-example-setup-style td {
+    padding: 3px 5px;
+
+    vertical-align: top;
+
+    border: 1px solid #ddd;
+}
+
+.ProseMirror-prompt {
+    position: fixed;
+    z-index: 11;
+
+    padding: 5px 10px 5px 15px;
+
+    border: 1px solid silver;
+    border-radius: 3px;
+    background: white;
+    box-shadow: -.5px 2px 5px rgba(0, 0, 0, .2);
+}
+
+.ProseMirror-prompt h5 {
+    font-size: 100%;
+    font-weight: normal;
+
+    margin: 0;
+
+    color: #444;
+}
+
+.ProseMirror-prompt input[type='text'],
+.ProseMirror-prompt textarea {
+    border: none;
+    outline: none;
+    background: #eee;
+}
+
+.ProseMirror-prompt input[type='text'] {
+    padding: 0 4px;
+}
+
+.ProseMirror-prompt-close {
+    position: absolute;top: 1px;
+    left: 2px; padding: 0;
+
+    color: #666;
+    border: none; background: transparent;
+}
+
+.ProseMirror-prompt-close:after {
+    font-size: 12px;
+
+    content: 'âœ•';
+}
+
+.ProseMirror-invalid {
+    position: absolute;
+
+    min-width: 10em;
+    padding: 5px 10px;
+
+    border: 1px solid #cc7;
+    border-radius: 4px;
+    background: #ffc;
+}
+
+.ProseMirror-prompt-buttons {
+    display: none;
+
+    margin-top: 5px;
+}
