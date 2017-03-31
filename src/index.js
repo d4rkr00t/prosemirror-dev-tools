@@ -7,3 +7,5 @@ export default function applyDevTools(editorView, options = {}) {
   document.body.appendChild(place);
   ReactDOM.render(<DevTools editorView={editorView} />, place);
 }
+
+// TODO: Copy doc
