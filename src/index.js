@@ -8,4 +8,5 @@ export default function applyDevTools(editorView, options = {}) {
   ReactDOM.render(<DevTools editorView={editorView} />, place);
 }
 
-// TODO: Copy doc
+// TODO: Copy doc button
+// TODO: Custom view for document json representation

@@ -59,6 +59,24 @@ const HeadingButton = styled.button`
   }
 `;
 
+const Group = styled.div`
+  margin: 0.5em 0px 0.5em 1em;
+`;
+
+const GroupRow = styled.div`
+  padding-top: 0.25em;
+`;
+
+const Key = styled.span`
+  display: inline-block;
+  color: rgb(102, 217, 239);
+  margin: 0px 0.5em 0px 0px;
+`;
+
+const ValueNum = styled.span`
+  color: rgb(253, 151, 31);
+`;
+
 export class Selection extends React.PureComponent {
   constructor() {
     super();
@@ -99,6 +117,16 @@ export default function StateView(props) {
         </Section>
         <Section>
           <Heading>Document</Heading>
+          <Group>
+            <GroupRow>
+              <Key>nodeSize:</Key>
+              <ValueNum>{props.doc.nodeSize}</ValueNum>
+            </GroupRow>
+            <GroupRow>
+              <Key>childCount:</Key>
+              <ValueNum>{props.doc.childCount}</ValueNum>
+            </GroupRow>
+          </Group>
         </Section>
       </SplitViewCol>
     </SplitView>
