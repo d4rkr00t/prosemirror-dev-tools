@@ -2,18 +2,21 @@ import { Plugin } from "prosemirror-state";
 
 export default function subscribeOnUpdates(editorView, callback) {
   const plugin = new Plugin({
-    view() {
-      return {
-        update(view, prevState) {
-          callback(view, prevState);
-        }
-      };
+    state: {
+      init() {
+        return null;
+      },
+
+      apply(tr, value, oldState, newState) {
+        callback(tr, value, oldState, newState);
+        return null;
+      }
     }
   });
 
   const { state } = editorView;
   const newState = state.reconfigure({
-    scheme: state.scheme,
+    schema: state.schema,
     plugins: [plugin].concat(state.plugins)
   });
 

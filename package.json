@@ -12,6 +12,9 @@
   "license": "MIT",
   "devDependencies": {
     "aik": "^0.14.0",
+    "date-fns": "^1.28.2",
+    "javascript-stringify": "^1.6.0",
+    "jsondiffpatch": "^0.2.4",
     "prosemirror-example-setup": "^0.19.0",
     "prosemirror-schema-basic": "^0.19.0",
     "prosemirror-state": "^0.19.1",

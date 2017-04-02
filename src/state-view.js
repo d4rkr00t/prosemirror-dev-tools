@@ -22,6 +22,9 @@ const JSONTreeWrapper = styled.div`
 `;
 
 const Section = styled.div`
+  min-width: 180px;
+  box-sizing: border-box;
+
   & + & {
     padding-top: 9px;
   }
@@ -32,11 +35,11 @@ const HeadingWithButton = styled.div`
 `;
 
 const HeadingButton = styled.button`
-  padding: 4px 8px;
-  margin: -5px -8px 0 8px;
+  padding: 6px 10px;
+  margin: -6px -10px 0 8px;
   font-weight: 400;
   letter-spacing: 1px;
-  font-size: 13px;
+  font-size: 11px;
   color: rgba(255, 255, 255, .8);
   text-transform: uppercase;
   transition: background .3s, color .3s;
@@ -109,6 +112,7 @@ export default function StateView(props) {
   return (
     <SplitView>
       <SplitViewCol grow>
+        <Heading>Current State</Heading>
         <JSONTree data={props.doc.toJSON()} hideRoot />
       </SplitViewCol>
       <SplitViewCol sep>

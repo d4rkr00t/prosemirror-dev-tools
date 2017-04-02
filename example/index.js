@@ -3,7 +3,6 @@ import applyDevTools from "../src";
 
 import { EditorState } from "prosemirror-state";
 import { EditorView } from "prosemirror-view";
-import { DOMParser } from "prosemirror-model";
 import { schema } from "prosemirror-schema-basic";
 import { exampleSetup } from "prosemirror-example-setup";
 

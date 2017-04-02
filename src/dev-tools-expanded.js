@@ -1,8 +1,10 @@
 import React from "react";
 import Dock from "react-dock";
 import styled from "styled-components";
+import { EditorState } from "prosemirror-state";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import StateView from "./state-view";
+import HistoryView from "./history-view";
 import subscribeOnUpdates from "./utils/subscribe-on-updates";
 
 const DockContainer = styled.div`
@@ -67,25 +69,75 @@ Tabs.setUseDefaultStyles(false);
 export default class DevTools extends React.PureComponent {
   constructor(props) {
     super();
-    this.state = this.getUpdatedState(props.editorView);
-    subscribeOnUpdates(props.editorView, view => this.onUpdate(view));
+    this.state = this.getUpdatedState(props.editorView.state);
+    this.state.editorView = props.editorView;
+
+    subscribeOnUpdates(props.editorView, (...args) => this.onUpdate(...args));
   }
 
-  getUpdatedState(editorView) {
-    const { state } = editorView;
+  getUpdatedState(state, skipHistory = false) {
+    let history = this.state && this.state.history ? this.state.history : [];
+    const movedToStateInHistory = skipHistory
+      ? this.state.movedToStateInHistory
+      : false;
+
+    if (!skipHistory) {
+      const startIndex = this.state && this.state.movedToStateInHistory
+        ? this.state.movedToStateInHistory
+        : 0;
+      history = history.slice(startIndex, 100);
+      const prev = history[0];
+      const num = prev ? prev.num + 1 : 1;
+      history.unshift({
+        doc: state.doc.toJSON(),
+        selection: state.selection,
+        timestamp: Date.now(),
+        num
+      });
+    }
+
     return {
       doc: state.doc,
-      selection: state.selection
+      selection: state.selection,
+      historyItem: skipHistory ? this.state.historyItem : 0,
+      movedToStateInHistory,
+      history
     };
   }
 
-  onUpdate(editorView) {
-    this.setState(this.getUpdatedState(editorView));
+  onUpdate(tr, value, oldState, newState) {
+    const skipHistory = tr.getMeta("_skip-dev-tools-history_");
+    this.setState(this.getUpdatedState(newState, skipHistory));
+  }
+
+  moveToState(index) {
+    const { state } = this.state.editorView;
+    const history = this.state.history[index];
+
+    const newState = EditorState.create({
+      schema: state.schema,
+      plugins: state.plugins,
+      doc: state.schema.nodeFromJSON(history.doc)
+    });
+
+    this.state.editorView.updateState(newState);
+    this.state.editorView.dom.focus();
+    const tr = this.state.editorView.state.tr
+      .setSelection(history.selection)
+      .setMeta("addToHistory", false)
+      .setMeta("_skip-dev-tools-history_", true);
+    this.state.editorView.dispatch(tr);
+
+    this.setState({ movedToStateInHistory: index });
+  }
+
+  selectHistoryItem(index) {
+    this.setState({ historyItem: index });
   }
 
   render() {
     return (
-      <Dock position="bottom" dimMode="none" isVisible>
+      <Dock position="bottom" dimMode="none" isVisible defaultSize={0.5}>
         {() => (
           <DockContainer>
             <Tabs>
@@ -105,7 +157,14 @@ export default class DevTools extends React.PureComponent {
               </TabPanel>
               <TabPanel>
                 <TabPanelWrapper>
-                  Tab 2
+                  <HistoryView
+                    history={this.state.history}
+                    movedToStateInHistory={this.state.movedToStateInHistory}
+                    selectedItem={this.state.history[this.state.historyItem]}
+                    prevItem={this.state.history[this.state.historyItem + 1]}
+                    onClick={index => this.selectHistoryItem(index)}
+                    onDoubleClick={index => this.moveToState(index)}
+                  />
                 </TabPanelWrapper>
               </TabPanel>
               <TabPanel>
