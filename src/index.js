@@ -10,3 +10,10 @@ export default function applyDevTools(editorView, options = {}) {
 
 // TODO: Copy doc button
 // TODO: Custom view for document json representation
+// TODO: Highlight current node in StateView
+// TODO: Hover on the node in StateView highlights actual node in the editor
+// TODO: Move State subscription to the top most component
+// TODO: Close button
+// TODO: Add animations
+// TODO: Schema view
+// TODO: Redux
