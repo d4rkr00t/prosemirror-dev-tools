@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import DevTools from "./dev-tools";
 
-export default function applyDevTools(editorView, options = {}) {
+export default function applyDevTools(editorView) {
   const place = document.createElement("div");
   document.body.appendChild(place);
   ReactDOM.render(<DevTools editorView={editorView} />, place);

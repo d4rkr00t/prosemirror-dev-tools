@@ -95,7 +95,6 @@ function replaceSpacesWithNonBreakingSpace(value) {
 
 function parseTextDiff(textDiff) {
   const diffByLines = textDiff.split(/\n/gm);
-  const matches = diffByLines.shift().match(/@@ -(\d+,\d+) \+(\d+,\d+) @@/);
 
   return diffByLines.map(line => {
     const type = line.startsWith("-")
@@ -106,7 +105,7 @@ function parseTextDiff(textDiff) {
   });
 }
 
-function valueRenderer(raw, _, key) {
+function valueRenderer(raw) {
   if (Array.isArray(raw)) {
     if (raw.length === 1) {
       return <Added>{getValueString(raw[0])}</Added>;
@@ -132,10 +131,6 @@ function valueRenderer(raw, _, key) {
       return (
         <Updated>
           "{parseTextDiff(raw[0]).map(item => {
-            if (item.raw) {
-              return <White key={item.raw + "raw"}>{item.raw}</White>;
-            }
-
             if (item.delete) {
               return (
                 <Deleted key={item.delete + "delete"}>{item.delete}</Deleted>
@@ -145,6 +140,8 @@ function valueRenderer(raw, _, key) {
             if (item.add) {
               return <Added key={item.add + "add"}>{item.add}</Added>;
             }
+
+            return <White key={item.raw + "raw"}>{item.raw}</White>;
           })}
           "
         </Updated>
@@ -159,7 +156,7 @@ export function itemsCountString(count) {
   return `${count}`;
 }
 
-export function getItemString(type, value, defaultView) {
+export function getItemString(type, value, defaultView, keysCount) {
   switch (type) {
     case "Object":
       return <span>{"{…}"}</span>;

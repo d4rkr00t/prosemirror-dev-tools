@@ -2,7 +2,6 @@ import React from "react";
 import format from "date-fns/format";
 import styled from "styled-components";
 import { SplitView, SplitViewCol } from "./split-view";
-import JSONTree from "./json-tree";
 import JSONDiff from "./json-diff";
 
 const HistoryItem = styled.button`
@@ -40,12 +39,6 @@ const HistoryItem = styled.button`
   &:active {
     background: rgba(191, 116, 135, 0.60);
   }
-`;
-
-const Num = styled.span`
-  display: inline-block;
-  color: rgb(102, 217, 239);
-  margin: 0px 0.5em 0px 0px;
 `;
 
 export default function HistoryView(props) {

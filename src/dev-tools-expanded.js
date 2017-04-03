@@ -90,7 +90,7 @@ export default class DevTools extends React.PureComponent {
   constructor(props) {
     super();
     this.state = this.getUpdatedState(props.editorView.state);
-    this.state.editorView = props.editorView;
+    this.state.editorView = props.editorView; // eslint-disable-line
 
     subscribeOnUpdates(props.editorView, (...args) => this.onUpdate(...args));
   }
