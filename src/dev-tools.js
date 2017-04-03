@@ -14,7 +14,12 @@ export default class DevTools extends React.PureComponent {
 
   render() {
     if (this.state.opened) {
-      return <DevToolsExpanded editorView={this.props.editorView} />;
+      return (
+        <DevToolsExpanded
+          editorView={this.props.editorView}
+          onClick={() => this.toggle()}
+        />
+      );
     } else {
       return <DevToolsCollapsed onClick={() => this.toggle()} />;
     }

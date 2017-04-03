@@ -8,7 +8,6 @@ import isPlainObject from "lodash/isPlainObject";
 const ignoreFields = ["schema", "contentExpr", "schema", "parseDOM", "toDOM"];
 
 export function postprocessValue(ignore, data) {
-  console.log(data);
   if (
     !isPlainObject(data) &&
     !(data instanceof NodeType) &&

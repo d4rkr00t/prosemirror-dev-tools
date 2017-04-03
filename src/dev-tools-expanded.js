@@ -65,6 +65,25 @@ const TabPanelWrapper = styled.div`
   box-sizing: border-box;
 `;
 
+const CloseButton = styled.button`
+  background: none;
+  border: none;
+  position: absolute;
+  right: 0;
+  color: rgba(255, 255, 255, .6);
+  font-size: 18px;
+
+  &:hover {
+    cursor: pointer;
+    background: rgba(255, 255, 255, .05);
+    color: rgba(255, 255, 255, 1);
+  }
+
+  &:focus {
+    outline: none;
+  }
+`;
+
 Tabs.setUseDefaultStyles(false);
 
 export default class DevTools extends React.PureComponent {
@@ -141,6 +160,7 @@ export default class DevTools extends React.PureComponent {
       <Dock position="bottom" dimMode="none" isVisible defaultSize={0.5}>
         {() => (
           <DockContainer>
+            <CloseButton onClick={this.props.onClick}>×</CloseButton>
             <Tabs>
               <TabList>
                 <Tab><TabLabel>State</TabLabel></Tab>
