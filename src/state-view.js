@@ -80,6 +80,14 @@ const ValueNum = styled.span`
   color: rgb(253, 151, 31);
 `;
 
+export function getItemString(type, value, defaultView, keysCount) {
+  if (type === "Object" && value.type) {
+    return <span>{"{}"} {value.type}</span>;
+  }
+
+  return <span>{defaultView} {keysCount}</span>;
+}
+
 export class Selection extends React.PureComponent {
   constructor() {
     super();
@@ -113,7 +121,11 @@ export default function StateView(props) {
     <SplitView>
       <SplitViewCol grow>
         <Heading>Current State</Heading>
-        <JSONTree data={props.doc.toJSON()} hideRoot />
+        <JSONTree
+          data={props.doc.toJSON()}
+          hideRoot
+          getItemString={getItemString}
+        />
       </SplitViewCol>
       <SplitViewCol sep>
         <Section>

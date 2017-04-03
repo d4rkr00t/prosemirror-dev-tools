@@ -164,7 +164,7 @@ export function getItemString(type, value, defaultView) {
     case "Object":
       return <span>{"{…}"}</span>;
     default:
-      return defaultView;
+      return <span>{defaultView} {keysCount}</span>;
   }
 }
 
