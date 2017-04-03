@@ -15,5 +15,5 @@ export default function applyDevTools(editorView, options = {}) {
 // TODO: Move State subscription to the top most component
 // TODO: Close button
 // TODO: Add animations
-// TODO: Schema view
 // TODO: Redux
+// TODO: Collapse button for JSON Tree View
