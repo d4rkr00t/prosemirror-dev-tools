@@ -5,6 +5,7 @@ import { EditorState } from "prosemirror-state";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import StateView from "./state-view";
 import HistoryView from "./history-view";
+import SchemaView from "./schema-view";
 import subscribeOnUpdates from "./utils/subscribe-on-updates";
 
 const DockContainer = styled.div`
@@ -145,6 +146,7 @@ export default class DevTools extends React.PureComponent {
                 <Tab><TabLabel>State</TabLabel></Tab>
                 <Tab><TabLabel>History</TabLabel></Tab>
                 <Tab><TabLabel>Plugins</TabLabel></Tab>
+                <Tab><TabLabel>Schema</TabLabel></Tab>
                 <Tab><TabLabel>Graph</TabLabel></Tab>
               </TabList>
               <TabPanel>
@@ -174,7 +176,12 @@ export default class DevTools extends React.PureComponent {
               </TabPanel>
               <TabPanel>
                 <TabPanelWrapper>
-                  Tab 4
+                  <SchemaView schema={this.state.editorView.state.schema} />
+                </TabPanelWrapper>
+              </TabPanel>
+              <TabPanel>
+                <TabPanelWrapper>
+                  Tab 5
                 </TabPanelWrapper>
               </TabPanel>
             </Tabs>

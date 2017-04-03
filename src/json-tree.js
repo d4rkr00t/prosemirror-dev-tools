@@ -22,5 +22,7 @@ const theme = {
 };
 
 export default function JSONTree(props) {
-  return <JSONTreeVendor invertTheme={false} theme={theme} {...props} />;
+  return (
+    <JSONTreeVendor invertTheme={false} theme={theme} hideRoot {...props} />
+  );
 }

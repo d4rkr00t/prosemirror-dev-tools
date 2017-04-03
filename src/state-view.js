@@ -3,18 +3,7 @@ import styled from "styled-components";
 import processSelection from "./utils/process-selection";
 import { SplitView, SplitViewCol } from "./split-view";
 import JSONTree from "./json-tree";
-import Button from "./button";
-
-const Heading = styled.h2`
-  padding: 0;
-  margin: 0;
-  font-weight: 400;
-  letter-spacing: 1px;
-  font-size: 13px;
-  color: #BB91A3;
-  text-transform: uppercase;
-  flex-grow: 1;
-`;
+import { Heading } from "./components/heading";
 
 const JSONTreeWrapper = styled.div`
   padding: 0 0 9px 0;
