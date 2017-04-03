@@ -109,7 +109,12 @@ export default function StateView(props) {
   return (
     <SplitView>
       <SplitViewCol grow>
-        <Heading>Current State</Heading>
+        <HeadingWithButton>
+          <Heading>Current Doc</Heading>
+          <HeadingButton onClick={() => console.log(props.editorView.state)}>
+            Log State
+          </HeadingButton>
+        </HeadingWithButton>
         <JSONTree
           data={props.doc.toJSON()}
           hideRoot
@@ -121,7 +126,7 @@ export default function StateView(props) {
           <Selection selection={props.selection} />
         </Section>
         <Section>
-          <Heading>Document</Heading>
+          <Heading>Document Stats</Heading>
           <Group>
             <GroupRow>
               <Key>nodeSize:</Key>

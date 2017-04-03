@@ -174,6 +174,7 @@ export default class DevTools extends React.PureComponent {
                   <StateView
                     doc={this.state.doc}
                     selection={this.state.selection}
+                    editorView={this.state.editorView}
                   />
                 </TabPanelWrapper>
               </TabPanel>

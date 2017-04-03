@@ -8,7 +8,6 @@ export default function applyDevTools(editorView) {
   ReactDOM.render(<DevTools editorView={editorView} />, place);
 }
 
-// TODO: Copy doc button
 // TODO: Redux / Cerebral
 // TODO: Move State subscription to the top most component
 // TODO: Plugins View
