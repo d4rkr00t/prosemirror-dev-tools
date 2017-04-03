@@ -94,7 +94,7 @@ function replaceSpacesWithNonBreakingSpace(value) {
 }
 
 function parseTextDiff(textDiff) {
-  const diffByLines = textDiff.split(/\n/gm);
+  const diffByLines = textDiff.split(/\n/gm).slice(1);
 
   return diffByLines.map(line => {
     const type = line.startsWith("-")
