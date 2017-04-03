@@ -95,24 +95,15 @@ function replaceSpacesWithNonBreakingSpace(value) {
 
 function parseTextDiff(textDiff) {
   const diffByLines = textDiff.split(/\n/gm);
-  const matches = diffByLines[0].match(/@@ -(\d+,\d+) \+(\d+,\d+) @@/);
+  const matches = diffByLines.shift().match(/@@ -(\d+,\d+) \+(\d+,\d+) @@/);
 
-  if (diffByLines.length === 6) {
-    return [
-      { raw: diffByLines[1].substr(1) },
-      { delete: diffByLines[2].substr(1), add: diffByLines[3].substr(1) },
-      { raw: diffByLines[4].substr(1) }
-    ];
-  }
+  return diffByLines.map(line => {
+    const type = line.startsWith("-")
+      ? "delete"
+      : line.startsWith("+") ? "add" : "raw";
 
-  if (diffByLines.length <= 5) {
-    const type = diffByLines[2].startsWith("-") ? "delete" : "add";
-    return [
-      { raw: diffByLines[1] },
-      { [type]: replaceSpacesWithNonBreakingSpace(diffByLines[2].substr(1)) },
-      { raw: diffByLines[3].substr(1) }
-    ];
-  }
+    return { [type]: replaceSpacesWithNonBreakingSpace(line.substr(1)) };
+  });
 }
 
 function valueRenderer(raw, _, key) {
@@ -141,24 +132,18 @@ function valueRenderer(raw, _, key) {
       return (
         <Updated>
           "{parseTextDiff(raw[0]).map(item => {
-            if (item.raw) return <White key={item.raw}>{item.raw}</White>;
-            if (item.add && item.delete) {
-              return (
-                <Updated key={item.delete + item.add}>
-                  [<Deleted>{item.delete}</Deleted>
-                  {" "}
-                  =&gt;
-                  {" "}
-                  <Added>{item.add}</Added>]
-                </Updated>
-              );
+            if (item.raw) {
+              return <White key={item.raw + "raw"}>{item.raw}</White>;
             }
+
             if (item.delete) {
-              return <Deleted key={item.delete}>{item.delete}</Deleted>;
+              return (
+                <Deleted key={item.delete + "delete"}>{item.delete}</Deleted>
+              );
             }
 
             if (item.add) {
-              return <Added key={item.add}>{item.add}</Added>;
+              return <Added key={item.add + "add"}>{item.add}</Added>;
             }
           })}
           "
