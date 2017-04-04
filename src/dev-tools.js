@@ -1,27 +1,19 @@
 import React from "react";
+import { connect } from "cerebral/react";
+import { state, signal } from "cerebral/tags";
 import DevToolsCollapsed from "./dev-tools-collapsed";
 import DevToolsExpanded from "./dev-tools-expanded";
 
-export default class DevTools extends React.PureComponent {
-  constructor() {
-    super();
-    this.state = { opened: false };
-  }
-
-  toggle() {
-    this.setState({ opened: !this.state.opened });
-  }
-
-  render() {
-    if (this.state.opened) {
-      return (
-        <DevToolsExpanded
-          editorView={this.props.editorView}
-          onClick={() => this.toggle()}
-        />
-      );
+export default connect(
+  {
+    opened: state`opened`,
+    devToolsToggled: signal`devToolsToggled`
+  },
+  function DevTools({ opened, devToolsToggled }) {
+    if (opened) {
+      return <DevToolsExpanded onClick={devToolsToggled} />;
     } else {
-      return <DevToolsCollapsed onClick={() => this.toggle()} />;
+      return <DevToolsCollapsed onClick={devToolsToggled} />;
     }
   }
-}
+);

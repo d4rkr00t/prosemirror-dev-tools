@@ -167,7 +167,7 @@ export function getItemString(type, value, defaultView, keysCount) {
 
 export default function JSONDiff(props) {
   if (!props.current || !props.prev)
-    return <Equal>there is only 1 item in history</Equal>;
+    return <Equal>there is nothing to compare with</Equal>;
 
   const delta = diff.diff(props.prev, props.current);
 

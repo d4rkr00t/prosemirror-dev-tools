@@ -1,12 +1,12 @@
 import React from "react";
 import Dock from "react-dock";
 import styled from "styled-components";
-import { EditorState } from "prosemirror-state";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import StateView from "./state-view";
-import HistoryView from "./history-view";
-import SchemaView from "./schema-view";
-import subscribeOnUpdates from "./utils/subscribe-on-updates";
+import { connect } from "cerebral/react";
+import { state, signal } from "cerebral/tags";
+import StateTab from "./tabs/state";
+import HistoryTab from "./tabs/history";
+import SchemaTab from "./tabs/schema";
 
 const DockContainer = styled.div`
   width: 100%;
@@ -86,82 +86,22 @@ const CloseButton = styled.button`
 
 Tabs.setUseDefaultStyles(false);
 
-export default class DevTools extends React.PureComponent {
-  constructor(props) {
-    super();
-    this.state = this.getUpdatedState(props.editorView.state);
-    this.state.editorView = props.editorView; // eslint-disable-line
-
-    subscribeOnUpdates(props.editorView, (...args) => this.onUpdate(...args));
-  }
-
-  getUpdatedState(state, skipHistory = false) {
-    let history = this.state && this.state.history ? this.state.history : [];
-    const movedToStateInHistory = skipHistory
-      ? this.state.movedToStateInHistory
-      : false;
-
-    if (!skipHistory) {
-      const startIndex = this.state && this.state.movedToStateInHistory
-        ? this.state.movedToStateInHistory
-        : 0;
-      history = history.slice(startIndex, 100);
-      const prev = history[0];
-      const num = prev ? prev.num + 1 : 1;
-      history.unshift({
-        doc: state.doc.toJSON(),
-        selection: state.selection,
-        timestamp: Date.now(),
-        num
-      });
-    }
-
-    return {
-      doc: state.doc,
-      selection: state.selection,
-      historyItem: skipHistory ? this.state.historyItem : 0,
-      movedToStateInHistory,
-      history
-    };
-  }
-
-  onUpdate(tr, value, oldState, newState) {
-    const skipHistory = tr.getMeta("_skip-dev-tools-history_");
-    this.setState(this.getUpdatedState(newState, skipHistory));
-  }
-
-  moveToState(index) {
-    const { state } = this.state.editorView;
-    const history = this.state.history[index];
-
-    const newState = EditorState.create({
-      schema: state.schema,
-      plugins: state.plugins,
-      doc: state.schema.nodeFromJSON(history.doc)
-    });
-
-    this.state.editorView.updateState(newState);
-    this.state.editorView.dom.focus();
-    const tr = this.state.editorView.state.tr
-      .setSelection(history.selection)
-      .setMeta("addToHistory", false)
-      .setMeta("_skip-dev-tools-history_", true);
-    this.state.editorView.dispatch(tr);
-
-    this.setState({ movedToStateInHistory: index });
-  }
-
-  selectHistoryItem(index) {
-    this.setState({ historyItem: index });
-  }
-
-  render() {
+export default connect(
+  {
+    tabIndex: state`tabIndex`,
+    tabSelected: signal`tabSelected`,
+    devToolsToggled: signal`devToolsToggled`
+  },
+  function DevToolsExpanded({ tabIndex, tabSelected, devToolsToggled }) {
     return (
       <Dock position="bottom" dimMode="none" isVisible defaultSize={0.5}>
         {() => (
           <DockContainer>
-            <CloseButton onClick={this.props.onClick}>×</CloseButton>
-            <Tabs>
+            <CloseButton onClick={() => devToolsToggled()}>×</CloseButton>
+            <Tabs
+              selectedIndex={tabIndex}
+              onSelect={index => tabSelected({ index })}
+            >
               <TabList>
                 <Tab><TabLabel>State</TabLabel></Tab>
                 <Tab><TabLabel>History</TabLabel></Tab>
@@ -171,23 +111,12 @@ export default class DevTools extends React.PureComponent {
               </TabList>
               <TabPanel>
                 <TabPanelWrapper>
-                  <StateView
-                    doc={this.state.doc}
-                    selection={this.state.selection}
-                    editorView={this.state.editorView}
-                  />
+                  <StateTab />
                 </TabPanelWrapper>
               </TabPanel>
               <TabPanel>
                 <TabPanelWrapper>
-                  <HistoryView
-                    history={this.state.history}
-                    movedToStateInHistory={this.state.movedToStateInHistory}
-                    selectedItem={this.state.history[this.state.historyItem]}
-                    prevItem={this.state.history[this.state.historyItem + 1]}
-                    onClick={index => this.selectHistoryItem(index)}
-                    onDoubleClick={index => this.moveToState(index)}
-                  />
+                  <HistoryTab />
                 </TabPanelWrapper>
               </TabPanel>
               <TabPanel>
@@ -197,7 +126,7 @@ export default class DevTools extends React.PureComponent {
               </TabPanel>
               <TabPanel>
                 <TabPanelWrapper>
-                  <SchemaView schema={this.state.editorView.state.schema} />
+                  <SchemaTab />
                 </TabPanelWrapper>
               </TabPanel>
               <TabPanel>
@@ -211,4 +140,4 @@ export default class DevTools extends React.PureComponent {
       </Dock>
     );
   }
-}
+);
