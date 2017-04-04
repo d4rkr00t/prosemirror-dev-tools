@@ -12,6 +12,7 @@
   "license": "MIT",
   "devDependencies": {
     "aik": "^0.14.0",
+    "cerebral": "2.0.0-b-alpha.44b98c71",
     "date-fns": "^1.28.2",
     "javascript-stringify": "^1.6.0",
     "jsondiffpatch": "^0.2.4",
