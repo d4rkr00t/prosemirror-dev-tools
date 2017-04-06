@@ -61,6 +61,7 @@ export default connect(
   }) {
     const prevItem = history[selectedItemIndex + 1];
     const selectedItem = history[selectedItemIndex];
+    const historyRolledBackToItem = history[historyRolledBackTo];
 
     return (
       <SplitView>
@@ -70,7 +71,8 @@ export default connect(
               isSelected={item.timestamp === selectedItem.timestamp}
               isPrevious={item.timestamp === (prevItem && prevItem.timestamp)}
               isFuture={
-                item.timestamp > selectedItem.timestamp && historyRolledBackTo
+                historyRolledBackToItem &&
+                  item.timestamp > historyRolledBackToItem.timestamp
               }
               key={item.timestamp}
               onClick={() => historyItemSelected({ index })}
