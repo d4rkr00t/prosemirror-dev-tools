@@ -7,6 +7,7 @@ import { state, signal } from "cerebral/tags";
 import StateTab from "./tabs/state";
 import HistoryTab from "./tabs/history";
 import SchemaTab from "./tabs/schema";
+import PluginsTab from "./tabs/plugins";
 
 const DockContainer = styled.div`
   width: 100%;
@@ -121,7 +122,7 @@ export default connect(
               </TabPanel>
               <TabPanel>
                 <TabPanelWrapper>
-                  Tab 3
+                  <PluginsTab />
                 </TabPanelWrapper>
               </TabPanel>
               <TabPanel>

@@ -24,13 +24,12 @@ export default function applyDevTools(editorView) {
   );
 }
 
-// TODO: Plugins View
+// TODO: Picker to highlight node
 // TODO: Graph View
 // TODO: Keyboard navigation in lists
-// TODO: Cerebral DevTools
 // TODO: Clean everything up
 // TODO: Fix colour scheme
+// TODO: Cerebral DevTools
 // TODO: Hover on the node in StateView highlights actual node in the editor
-// TODO: Highlight current node in StateView
 // TODO: Collapse button for JSON Tree View
-// TODO: Add animations
+// TODO: Visual schema representation
