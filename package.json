@@ -14,6 +14,8 @@
     "aik": "^0.14.0",
     "cerebral": "2.0.0-b-alpha.44b98c71",
     "date-fns": "^1.28.2",
+    "eslint": "^3.19.0",
+    "eslint-plugin-react": "^6.10.3",
     "javascript-stringify": "^1.6.0",
     "jsondiffpatch": "^0.2.4",
     "prosemirror-example-setup": "^0.19.0",
@@ -27,9 +29,5 @@
     "react-tabs": "^0.8.2",
     "styled-components": "^1.4.4"
   },
-  "eslint": {
-    "extends": [
-      "./node_modules/aik/lib/eslint-config.js"
-    ]
-  }
+  "eslintConfig": "./node_modules/aik/lib/eslint-config.js"
 }

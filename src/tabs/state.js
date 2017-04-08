@@ -79,13 +79,33 @@ export function getItemString(type, value, defaultView, keysCount) {
   return <span>{defaultView} {keysCount}</span>;
 }
 
+export function shouldExpandNode(expandPath, nodePath) {
+  const path = [].concat(nodePath).reverse();
+
+  if (!expandPath) return false;
+
+  // Expand attrs if node has them.
+  expandPath.push("attrs");
+
+  if (path.length > expandPath.length) return false;
+  if (path.join(".") === expandPath.join(".")) return true;
+  if (path.every((el, idx) => el === expandPath[idx])) return true;
+  return false;
+}
+
 export default connect(
   {
     state: state`editor.state`,
+    expandPath: state`editor.expandPath`,
     selectionExpanded: state`stateTab.selectionExpanded`,
     selectionToggled: signal`stateTab.selectionToggled`
   },
-  function StateTab({ state, selectionExpanded, selectionToggled }) {
+  function StateTab({
+    state,
+    selectionExpanded,
+    selectionToggled,
+    expandPath
+  }) {
     return (
       <SplitView>
         <SplitViewCol grow>
@@ -99,9 +119,11 @@ export default connect(
             data={state.doc.toJSON()}
             hideRoot
             getItemString={getItemString}
+            shouldExpandNode={nodePath =>
+              shouldExpandNode(expandPath, nodePath)}
           />
         </SplitViewCol>
-        <SplitViewCol sep>
+        <SplitViewCol sep minWidth={220}>
           <Section>
             <HeadingWithButton>
               <Heading>Selection</Heading>

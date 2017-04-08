@@ -12,4 +12,5 @@ export const SplitViewCol = styled.div`
   padding: ${props => props.noPaddings ? "" : "16px 18px 18px"};
   overflow: scroll;
   height: 100%;
+  ${({ minWidth }) => minWidth ? `min-width: ${minWidth}px;` : ""}
 `;

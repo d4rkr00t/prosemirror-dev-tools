@@ -4,6 +4,7 @@ import { Container } from "cerebral/react";
 import createController from "./state/controller";
 import subscribeOnUpdates from "./utils/subscribe-on-updates";
 import DevTools from "./dev-tools";
+import addKeyBindings from "./keybindings";
 
 export default function applyDevTools(editorView) {
   const place = document.createElement("div");
@@ -16,6 +17,8 @@ export default function applyDevTools(editorView) {
     editorUpdated({ tr, value, oldState, newState });
   });
 
+  addKeyBindings(controller);
+
   ReactDOM.render(
     <Container controller={controller}>
       <DevTools editorView={editorView} />
@@ -24,8 +27,9 @@ export default function applyDevTools(editorView) {
   );
 }
 
-// TODO: Picker to highlight node
 // TODO: Graph View
+// TODO: Print node
+// TODO: Scroll highlighted node into view
 // TODO: Keyboard navigation in lists
 // TODO: Clean everything up
 // TODO: Fix colour scheme

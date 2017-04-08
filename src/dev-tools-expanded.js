@@ -8,6 +8,8 @@ import StateTab from "./tabs/state";
 import HistoryTab from "./tabs/history";
 import SchemaTab from "./tabs/schema";
 import PluginsTab from "./tabs/plugins";
+import NodePicker from "./components/node-picker";
+import Button from "./components/button";
 
 const DockContainer = styled.div`
   width: 100%;
@@ -85,60 +87,89 @@ const CloseButton = styled.button`
   }
 `;
 
+const NodePickerTrigger = styled.div`
+  position: absolute;
+  right: 4px;
+  top: -34px;
+`;
+
 Tabs.setUseDefaultStyles(false);
 
 export default connect(
   {
     tabIndex: state`tabIndex`,
     tabSelected: signal`tabSelected`,
-    devToolsToggled: signal`devToolsToggled`
+    devToolsToggled: signal`devToolsToggled`,
+    nodePicker: state`editor.nodePicker`,
+    pickerActivated: signal`editor.pickerActivated`,
+    pickerDeactivated: signal`editor.pickerDeactivated`
   },
-  function DevToolsExpanded({ tabIndex, tabSelected, devToolsToggled }) {
+  function DevToolsExpanded({
+    tabIndex,
+    tabSelected,
+    devToolsToggled,
+    nodePicker,
+    pickerActivated,
+    pickerDeactivated
+  }) {
+    const pickerActive = !!(nodePicker.onClick && nodePicker.onMouseOver);
     return (
-      <Dock position="bottom" dimMode="none" isVisible defaultSize={0.5}>
-        {() => (
-          <DockContainer>
-            <CloseButton onClick={() => devToolsToggled()}>×</CloseButton>
-            <Tabs
-              selectedIndex={tabIndex}
-              onSelect={index => tabSelected({ index })}
-            >
-              <TabList>
-                <Tab><TabLabel>State</TabLabel></Tab>
-                <Tab><TabLabel>History</TabLabel></Tab>
-                <Tab><TabLabel>Plugins</TabLabel></Tab>
-                <Tab><TabLabel>Schema</TabLabel></Tab>
-                <Tab><TabLabel>Graph</TabLabel></Tab>
-              </TabList>
-              <TabPanel>
-                <TabPanelWrapper>
-                  <StateTab />
-                </TabPanelWrapper>
-              </TabPanel>
-              <TabPanel>
-                <TabPanelWrapper>
-                  <HistoryTab />
-                </TabPanelWrapper>
-              </TabPanel>
-              <TabPanel>
-                <TabPanelWrapper>
-                  <PluginsTab />
-                </TabPanelWrapper>
-              </TabPanel>
-              <TabPanel>
-                <TabPanelWrapper>
-                  <SchemaTab />
-                </TabPanelWrapper>
-              </TabPanel>
-              <TabPanel>
-                <TabPanelWrapper>
-                  Tab 5
-                </TabPanelWrapper>
-              </TabPanel>
-            </Tabs>
-          </DockContainer>
-        )}
-      </Dock>
+      <div>
+        <NodePicker />
+        <Dock position="bottom" dimMode="none" isVisible defaultSize={0.5}>
+          {() => (
+            <DockContainer>
+              <CloseButton onClick={() => devToolsToggled()}>×</CloseButton>
+              <NodePickerTrigger>
+                <Button
+                  isSmall
+                  onClick={pickerActive ? pickerDeactivated : pickerActivated}
+                  isActive={pickerActive}
+                >
+                  ⇲
+                </Button>
+              </NodePickerTrigger>
+              <Tabs
+                selectedIndex={tabIndex}
+                onSelect={index => tabSelected({ index })}
+              >
+                <TabList>
+                  <Tab><TabLabel>State</TabLabel></Tab>
+                  <Tab><TabLabel>History</TabLabel></Tab>
+                  <Tab><TabLabel>Plugins</TabLabel></Tab>
+                  <Tab><TabLabel>Schema</TabLabel></Tab>
+                  <Tab><TabLabel>Graph</TabLabel></Tab>
+                </TabList>
+                <TabPanel>
+                  <TabPanelWrapper>
+                    <StateTab />
+                  </TabPanelWrapper>
+                </TabPanel>
+                <TabPanel>
+                  <TabPanelWrapper>
+                    <HistoryTab />
+                  </TabPanelWrapper>
+                </TabPanel>
+                <TabPanel>
+                  <TabPanelWrapper>
+                    <PluginsTab />
+                  </TabPanelWrapper>
+                </TabPanel>
+                <TabPanel>
+                  <TabPanelWrapper>
+                    <SchemaTab />
+                  </TabPanelWrapper>
+                </TabPanel>
+                <TabPanel>
+                  <TabPanelWrapper>
+                    Tab 5
+                  </TabPanelWrapper>
+                </TabPanel>
+              </Tabs>
+            </DockContainer>
+          )}
+        </Dock>
+      </div>
     );
   }
 );
