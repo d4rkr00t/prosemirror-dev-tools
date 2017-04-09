@@ -3,7 +3,11 @@ import styled from "styled-components";
 import { connect } from "cerebral/react";
 import { state, signal } from "cerebral/tags";
 import { SplitView, SplitViewCol } from "./../split-view";
-import { Heading } from "./../components/heading";
+import {
+  Heading,
+  HeadingWithButton,
+  HeadingButton
+} from "./../components/heading";
 import JSONTree from "./../json-tree";
 
 const GraphWrapper = styled.div`
@@ -115,6 +119,7 @@ export default connect(
     nodeSelected: signal`structureTab.nodeSelected`
   },
   function GraphTab({ state, colors, selectedNode, nodeSelected }) {
+    const selected = selectedNode ? selectedNode : state.doc;
     return (
       <SplitView>
         <SplitViewCol grow>
@@ -128,12 +133,16 @@ export default connect(
           </GraphWrapper>
         </SplitViewCol>
         <SplitViewCol sep minWidth={200} maxWidth={300}>
-          <Heading>Node Info</Heading>
+          <HeadingWithButton>
+            <Heading>Node Info</Heading>
+            <HeadingButton onClick={() => console.log(selected)}>
+              Log Node
+            </HeadingButton>
+          </HeadingWithButton>
           <JSONTree
-            data={selectedNode ? selectedNode.toJSON() : state.doc.toJSON()}
+            data={selected.toJSON()}
             hideRoot
-            shouldExpandNode={() =>
-              selectedNode && selectedNode.type.name !== "doc" ? true : false}
+            shouldExpandNode={() => selected.type.name !== "doc" ? true : false}
           />
         </SplitViewCol>
       </SplitView>
