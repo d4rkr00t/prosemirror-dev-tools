@@ -33,7 +33,6 @@ export default function applyDevTools(editorView) {
   );
 }
 
-// TODO: Fix colour scheme
 // TODO: Print node
 // TODO: Clean everything up
 // TODO: ====================== MVP ============================
