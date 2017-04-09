@@ -8,6 +8,7 @@ import StateTab from "./tabs/state";
 import HistoryTab from "./tabs/history";
 import SchemaTab from "./tabs/schema";
 import PluginsTab from "./tabs/plugins";
+import StructureTab from "./tabs/structure";
 import NodePicker from "./components/node-picker";
 import Button from "./components/button";
 
@@ -126,7 +127,7 @@ export default connect(
                   onClick={pickerActive ? pickerDeactivated : pickerActivated}
                   isActive={pickerActive}
                 >
-                  ⇲
+                  ⦿
                 </Button>
               </NodePickerTrigger>
               <Tabs
@@ -138,7 +139,7 @@ export default connect(
                   <Tab><TabLabel>History</TabLabel></Tab>
                   <Tab><TabLabel>Plugins</TabLabel></Tab>
                   <Tab><TabLabel>Schema</TabLabel></Tab>
-                  <Tab><TabLabel>Graph</TabLabel></Tab>
+                  <Tab><TabLabel>Structure</TabLabel></Tab>
                 </TabList>
                 <TabPanel>
                   <TabPanelWrapper>
@@ -162,7 +163,7 @@ export default connect(
                 </TabPanel>
                 <TabPanel>
                   <TabPanelWrapper>
-                    Tab 5
+                    <StructureTab />
                   </TabPanelWrapper>
                 </TabPanel>
               </Tabs>

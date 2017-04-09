@@ -3,6 +3,7 @@ import Devtools from "cerebral/devtools";
 import createEditorModule from "./modules/editor";
 import createStateTabModule from "./modules/state-tab";
 import createPluginsTabModule from "./modules/plugins-tab";
+import createStructureTabModule from "./modules/structure-tab";
 
 export function toggleDevTools({ state }) {
   state.set("opened", !state.get("opened"));
@@ -26,7 +27,8 @@ export default function createController(editorView) {
     modules: {
       editor: createEditorModule(editorView),
       stateTab: createStateTabModule(),
-      pluginsTab: createPluginsTabModule()
+      pluginsTab: createPluginsTabModule(),
+      structureTab: createStructureTabModule(editorView.state.schema)
     }
   });
 }

@@ -29,5 +29,7 @@
     "react-tabs": "^0.8.2",
     "styled-components": "^1.4.4"
   },
-  "eslintConfig": "./node_modules/aik/lib/eslint-config.js"
+  "eslintConfig": {
+    "extends": "./node_modules/aik/lib/eslint-config.js"
+  }
 }

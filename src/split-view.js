@@ -13,4 +13,5 @@ export const SplitViewCol = styled.div`
   overflow: scroll;
   height: 100%;
   ${({ minWidth }) => minWidth ? `min-width: ${minWidth}px;` : ""}
+  ${({ maxWidth }) => maxWidth ? `max-width: ${maxWidth}px;` : ""}
 `;
