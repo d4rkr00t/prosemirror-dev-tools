@@ -1,5 +1,5 @@
 import { EditorState } from "prosemirror-state";
-import findNodeIn from "../../utils/find-node";
+import findNodeIn, { findNodeInJSON } from "../../utils/find-node";
 
 const HISTORY_SIZE = 100;
 
@@ -75,6 +75,21 @@ export function findPMNode(domNode) {
   }
 
   return node;
+}
+
+export function findPMNodeInJSON(doc, node) {
+  return findNodeInJSON(doc, node);
+}
+
+export function logNodeFromJSON({ state, props }) {
+  const { doc, node } = props;
+  const fullDoc = state.get("editor.state").doc;
+  const path = findPMNodeInJSON(doc, node);
+  if (path) {
+    console.log(path.reduce((node, pathItem) => node[pathItem], fullDoc));
+  } else {
+    console.log("Not found!");
+  }
 }
 
 export function activatePicker({ state }) {
@@ -168,7 +183,8 @@ export default function createEditorModule(editorView) {
       historyItemSelected: selectHistoryItem,
       historyRolledBack: rollbackHistory,
       pickerActivated: activatePicker,
-      pickerDeactivated: deactivatePicker
+      pickerDeactivated: deactivatePicker,
+      JSONTreeNodeLogged: logNodeFromJSON
     }
   };
 }

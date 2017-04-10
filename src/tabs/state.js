@@ -43,12 +43,74 @@ const ValueNum = styled.span`
   color: rgb(253, 151, 31);
 `;
 
-export function getItemString(type, value, defaultView, keysCount) {
-  if (type === "Object" && value.type) {
-    return <span>{"{}"} {value.type}</span>;
+const LogNodeButton = styled.button`
+  color: rgba(255, 255, 255, .6);
+  background: none;
+  border: none;
+  transition: background .3s, color .3s;
+  border-radius: 3px;
+
+  &:hover {
+    cursor: pointer;
+    background: rgba(191, 116, 135, 0.60);
+    color: rgba(255, 255, 255, 1);
   }
 
-  return <span>{defaultView} {keysCount}</span>;
+  &:focus {
+    outline: none;
+  }
+`;
+
+const logNodeHandler = (e, doc, node) => {
+  e.preventDefault();
+  e.stopPropagation();
+};
+
+export function getItemString(doc, action) {
+  return function getItemStringWithBindedDoc(
+    type,
+    value,
+    defaultView,
+    keysCount
+  ) {
+    if (type === "Object" && value.type) {
+      return (
+        <span>
+          {"{}"}
+          {" "}
+          {value.type}
+          {" "}
+          <LogNodeButton
+            onClick={e => {
+              e.preventDefault();
+              e.stopPropagation();
+              action({ doc, node: value });
+            }}
+          >
+            log
+          </LogNodeButton>
+        </span>
+      );
+    }
+
+    return (
+      <span>
+        {defaultView}
+        {" "}
+        {keysCount}
+        {" "}
+        <LogNodeButton
+          onClick={e => {
+            e.preventDefault();
+            e.stopPropagation();
+            action({ doc, node: value });
+          }}
+        >
+          log
+        </LogNodeButton>
+      </span>
+    );
+  };
 }
 
 export function shouldExpandNode(expandPath, nodePath) {
@@ -70,14 +132,17 @@ export default connect(
     state: state`editor.state`,
     expandPath: state`editor.expandPath`,
     selectionExpanded: state`stateTab.selectionExpanded`,
-    selectionToggled: signal`stateTab.selectionToggled`
+    selectionToggled: signal`stateTab.selectionToggled`,
+    JSONTreeNodeLogged: signal`editor.JSONTreeNodeLogged`
   },
   function StateTab({
     state,
     selectionExpanded,
     selectionToggled,
-    expandPath
+    expandPath,
+    JSONTreeNodeLogged
   }) {
+    const doc = state.doc.toJSON();
     return (
       <SplitView>
         <SplitViewCol grow>
@@ -88,9 +153,9 @@ export default connect(
             </HeadingButton>
           </HeadingWithButton>
           <JSONTree
-            data={state.doc.toJSON()}
+            data={doc}
             hideRoot
-            getItemString={getItemString}
+            getItemString={getItemString(doc, JSONTreeNodeLogged)}
             shouldExpandNode={nodePath =>
               shouldExpandNode(expandPath, nodePath)}
           />

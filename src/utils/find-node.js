@@ -32,3 +32,41 @@ export default function findNodeIn(doc, node) {
     );
   }
 }
+
+function findNodeJSON(fullPath, currentNode, nodeToFind) {
+  if (nodeToFind === currentNode) {
+    return fullPath;
+  }
+
+  if (!currentNode.content) return null;
+
+  if (currentNode.content == nodeToFind) {
+    return fullPath.concat("content");
+  }
+
+  const res = currentNode.content
+    .map((currentNode, i) =>
+      findNodeJSON([].concat(fullPath, "content", i), currentNode, nodeToFind))
+    .filter(res => Array.isArray(res) && res.length)[0];
+
+  return res;
+}
+
+export function findNodeInJSON(doc, node) {
+  let path = findNodeJSON([], doc, node);
+
+  if (path) {
+    return path.reduce(
+      (newPath, item) => {
+        newPath.push(item);
+
+        if (item === "content") {
+          newPath.push("content");
+        }
+
+        return newPath;
+      },
+      []
+    );
+  }
+}
