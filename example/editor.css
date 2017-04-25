@@ -226,7 +226,7 @@ li.ProseMirror-selectednode:after {
 
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    min-height: 1em;
+    min-height: 1em !important;
     padding: 1px 6px;
 
     color: #666;

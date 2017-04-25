@@ -2,14 +2,16 @@ import React from "react";
 import styled from "styled-components";
 import { connect } from "cerebral/react";
 import { state, signal } from "cerebral/tags";
-import processSelection from "./../utils/process-selection";
-import { SplitView, SplitViewCol } from "./../split-view";
-import JSONTree from "./../json-tree";
+
+import formatSelectionObject from "./../utils/format-selection-object";
+import { SplitView, SplitViewCol } from "../components/split-view";
+import JSONTree from "../components/json-tree";
 import {
   Heading,
   HeadingWithButton,
   HeadingButton
 } from "./../components/heading";
+import colors, { jsonTreeTheme } from "../colors";
 
 const JSONTreeWrapper = styled.div`
   padding: 0 0 9px 0;
@@ -35,16 +37,16 @@ const GroupRow = styled.div`
 
 const Key = styled.span`
   display: inline-block;
-  color: rgb(102, 217, 239);
+  color: ${jsonTreeTheme.base0D};
   margin: 0px 0.5em 0px 0px;
 `;
 
 const ValueNum = styled.span`
-  color: rgb(253, 151, 31);
+  color: ${jsonTreeTheme.base09};
 `;
 
 const LogNodeButton = styled.button`
-  color: rgba(255, 255, 255, .6);
+  color: ${colors.white60};
   background: none;
   border: none;
   transition: background .3s, color .3s;
@@ -52,19 +54,14 @@ const LogNodeButton = styled.button`
 
   &:hover {
     cursor: pointer;
-    background: rgba(191, 116, 135, 0.60);
-    color: rgba(255, 255, 255, 1);
+    background: ${colors.main40};
+    color: ${colors.white};
   }
 
   &:focus {
     outline: none;
   }
 `;
-
-const logNodeHandler = (e, doc, node) => {
-  e.preventDefault();
-  e.stopPropagation();
-};
 
 export function getItemString(doc, action) {
   return function getItemStringWithBindedDoc(
@@ -172,7 +169,7 @@ export default connect(
               <JSONTree
                 data={
                   selectionExpanded
-                    ? processSelection(state.selection)
+                    ? formatSelectionObject(state.selection)
                     : state.selection.toJSON()
                 }
                 hideRoot

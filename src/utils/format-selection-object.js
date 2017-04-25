@@ -13,13 +13,13 @@ const copyProps = [
 ];
 
 const copySubProps = {
-  $from: ["nodeAfter", "nodeBefore", "parent", "textOffset", "depth"],
-  $to: ["nodeAfter", "nodeBefore", "parent", "textOffset", "depth"]
+  $from: ["nodeAfter", "nodeBefore", "parent", "textOffset", "depth", "pos"],
+  $to: ["nodeAfter", "nodeBefore", "parent", "textOffset", "depth", "pos"]
 };
 
 const isNode = ["nodeAfter", "nodeBefore", "parent"];
 
-export default function processSelection(selection) {
+export default function formatSelectionObject(selection) {
   return copyProps.reduce(
     (acc, prop) => {
       if (copySubProps[prop]) {

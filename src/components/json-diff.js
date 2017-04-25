@@ -3,6 +3,8 @@ import JSONTree from "./json-tree";
 import diffPatcher from "jsondiffpatch";
 import styled from "styled-components";
 import stringify from "javascript-stringify";
+import colors from "./../colors";
+import InfoPanel from "./info-panel";
 
 const diff = diffPatcher.create({
   arrays: { detectMove: false },
@@ -10,17 +12,17 @@ const diff = diffPatcher.create({
 });
 
 const Updated = styled.span`
-  color: rgb(197, 142, 150);
+  color: ${colors.main};
 `;
 
 const White = styled.span`
-  color: #fff59d;
+  color: ${colors.white};
 `;
 
 const Deleted = styled.span`
   display: inline-block;
-  background: #FFF9C4;
-  color: #D32F2F;
+  background: ${colors.lightYellow};
+  color: ${colors.lightPink};
   padding: 1px 3px 2px;
   text-indent: 0;
   text-decoration: line-through;
@@ -29,20 +31,11 @@ const Deleted = styled.span`
 
 const Added = styled.span`
   display: inline-block;
-  background: #FFF9C4;
-  color: #2E7D32;
+  background: ${colors.lightYellow};
+  color: ${colors.darkGreen};
   padding: 1px 3px 2px;
   text-indent: 0;
   min-height: 1ex;
-`;
-
-const Equal = styled.div`
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  text-align: center;
-  color: #FFA2B1;
-  font-size: 14px;
 `;
 
 function postprocessValue(value) {
@@ -167,12 +160,12 @@ export function getItemString(type, value, defaultView, keysCount) {
 
 export default function JSONDiff(props) {
   if (!props.current || !props.prev)
-    return <Equal>there is nothing to compare with</Equal>;
+    return <InfoPanel>There is nothing to compare with</InfoPanel>;
 
   const delta = diff.diff(props.prev, props.current);
 
   if (!delta) {
-    return <Equal>docs are equal</Equal>;
+    return <InfoPanel>Docs are equal</InfoPanel>;
   }
 
   return (

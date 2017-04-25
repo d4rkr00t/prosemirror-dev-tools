@@ -2,13 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import { connect } from "cerebral/react";
 import { state, signal } from "cerebral/tags";
-import { SplitView, SplitViewCol } from "./../split-view";
+
+import { SplitView, SplitViewCol } from "../components/split-view";
+import JSONTree from "../components/json-tree";
 import {
   Heading,
   HeadingWithButton,
   HeadingButton
 } from "./../components/heading";
-import JSONTree from "./../json-tree";
+import colors from "../colors";
 
 const GraphWrapper = styled.div`
   margin-top: 12px;
@@ -19,7 +21,7 @@ const BlockNodeWrapper = styled.div``;
 const BlockNodeContentView = styled.div`
   padding: 0 0 0 12px;
   box-sizing: border-box;
-  border-left: 1px solid rgba(255, 255, 255, .2);
+  border-left: 1px solid ${colors.white20};
 `;
 
 const BlockNodeContentViewWithInline = styled.div`
@@ -27,7 +29,7 @@ const BlockNodeContentViewWithInline = styled.div`
   display: flex;
   width: 100%;
   box-sizing: border-box;
-  border-left: 1px solid rgba(255, 255, 255, .2);
+  border-left: 1px solid ${colors.white20};
 `;
 
 const BlockNodeView = styled.div`

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import colors from '../colors';
 
 const Heading = styled.h2`
   padding: 0;
@@ -6,7 +7,7 @@ const Heading = styled.h2`
   font-weight: 400;
   letter-spacing: 1px;
   font-size: 13px;
-  color: #BB91A3;
+  color: ${colors.softerMain};
   text-transform: uppercase;
   flex-grow: 1;
 `;
@@ -21,7 +22,7 @@ const HeadingButton = styled.button`
   font-weight: 400;
   letter-spacing: 1px;
   font-size: 11px;
-  color: rgba(255, 255, 255, .8);
+  color: ${colors.white80};
   text-transform: uppercase;
   transition: background .3s, color .3s;
   border-radius: 2px;
@@ -29,8 +30,8 @@ const HeadingButton = styled.button`
   background: transparent;
 
   &:hover {
-    background: rgba(191, 116, 135, 0.40);
-    color: rgba(255, 255, 255, 1);
+    background: ${colors.main40};
+    color: ${colors.white};
     cursor: pointer;
   }
 
@@ -39,7 +40,7 @@ const HeadingButton = styled.button`
   }
 
   &:active {
-    background: rgba(191, 116, 135, 0.60);
+    background: ${colors.main60};
   }
 `;
 

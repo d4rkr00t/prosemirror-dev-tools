@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import colors from "./colors";
 
 const FloattingButton = styled.div`
   position: fixed;
   bottom: 16px;
   right: 16px;
-  background: #000;
+  background: ${colors.mainBg};
   box-shadow: 0 0 30px rgba(0, 0, 0, .3);
   border-radius: 50%;
   padding: 6px 8px;

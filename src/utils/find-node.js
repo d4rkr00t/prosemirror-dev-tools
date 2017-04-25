@@ -40,7 +40,7 @@ function findNodeJSON(fullPath, currentNode, nodeToFind) {
 
   if (!currentNode.content) return null;
 
-  if (currentNode.content == nodeToFind) {
+  if (currentNode.content === nodeToFind) {
     return fullPath.concat("content");
   }
 
