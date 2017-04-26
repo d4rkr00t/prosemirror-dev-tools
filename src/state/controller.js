@@ -1,5 +1,4 @@
 import { Controller } from "cerebral";
-import Devtools from "cerebral/devtools";
 import createEditorModule from "./modules/editor";
 import createStateTabModule from "./modules/state-tab";
 import createPluginsTabModule from "./modules/plugins-tab";

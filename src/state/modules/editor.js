@@ -158,9 +158,15 @@ export function activatePicker({ state }) {
 
 export function deactivatePicker({ state }) {
   const picker = state.get("editor.nodePicker");
-  picker.onMouseOver &&
+
+  if (picker.onMouseOver) {
     document.removeEventListener("mouseover", picker.onMouseOver);
-  picker.onClick && document.removeEventListener("click", picker.onClick);
+  }
+
+  if (picker.onMouseOver) {
+    document.removeEventListener("click", picker.onClick);
+  }
+
   state.set("editor.nodePicker", { top: 0, left: 0, width: 0, height: 0 });
 }
 

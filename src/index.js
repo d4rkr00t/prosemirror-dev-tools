@@ -45,6 +45,7 @@ export default function applyDevTools(editorView) {
 // TODO: Readme
 // TODO: Logo
 // TODO: Move all todos to issues
+// TODO: Proper icon for node picker
 // TODO: ====================== MVP ============================
 
 // TODO: Log document
