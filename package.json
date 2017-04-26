@@ -2,16 +2,22 @@
   "name": "prosemirror-dev-tools",
   "version": "0.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/bundle.js",
+  "module": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "aik example/index.js -r"
+    "start": "aik example/index.js -r",
+    "build": "webpack --optimize-minimize"
   },
   "keywords": [],
   "author": "Stanislav Sysoev <@d4rkr00t>",
   "license": "MIT",
   "devDependencies": {
     "aik": "^0.15.0",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-env": "^1.4.0",
+    "babel-preset-react": "^6.24.1",
     "cerebral": "2.0.0-b-alpha.44b98c71",
     "components": "^0.1.0",
     "date-fns": "^1.28.2",
@@ -29,7 +35,8 @@
     "react-dom": "^15.4.2",
     "react-json-tree": "^0.10.7",
     "react-tabs": "^0.8.2",
-    "styled-components": "^1.4.4"
+    "styled-components": "^1.4.4",
+    "webpack": "^2.4.1"
   },
   "eslintConfig": {
     "extends": "./node_modules/aik/lib/eslint-config.js"
