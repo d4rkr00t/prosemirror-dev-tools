@@ -12,7 +12,7 @@
   "license": "MIT",
   "devDependencies": {
     "aik": "^0.15.0",
-    "cerebral": "2.0.0-b-alpha.44b98c71",
+    "cerebral": "2.0.0-b-alpha.a54303bb",
     "components": "^0.1.0",
     "date-fns": "^1.28.2",
     "eslint": "^3.19.0",
