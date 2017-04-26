@@ -10,7 +10,6 @@ import {
   HeadingWithButton,
   HeadingButton
 } from "./../components/heading";
-import colors from "../colors";
 
 const GraphWrapper = styled.div`
   margin-top: 12px;
@@ -21,7 +20,7 @@ const BlockNodeWrapper = styled.div``;
 const BlockNodeContentView = styled.div`
   padding: 0 0 0 12px;
   box-sizing: border-box;
-  border-left: 1px solid ${colors.white20};
+  border-left: 1px solid ${props => props.theme.white20};
 `;
 
 const BlockNodeContentViewWithInline = styled.div`
@@ -29,7 +28,7 @@ const BlockNodeContentViewWithInline = styled.div`
   display: flex;
   width: 100%;
   box-sizing: border-box;
-  border-left: 1px solid ${colors.white20};
+  border-left: 1px solid ${props => props.theme.white20};
 `;
 
 const BlockNodeView = styled.div`

@@ -11,7 +11,6 @@ import {
   HeadingWithButton,
   HeadingButton
 } from "./../components/heading";
-import colors, { jsonTreeTheme } from "../colors";
 
 const JSONTreeWrapper = styled.div`
   padding: 0 0 9px 0;
@@ -37,16 +36,16 @@ const GroupRow = styled.div`
 
 const Key = styled.span`
   display: inline-block;
-  color: ${jsonTreeTheme.base0D};
+  color: ${props => props.theme.syntax.base0D};
   margin: 0px 0.5em 0px 0px;
 `;
 
 const ValueNum = styled.span`
-  color: ${jsonTreeTheme.base09};
+  color: ${props => props.theme.syntax.base09};
 `;
 
 const LogNodeButton = styled.button`
-  color: ${colors.white60};
+  color: ${props => props.theme.white60};
   background: none;
   border: none;
   transition: background .3s, color .3s;
@@ -54,8 +53,8 @@ const LogNodeButton = styled.button`
 
   &:hover {
     cursor: pointer;
-    background: ${colors.main40};
-    color: ${colors.white};
+    background: ${props => props.theme.main40};
+    color: ${props => props.theme.white};
   }
 
   &:focus {

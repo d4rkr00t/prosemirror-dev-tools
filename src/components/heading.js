@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import colors from '../colors';
 
 const Heading = styled.h2`
   padding: 0;
@@ -7,7 +6,7 @@ const Heading = styled.h2`
   font-weight: 400;
   letter-spacing: 1px;
   font-size: 13px;
-  color: ${colors.softerMain};
+  color: ${props => props.theme.softerMain};
   text-transform: uppercase;
   flex-grow: 1;
 `;
@@ -22,7 +21,7 @@ const HeadingButton = styled.button`
   font-weight: 400;
   letter-spacing: 1px;
   font-size: 11px;
-  color: ${colors.white80};
+  color: ${props => props.theme.white80};
   text-transform: uppercase;
   transition: background .3s, color .3s;
   border-radius: 2px;
@@ -30,8 +29,8 @@ const HeadingButton = styled.button`
   background: transparent;
 
   &:hover {
-    background: ${colors.main40};
-    color: ${colors.white};
+    background: ${props => props.theme.main40};
+    color: ${props => props.theme.white};
     cursor: pointer;
   }
 
@@ -40,7 +39,7 @@ const HeadingButton = styled.button`
   }
 
   &:active {
-    background: ${colors.main60};
+    background: ${props => props.theme.main60};
   }
 `;
 

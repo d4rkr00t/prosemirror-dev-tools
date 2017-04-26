@@ -6,7 +6,6 @@ import { state, signal } from "cerebral/tags";
 import { ListItem } from "../components/list";
 import JSONDiff from "../components/json-diff";
 import { SplitView, SplitViewCol } from "../components/split-view";
-import colors from "../colors";
 
 export default connect(
   {
@@ -41,8 +40,8 @@ export default connect(
               key={item.timestamp}
               background={props =>
                 props.isSelected
-                  ? colors.main40
-                  : props.isPrevious ? colors.main20 : "transparent"}
+                  ? props.theme.main40
+                  : props.isPrevious ? props.theme.main20 : "transparent"}
               onClick={() => historyItemSelected({ index })}
               onDoubleClick={() => historyRolledBack({ index })}
             >

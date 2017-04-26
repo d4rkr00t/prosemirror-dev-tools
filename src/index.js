@@ -1,10 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Container } from "cerebral/react";
+import { ThemeProvider } from "styled-components";
+
 import createController from "./state/controller";
 import subscribeOnUpdates from "./utils/subscribe-on-updates";
 import DevTools from "./dev-tools";
 import addKeyBindings from "./keybindings";
+import theme from "./theme";
 
 export default function applyDevTools(editorView) {
   const place = document.createElement("div");
@@ -17,7 +20,6 @@ export default function applyDevTools(editorView) {
   subscribeOnUpdates(editorView, (tr, value, oldState, newState) => {
     editorUpdated({ tr, value, oldState, newState });
 
-    // TODO: Fix, probably wrong
     if (oldState.schema === newState.schema) {
       schemaUpdated({ schema: newState.schema });
     }
@@ -27,21 +29,24 @@ export default function applyDevTools(editorView) {
 
   ReactDOM.render(
     <Container controller={controller}>
-      <DevTools editorView={editorView} />
+      <ThemeProvider theme={theme}>
+        <DevTools editorView={editorView} />
+      </ThemeProvider>
     </Container>,
     place
   );
 }
 
 // TODO: Clean everything up
-// TODO: Use styled-components themes
+// TODO: Distribution / Build
 // TODO: Jest
 // TODO: TravisCI
 // TODO: pmm
+// TODO: Readme
+// TODO: Logo
 // TODO: Move all todos to issues
 // TODO: ====================== MVP ============================
 
-// TODO: Find all prosemirror instances on given page and be able to switch between them
 // TODO: Log document
 // TODO: Dim history states where only selection changed
 // TODO: Do not compare states with only selection changed
@@ -54,3 +59,4 @@ export default function applyDevTools(editorView) {
 // TODO: CMD + Click logs JSON
 // TODO: Fix Selection — $from and $to should have pos
 // TODO: Fix logging attributes
+// TODO: Find all prosemirror instances on given page and be able to switch between them
