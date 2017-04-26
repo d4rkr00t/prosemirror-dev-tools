@@ -1,16 +1,17 @@
 {
   "name": "prosemirror-dev-tools",
-  "version": "0.0.0",
+  "version": "0.0.0-development",
   "description": "",
   "main": "dist/bundle.js",
   "module": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "aik example/index.js -r",
     "build": "webpack --optimize-minimize",
-    "lint": "eslint ./src",
-    "precommit": "lint-staged",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "test": "echo \"No tests yet\"",
+    "start": "aik example/index.js -r",
+    "lint:all": "eslint ./src",
+    "lint:staged": "lint-staged",
+    "ci:semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "keywords": [],
   "author": "Stanislav Sysoev <@d4rkr00t>",
@@ -19,45 +20,55 @@
     "type": "git",
     "url": "https://github.com/d4rkr00t/prosemirror-dev-tools"
   },
+  "dependencies": {
+    "cerebral": "2.0.0-b-alpha.44b98c71",
+    "date-fns": "^1.28.2",
+    "javascript-stringify": "^1.6.0",
+    "jsondiffpatch": "^0.2.4",
+    "lodash": "^4.17.4",
+    "prosemirror-model": "^0.20.0",
+    "prosemirror-state": "^0.19.1",
+    "react": "^15.4.2",
+    "react-dock": "^0.2.3",
+    "react-dom": "^15.4.2",
+    "react-json-tree": "^0.10.7",
+    "react-tabs": "^0.8.2",
+    "styled-components": "^1.4.4"
+  },
   "devDependencies": {
     "aik": "^0.15.0",
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
     "babel-preset-env": "^1.4.0",
     "babel-preset-react": "^6.24.1",
-    "cerebral": "2.0.0-b-alpha.44b98c71",
     "commitizen": "^2.9.6",
-    "components": "^0.1.0",
     "cz-conventional-changelog": "^2.0.0",
-    "date-fns": "^1.28.2",
     "eslint": "^3.19.0",
     "eslint-plugin-react": "^6.10.3",
-    "husky": "^0.13.3",
-    "javascript-stringify": "^1.6.0",
-    "jsondiffpatch": "^0.2.4",
     "lint-staged": "^3.4.0",
+    "pre-commit": "^1.2.2",
     "prettier": "^0.22.0",
     "prosemirror-example-setup": "^0.19.0",
     "prosemirror-schema-basic": "^0.19.0",
-    "prosemirror-state": "^0.19.1",
     "prosemirror-view": "^0.19.1",
-    "react": "^15.4.2",
-    "react-dock": "^0.2.3",
-    "react-dom": "^15.4.2",
-    "react-json-tree": "^0.10.7",
-    "react-tabs": "^0.8.2",
-    "styled-components": "^1.4.4",
+    "semantic-release": "^6.3.2",
     "webpack": "^2.4.1"
   },
   "eslintConfig": {
     "extends": "./node_modules/aik/lib/eslint-config.js"
   },
+  "pre-commit": [
+    "lint:staged"
+  ],
   "lint-staged": {
     "*.js": [
-      "lint",
+      "eslint",
       "prettier --write",
       "git add"
     ]
+  },
+  "release": {
+    "branch": "release"
   },
   "config": {
     "commitizen": {

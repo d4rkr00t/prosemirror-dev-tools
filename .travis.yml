@@ -1,0 +1,23 @@
+language: node_js
+cache:
+  directories:
+    - node_modules
+notifications:
+  email: false
+node_js:
+  - '7'
+  - '6'
+  - '4'
+before_script:
+  - npm prune
+install:
+  - npm install
+script:
+  - npm run build
+  - npm run lint:all
+  - npm run test
+after_success:
+  - npm run ci:semantic-release
+branches:
+  except:
+    - /^v\d+\.\d+\.\d+$/
