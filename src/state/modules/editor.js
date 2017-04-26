@@ -88,7 +88,7 @@ export function logNodeFromJSON({ state, props }) {
   if (path) {
     console.log(path.reduce((node, pathItem) => node[pathItem], fullDoc));
   } else {
-    console.log("Not found!");
+    console.log(node);
   }
 }
 

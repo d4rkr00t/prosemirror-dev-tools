@@ -69,43 +69,23 @@ export function getItemString(doc, action) {
     defaultView,
     keysCount
   ) {
+    const logButton = (
+      <LogNodeButton
+        onClick={e => {
+          e.preventDefault();
+          e.stopPropagation();
+          action({ doc, node: value });
+        }}
+      >
+        log
+      </LogNodeButton>
+    );
+
     if (type === "Object" && value.type) {
-      return (
-        <span>
-          {"{}"}
-          {" "}
-          {value.type}
-          {" "}
-          <LogNodeButton
-            onClick={e => {
-              e.preventDefault();
-              e.stopPropagation();
-              action({ doc, node: value });
-            }}
-          >
-            log
-          </LogNodeButton>
-        </span>
-      );
+      return <span>{"{} "}{value.type}{" "}{logButton}</span>;
     }
 
-    return (
-      <span>
-        {defaultView}
-        {" "}
-        {keysCount}
-        {" "}
-        <LogNodeButton
-          onClick={e => {
-            e.preventDefault();
-            e.stopPropagation();
-            action({ doc, node: value });
-          }}
-        >
-          log
-        </LogNodeButton>
-      </span>
-    );
+    return <span>{defaultView}{" "}{keysCount}{" "}{logButton}</span>;
   };
 }
 
