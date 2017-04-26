@@ -36,28 +36,3 @@ export default function applyDevTools(editorView) {
     place
   );
 }
-
-// TODO: Clean everything up
-// TODO: Distribution / Build
-// TODO: Jest
-// TODO: TravisCI
-// TODO: pmm
-// TODO: Readme
-// TODO: Logo
-// TODO: Move all todos to issues
-// TODO: Proper icon for node picker
-// TODO: ====================== MVP ============================
-
-// TODO: Log document
-// TODO: Dim history states where only selection changed
-// TODO: Do not compare states with only selection changed
-// TODO: Scroll highlighted node into view
-// TODO: Keyboard navigation in lists
-// TODO: Hover on the node in StateView highlights actual node in the editor
-// TODO: Collapse button for JSON Tree View
-// TODO: Visual schema representation
-// TODO: Cerebral DevTools
-// TODO: CMD + Click logs JSON
-// TODO: Fix Selection — $from and $to should have pos
-// TODO: Fix logging attributes
-// TODO: Find all prosemirror instances on given page and be able to switch between them
