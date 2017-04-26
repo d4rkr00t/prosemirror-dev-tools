@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import colors from "../colors";
 
 export const ListItem = styled.button`
   width: 180px;
@@ -8,16 +7,16 @@ export const ListItem = styled.button`
   font-weight: 400;
   letter-spacing: 1px;
   font-size: 11px;
-  color: ${colors.white80};
+  color: ${props => props.theme.white80};
   text-transform: uppercase;
   transition: background .3s, color .3s;
   border-radius: 2px;
   border: none;
-  background: ${props => props.background ? props.background(props) : props.isSelected ? colors.main40 : "transparent"};
+  background: ${props => props.background ? props.background(props) : props.isSelected ? props.theme.main40 : "transparent"};
   text-align: left;
   font-family: monospace;
   transition: background .3s;
-  border-top: 1px solid ${colors.main20};
+  border-top: 1px solid ${props => props.theme.main20};
   opacity: ${props => props.isDimmed ? 0.3 : 1};
 
   &:first-child {
@@ -25,8 +24,8 @@ export const ListItem = styled.button`
   }
 
   &:hover {
-    background: ${colors.main40};
-    color: ${colors.white};
+    background: ${props => props.theme.main40};
+    color: ${props => props.theme.white};
     cursor: pointer;
   }
 
@@ -35,6 +34,6 @@ export const ListItem = styled.button`
   }
 
   &:active {
-    background: ${colors.main60};
+    background: ${props => props.theme.main60};
   }
 `;

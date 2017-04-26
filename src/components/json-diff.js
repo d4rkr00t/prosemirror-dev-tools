@@ -3,7 +3,6 @@ import JSONTree from "./json-tree";
 import diffPatcher from "jsondiffpatch";
 import styled from "styled-components";
 import stringify from "javascript-stringify";
-import colors from "./../colors";
 import InfoPanel from "./info-panel";
 
 const diff = diffPatcher.create({
@@ -12,17 +11,17 @@ const diff = diffPatcher.create({
 });
 
 const Updated = styled.span`
-  color: ${colors.main};
+  color: ${props => props.theme.main};
 `;
 
 const White = styled.span`
-  color: ${colors.white};
+  color: ${props => props.theme.white};
 `;
 
 const Deleted = styled.span`
   display: inline-block;
-  background: ${colors.lightYellow};
-  color: ${colors.lightPink};
+  background: ${props => props.theme.lightYellow};
+  color: ${props => props.theme.lightPink};
   padding: 1px 3px 2px;
   text-indent: 0;
   text-decoration: line-through;
@@ -31,8 +30,8 @@ const Deleted = styled.span`
 
 const Added = styled.span`
   display: inline-block;
-  background: ${colors.lightYellow};
-  color: ${colors.darkGreen};
+  background: ${props => props.theme.lightYellow};
+  color: ${props => props.theme.darkGreen};
   padding: 1px 3px 2px;
   text-indent: 0;
   min-height: 1ex;

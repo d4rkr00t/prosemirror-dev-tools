@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { connect } from "cerebral/react";
 import { state, signal } from "cerebral/tags";
-import colors from "./colors";
 import StateTab from "./tabs/state";
 import HistoryTab from "./tabs/history";
 import SchemaTab from "./tabs/schema";
@@ -17,7 +16,7 @@ const DockContainer = styled.div`
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: ${colors.mainBg};
+  background: ${props => props.theme.mainBg};
   font-family: Helvetica Neue,Calibri Light,Roboto,sans-serif;
   font-size: 13px;
 
@@ -33,7 +32,7 @@ const DockContainer = styled.div`
     .ReactTabs__TabList {
       display: flex;
       list-style: none;
-      border-bottom: 1px solid ${colors.main20};
+      border-bottom: 1px solid ${props => props.theme.main20};
     }
 
     .ReactTabs__TabPanel {
@@ -43,7 +42,7 @@ const DockContainer = styled.div`
 `;
 
 const TabLabel = styled.div`
-  color: ${colors.white};
+  color: ${props => props.theme.white};
   text-transform: uppercase;
   font-size: 13px;
   padding: 16px 24px 14px;
@@ -52,7 +51,7 @@ const TabLabel = styled.div`
 
   &:hover {
     cursor: pointer;
-    background: ${colors.white05};
+    background: ${props => props.theme.white05};
   }
 
   &:focus {
@@ -60,7 +59,7 @@ const TabLabel = styled.div`
   }
 
   .ReactTabs__Tab--selected & {
-    border-bottom: 2px solid ${colors.main};
+    border-bottom: 2px solid ${props => props.theme.main};
   }
 `;
 
@@ -75,13 +74,13 @@ const CloseButton = styled.button`
   border: none;
   position: absolute;
   right: 0;
-  color: ${colors.white60};
+  color: ${props => props.theme.white60};
   font-size: 18px;
 
   &:hover {
     cursor: pointer;
-    background: ${colors.white05};
-    color: ${colors.white};
+    background: ${props => props.theme.white05};
+    color: ${props => props.theme.white};
   }
 
   &:focus {

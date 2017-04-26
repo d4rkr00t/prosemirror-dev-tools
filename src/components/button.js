@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import colors from "../colors";
 
 const Button = styled.button`
-  background: ${({ isActive }) => isActive ? colors.main80 : colors.main40};
+  background: ${({ isActive, theme }) => isActive ? theme.main80 : theme.main40};
   border: none;
   color: #fff;
   padding: ${({ isSmall }) => isSmall ? "8px 16px;" : "12px 24px;"}
@@ -11,7 +10,7 @@ const Button = styled.button`
   border-radius: 3px;
 
   &:hover {
-    background: ${({ isActive }) => isActive ? colors.main90 : colors.main60};
+    background: ${({ isActive, theme }) => isActive ? theme.main90 : theme.main60};
     cursor: pointer;
   }
 
@@ -20,7 +19,7 @@ const Button = styled.button`
   }
 
   &:active {
-    background: ${({ isActive }) => isActive ? colors.main : colors.main80};
+    background: ${({ isActive, theme }) => isActive ? theme.main : theme.main80};
   }
 `;
 
