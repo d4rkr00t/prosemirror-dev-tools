@@ -1,7 +1,9 @@
-import { Plugin } from "prosemirror-state";
+import { Plugin, PluginKey } from "prosemirror-state";
 
+export const stateKey = new PluginKey("ProseMirrorDevTools");
 export default function subscribeOnUpdates(editorView, callback) {
   const plugin = new Plugin({
+    key: stateKey,
     state: {
       init() {
         return null;
