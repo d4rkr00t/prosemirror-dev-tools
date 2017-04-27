@@ -1,26 +1,16 @@
-import { Plugin, PluginKey } from "prosemirror-state";
-
-export const stateKey = new PluginKey("ProseMirrorDevTools");
 export default function subscribeOnUpdates(editorView, callback) {
-  const plugin = new Plugin({
-    key: stateKey,
-    state: {
-      init() {
-        return null;
-      },
+  const dispatch = editorView._props.dispatchTransaction ||
+    editorView.dispatch.bind(editorView);
 
-      apply(tr, value, oldState, newState) {
-        callback(tr, value, oldState, newState);
-        return null;
-      }
-    }
-  });
+  const handler = function(tr) {
+    const oldState = editorView.state;
+    dispatch(tr);
+    callback(tr, oldState, editorView.state);
+  };
 
-  const { state } = editorView;
-  const newState = state.reconfigure({
-    schema: state.schema,
-    plugins: [plugin].concat(state.plugins)
-  });
-
-  editorView.updateState(newState);
+  if (editorView._props.dispatchTransaction) {
+    editorView._props.dispatchTransaction = handler;
+  } else {
+    editorView.dispatch = handler;
+  }
 }
