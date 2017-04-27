@@ -4,7 +4,7 @@ import { state, signal } from "cerebral/tags";
 
 import InfoPanel from "../components/info-panel";
 import JSONTree from "../components/json-tree";
-import { ListItem } from "../components/list";
+import { List } from "../components/list";
 import { SplitView, SplitViewCol } from "../components/split-view";
 
 export default connect(
@@ -20,16 +20,14 @@ export default connect(
     return (
       <SplitView>
         <SplitViewCol noPaddings>
-          {plugins.map((plugin, index) => (
-            <ListItem
-              key={plugin.key}
-              isSelected={selected === index}
-              isDimmed={!plugin.getState(state)}
-              onClick={() => pluginSelected({ index })}
-            >
-              {plugin.key}
-            </ListItem>
-          ))}
+          <List
+            items={plugins}
+            getKey={plugin => plugin.key}
+            title={plugin => plugin.key}
+            isSelected={(plugin, index) => selected === index}
+            isDimmed={plugin => !plugin.getState(state)}
+            onListItemClick={(plugin, index) => pluginSelected({ index })}
+          />
         </SplitViewCol>
         <SplitViewCol grow sep>
           {selectedPluginState

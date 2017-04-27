@@ -158,18 +158,13 @@ export function getItemString(type, value, defaultView, keysCount) {
 }
 
 export default function JSONDiff(props) {
-  if (!props.current || !props.prev)
-    return <InfoPanel>There is nothing to compare with</InfoPanel>;
-
-  const delta = diff.diff(props.prev, props.current);
-
-  if (!delta) {
+  if (!props.delta) {
     return <InfoPanel>Docs are equal</InfoPanel>;
   }
 
   return (
     <JSONTree
-      data={delta}
+      data={props.delta}
       hideRoot
       postprocessValue={postprocessValue}
       labelRenderer={labelRenderer}
