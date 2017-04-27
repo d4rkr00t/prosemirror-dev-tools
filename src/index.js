@@ -17,8 +17,8 @@ export default function applyDevTools(editorView) {
   const editorUpdated = controller.getSignal("editor.updated");
   const schemaUpdated = controller.getSignal("structureTab.schemaUpdated");
 
-  subscribeOnUpdates(editorView, (tr, value, oldState, newState) => {
-    editorUpdated({ tr, value, oldState, newState });
+  subscribeOnUpdates(editorView, (tr, oldState, newState) => {
+    editorUpdated({ tr, oldState, newState });
 
     if (oldState.schema === newState.schema) {
       schemaUpdated({ schema: newState.schema });
