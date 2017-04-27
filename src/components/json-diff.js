@@ -1,14 +1,8 @@
 import React from "react";
 import JSONTree from "./json-tree";
-import diffPatcher from "jsondiffpatch";
 import styled from "styled-components";
 import stringify from "javascript-stringify";
 import InfoPanel from "./info-panel";
-
-const diff = diffPatcher.create({
-  arrays: { detectMove: false },
-  textDiff: { minLength: 1 }
-});
 
 const Updated = styled.span`
   color: ${props => props.theme.main};
