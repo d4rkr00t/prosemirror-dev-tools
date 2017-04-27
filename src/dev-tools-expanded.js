@@ -9,8 +9,7 @@ import HistoryTab from "./tabs/history";
 import SchemaTab from "./tabs/schema";
 import PluginsTab from "./tabs/plugins";
 import StructureTab from "./tabs/structure";
-import NodePicker from "./components/node-picker";
-import Button from "./components/button";
+import { NodePicker, NodePickerTrigger } from "./components/node-picker";
 
 const DockContainer = styled.div`
   width: 100%;
@@ -88,12 +87,6 @@ const CloseButton = styled.button`
   }
 `;
 
-const NodePickerTrigger = styled.div`
-  position: absolute;
-  right: 4px;
-  top: -34px;
-`;
-
 Tabs.setUseDefaultStyles(false);
 
 export default connect(
@@ -121,15 +114,10 @@ export default connect(
           {() => (
             <DockContainer>
               <CloseButton onClick={() => devToolsToggled()}>×</CloseButton>
-              <NodePickerTrigger>
-                <Button
-                  isSmall
-                  onClick={pickerActive ? pickerDeactivated : pickerActivated}
-                  isActive={pickerActive}
-                >
-                  ⦿
-                </Button>
-              </NodePickerTrigger>
+              <NodePickerTrigger
+                onClick={pickerActive ? pickerDeactivated : pickerActivated}
+                isActive={pickerActive}
+              />
               <Tabs
                 selectedIndex={tabIndex}
                 onSelect={index => tabSelected({ index })}
