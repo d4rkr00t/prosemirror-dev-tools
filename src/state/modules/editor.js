@@ -1,7 +1,13 @@
 import { EditorState } from "prosemirror-state";
 import findNodeIn, { findNodeInJSON } from "../../utils/find-node";
+import diffPatcher from "jsondiffpatch";
 
 const HISTORY_SIZE = 100;
+
+const diff = diffPatcher.create({
+  arrays: { detectMove: false },
+  textDiff: { minLength: 1 }
+});
 
 export function shrinkEditorHistory({ state, props }) {
   const { tr } = props;
@@ -25,7 +31,11 @@ export function updateEditorHistory({ state, props }) {
 
   state.unshift("editor.history", {
     state: newState,
-    timestamp: Date.now()
+    timestamp: Date.now(),
+    diff: diff.diff(
+      state.get("editor.history")[0].state.doc.toJSON(),
+      newState.doc.toJSON()
+    )
   });
 
   state.set("editor.selectedHistoryItem", 0);

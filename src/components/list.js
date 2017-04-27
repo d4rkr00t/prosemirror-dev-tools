@@ -1,16 +1,20 @@
+import React, { PureComponent } from "react";
 import styled from "styled-components";
 
+const noop = () => {};
+
 export const ListItem = styled.button`
-  width: 180px;
-  display: block;
-  padding: 6px 18px;
+  min-width: 190px;
+  width: 100%;
+  display: flex;
+  padding: ${props => props.nested ? "6px 18px 6px 36px" : "6px 18px"};
+  box-sizing: border-box;
   font-weight: 400;
   letter-spacing: 1px;
   font-size: 11px;
   color: ${props => props.theme.white80};
   text-transform: uppercase;
   transition: background .3s, color .3s;
-  border-radius: 2px;
   border: none;
   background: ${props => props.background ? props.background(props) : props.isSelected ? props.theme.main40 : "transparent"};
   text-align: left;
@@ -37,3 +41,97 @@ export const ListItem = styled.button`
     background: ${props => props.theme.main60};
   }
 `;
+
+const ListItemGroupContent = styled.div`
+  display: ${props => props.collapsed ? "none" : "block"}
+`;
+
+class ListItemGroup extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = { collapsed: true };
+  }
+
+  toggle() {
+    this.setState({ collapsed: !this.state.collapsed });
+  }
+
+  render() {
+    const {
+      items,
+      groupTitle,
+      title,
+      isSelected = noop,
+      isPrevious = noop,
+      isDimmed = noop,
+      getKey = noop,
+      onListItemClick = noop,
+      onListItemDoubleClick = noop,
+      customItemBackground
+    } = this.props;
+    return (
+      <div>
+        <ListItem key={getKey(items[0])} onClick={this.toggle.bind(this)}>
+          <div style={{ flexGrow: 1 }}>{groupTitle(items, 0)}</div>
+          <div>{this.state.collapsed ? "▶" : "▼"}</div>
+        </ListItem>
+        <ListItemGroupContent collapsed={this.state.collapsed}>
+          {(items || []).map((item, index) => {
+            return (
+              <ListItem
+                key={getKey(item)}
+                nested
+                isSelected={isSelected(item, index)}
+                isPrevious={isPrevious(item, index)}
+                isDimmed={isDimmed(item, index)}
+                background={customItemBackground}
+                onClick={() => onListItemClick(item, index)}
+                onDoubleClick={() => onListItemDoubleClick(item, index)}
+              >
+                {title(item, index)}
+              </ListItem>
+            );
+          })}
+        </ListItemGroupContent>
+      </div>
+    );
+  }
+}
+
+export function List(props) {
+  const {
+    isSelected = noop,
+    isPrevious = noop,
+    isDimmed = noop,
+    getKey = noop,
+    onListItemClick = noop,
+    onListItemDoubleClick = noop
+  } = props;
+  return (
+    <div>
+      {(props.items || []).map((item, index) => {
+        if (Array.isArray(item)) {
+          return (
+            <ListItemGroup {...props} items={item} key={item[0].timestamp}>
+              {props.groupTitle(item, index)}
+            </ListItemGroup>
+          );
+        }
+
+        return (
+          <ListItem
+            key={getKey(item)}
+            isSelected={isSelected(item, index)}
+            isPrevious={isPrevious(item, index)}
+            isDimmed={isDimmed(item, index)}
+            background={props.customItemBackground}
+            onClick={() => onListItemClick(item, index)}
+            onDoubleClick={() => onListItemDoubleClick(item, index)}
+          >
+            {props.title(item, index)}
+          </ListItem>
+        );
+      })}
+    </div>
+  );
+}
