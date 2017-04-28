@@ -2,10 +2,45 @@ import React from "react";
 import format from "date-fns/format";
 import { connect } from "cerebral/react";
 import { state, signal } from "cerebral/tags";
+import styled from "styled-components";
 
+import { InfoPanel } from "../components/info-panel";
+import { Heading } from "./../components/heading";
 import { List } from "../components/list";
 import JSONDiff from "../components/json-diff";
 import { SplitView, SplitViewCol } from "../components/split-view";
+import { Highlighter } from "../components/highlighter";
+
+const Section = styled.div`
+  min-width: 180px;
+  box-sizing: border-box;
+
+  & + & {
+    padding-top: 9px;
+  }
+`;
+
+export function SelectionSection(props) {
+  if (!props.selection) return null;
+
+  return (
+    <Section>
+      <Heading>Selection Content</Heading>
+      <Highlighter>{props.selection}</Highlighter>
+    </Section>
+  );
+}
+
+export function DocDiffSection(props) {
+  if (!props.diff) return null;
+
+  return (
+    <Section>
+      <Heading>Doc diff</Heading>
+      <JSONDiff delta={props.diff} />
+    </Section>
+  );
+}
 
 export default connect(
   {
@@ -67,7 +102,7 @@ export default connect(
 
     return (
       <SplitView>
-        <SplitViewCol noPaddings>
+        <SplitViewCol noPaddings minWidth={190}>
           <List
             items={historyList}
             getKey={item => item.timestamp}
@@ -88,7 +123,11 @@ export default connect(
           />
         </SplitViewCol>
         <SplitViewCol grow sep>
-          <JSONDiff delta={selectedItem.diff} />
+          <DocDiffSection diff={selectedItem.diff} />
+          <SelectionSection selection={selectedItem.selection} />
+          {!selectedItem.diff &&
+            !selectedItem.selection &&
+            <InfoPanel>Doc are equal.</InfoPanel>}
         </SplitViewCol>
       </SplitView>
     );

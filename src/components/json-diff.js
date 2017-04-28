@@ -2,7 +2,6 @@ import React from "react";
 import JSONTree from "./json-tree";
 import styled from "styled-components";
 import stringify from "javascript-stringify";
-import InfoPanel from "./info-panel";
 
 const Updated = styled.span`
   color: ${props => props.theme.main};
@@ -152,9 +151,7 @@ export function getItemString(type, value, defaultView, keysCount) {
 }
 
 export default function JSONDiff(props) {
-  if (!props.delta) {
-    return <InfoPanel>Docs are equal</InfoPanel>;
-  }
+  if (!props.delta) return null;
 
   return (
     <JSONTree
