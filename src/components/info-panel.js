@@ -9,4 +9,4 @@ const InfoPanel = styled.div`
   font-size: 14px;
 `;
 
-export default InfoPanel;
+export { InfoPanel };

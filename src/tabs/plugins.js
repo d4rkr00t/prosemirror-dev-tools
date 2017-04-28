@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "cerebral/react";
 import { state, signal } from "cerebral/tags";
 
-import InfoPanel from "../components/info-panel";
+import { InfoPanel } from "../components/info-panel";
 import JSONTree from "../components/json-tree";
 import { List } from "../components/list";
 import { SplitView, SplitViewCol } from "../components/split-view";

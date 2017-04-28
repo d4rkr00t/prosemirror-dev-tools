@@ -71,7 +71,14 @@ class ListItemGroup extends PureComponent {
     } = this.props;
     return (
       <div>
-        <ListItem key={getKey(items[0])} onClick={this.toggle.bind(this)}>
+        <ListItem
+          key={getKey(items[0])}
+          onClick={() => this.toggle()}
+          isSelected={items.some(isSelected) && this.state.collapsed}
+          isDimmed={items.every(isDimmed)}
+          isPrevious={isPrevious(items[0], 0) && this.state.collapsed}
+          background={customItemBackground}
+        >
           <div style={{ flexGrow: 1 }}>{groupTitle(items, 0)}</div>
           <div>{this.state.collapsed ? "▶" : "▼"}</div>
         </ListItem>
