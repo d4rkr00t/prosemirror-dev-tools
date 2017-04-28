@@ -1,0 +1,7 @@
+/example/
+
+/.babelrc
+/.editorconfig
+/.gitignore
+/.travis.yml
+/webpack.config.js
