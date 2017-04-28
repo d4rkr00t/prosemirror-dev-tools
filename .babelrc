@@ -1,6 +1,12 @@
+// prettier-ignore
 {
   "presets": [
-    ["env", { "modules": false }],
+    [
+      "env",
+      {
+        "modules": false
+      }
+    ],
     "react"
   ]
 }

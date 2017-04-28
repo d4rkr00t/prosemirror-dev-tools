@@ -1,5 +1,5 @@
-import "./editor.css";
 import applyDevTools from "../src";
+import "./editor.css";
 
 import { EditorState } from "prosemirror-state";
 import { EditorView } from "prosemirror-view";
