@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "cerebral/react";
 import { state, signal } from "cerebral/tags";
 import styled from "styled-components";
-import tinytime from "tinytime";
+import format from "date-fns/format";
 
 import { InfoPanel } from "../components/info-panel";
 import { Heading } from "./../components/heading";
@@ -20,7 +20,8 @@ const Section = styled.div`
   }
 `;
 
-const dateFormatter = tinytime("{H}:{mm}:{ss}");
+const formatTimestamp = timestamp =>
+  format(new Date(timestamp), "HH:mm:ss:SSS");
 
 export function SelectionSection(props) {
   if (!props.selection) return null;
@@ -108,10 +109,10 @@ export default connect(
           <List
             items={historyList}
             getKey={item => item.timestamp}
-            title={item => dateFormatter.render(new Date(item.timestamp))}
-            groupTitle={item =>
-              dateFormatter.render(new Date(item.timestamp)) +
-              ` [${item.length}]`}
+            title={item => formatTimestamp(item.timestamp)}
+            groupTitle={item => {
+              return formatTimestamp(item[0].timestamp) + ` [${item.length}]`;
+            }}
             isSelected={isSelected}
             isPrevious={isPrevious}
             isDimmed={isDimmed}
