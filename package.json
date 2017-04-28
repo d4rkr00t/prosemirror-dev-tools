@@ -1,16 +1,19 @@
 {
   "name": "prosemirror-dev-tools",
   "version": "0.0.0-development",
-  "description": "",
-  "main": "dist/bundle.js",
+  "description": "Dev Tools for ProseMirror",
+  "main": "dist/cjs/index.js",
   "module": "src/index.js",
   "scripts": {
-    "build": "webpack --optimize-minimize",
     "commit": "git-cz",
     "test": "echo \"No tests yet\"",
     "start": "aik example/index.js -r",
+    "build:umd": "webpack --optimize-minimize --config ./.build/webpack.config.umd.js",
+    "build:cjs": "babel src --out-dir dist/cjs",
     "lint:all": "eslint ./src",
     "lint:staged": "lint-staged",
+    "preci:build": "rimraf ./dist",
+    "ci:build": "npm run build:umd && npm run build:cjs",
     "ci:semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "keywords": [],
@@ -37,6 +40,7 @@
   },
   "devDependencies": {
     "aik": "^0.15.0",
+    "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
     "babel-preset-env": "^1.4.0",
@@ -52,6 +56,7 @@
     "prosemirror-schema-basic": "^0.20.0",
     "prosemirror-view": "^0.20.4",
     "react-syntax-highlighter": "^5.5.0",
+    "rimraf": "^2.6.1",
     "semantic-release": "^6.3.2",
     "webpack": "^2.4.1"
   },

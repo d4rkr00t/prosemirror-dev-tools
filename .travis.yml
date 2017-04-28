@@ -13,7 +13,7 @@ before_script:
 install:
   - npm install
 script:
-  - npm run build
+  - npm run ci:build
   - npm run lint:all
   - npm run test
 after_success:
