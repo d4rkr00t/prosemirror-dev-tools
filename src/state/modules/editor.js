@@ -1,4 +1,5 @@
 import { EditorState } from "prosemirror-state";
+import { DOMSerializer } from "prosemirror-model";
 import findNodeIn, { findNodeInJSON } from "../../utils/find-node";
 import diffPatcher from "jsondiffpatch";
 
@@ -29,13 +30,20 @@ export function updateEditorHistory({ state, props }) {
 
   if (skipHistory) return;
 
+  const serializer = DOMSerializer.fromSchema(newState.schema);
+  const domFragment = serializer.serializeFragment(
+    newState.selection.content().content
+  );
+
   state.unshift("editor.history", {
     state: newState,
     timestamp: Date.now(),
     diff: diff.diff(
       state.get("editor.history")[0].state.doc.toJSON(),
       newState.doc.toJSON()
-    )
+    ),
+    selection: domFragment &&
+      [].map.call(domFragment.children, child => child.outerHTML).join("\n")
   });
 
   state.set("editor.selectedHistoryItem", 0);

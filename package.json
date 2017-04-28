@@ -23,6 +23,7 @@
   "dependencies": {
     "cerebral": "2.0.0-b-alpha.44b98c71",
     "date-fns": "^1.28.2",
+    "highlight.js": "^9.11.0",
     "javascript-stringify": "^1.6.0",
     "jsondiffpatch": "^0.2.4",
     "lodash": "^4.17.4",
@@ -51,6 +52,7 @@
     "prosemirror-example-setup": "^0.20.0",
     "prosemirror-schema-basic": "^0.20.0",
     "prosemirror-view": "^0.20.4",
+    "react-syntax-highlighter": "^5.5.0",
     "semantic-release": "^6.3.2",
     "webpack": "^2.4.1"
   },
