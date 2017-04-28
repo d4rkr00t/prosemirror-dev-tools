@@ -4,4 +4,5 @@
 /.editorconfig
 /.gitignore
 /.travis.yml
-/webpack.config.js
+/.build
+/docs
