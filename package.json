@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "cerebral": "2.0.0-b-alpha.44b98c71",
+    "date-fns": "^1.28.2",
     "highlight.js": "^9.11.0",
     "javascript-stringify": "^1.6.0",
     "jsondiffpatch": "^0.2.4",
@@ -35,8 +36,7 @@
     "react-dom": "^15.4.2",
     "react-json-tree": "^0.10.7",
     "react-tabs": "^0.8.2",
-    "styled-components": "^2.0.0-15",
-    "date-fns": "^1.28.2"
+    "styled-components": "^2.0.0-15"
   },
   "devDependencies": {
     "aik": "^0.15.0",

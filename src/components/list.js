@@ -22,6 +22,7 @@ export const ListItem = styled.button`
   transition: background .3s;
   border-top: 1px solid ${props => props.theme.main20};
   opacity: ${props => props.isDimmed ? 0.3 : 1};
+  margin: 0;
 
   &:first-child {
     border-top: none;
