@@ -35,6 +35,15 @@ export function updateEditorHistory({ state, props }) {
     newState.selection.content().content
   );
 
+  let selectionContent = [];
+  if (domFragment) {
+    let child = domFragment.firstChild;
+    while (child) {
+      selectionContent.push(child.outerHTML);
+      child = child.nextSibling;
+    }
+  }
+
   state.unshift("editor.history", {
     state: newState,
     timestamp: Date.now(),
@@ -42,8 +51,7 @@ export function updateEditorHistory({ state, props }) {
       state.get("editor.history")[0].state.doc.toJSON(),
       newState.doc.toJSON()
     ),
-    selection: domFragment &&
-      [].map.call(domFragment.children, child => child.outerHTML).join("\n")
+    selection: selectionContent.join("\n")
   });
 
   state.set("editor.selectedHistoryItem", 0);
