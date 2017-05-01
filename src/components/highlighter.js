@@ -12,8 +12,7 @@ colorTheme.hljs.background = "transparent";
 registerLanguage("html", htmlLang);
 
 const CustomPre = styled.pre`
-  white-space: pre-line;
-  padding: 9px 0 0 0 !important;
+  padding: 9px 0 18px 0 !important;
   margin: 0;
 `;
 
