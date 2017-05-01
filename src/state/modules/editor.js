@@ -2,8 +2,9 @@ import { EditorState } from "prosemirror-state";
 import { DOMSerializer } from "prosemirror-model";
 import findNodeIn, { findNodeInJSON } from "../../utils/find-node";
 import diffPatcher from "jsondiffpatch";
+import { prettyPrint } from "html";
 
-const HISTORY_SIZE = 100;
+const HISTORY_SIZE = 200;
 
 const diff = diffPatcher.create({
   arrays: { detectMove: false },
@@ -51,7 +52,10 @@ export function updateEditorHistory({ state, props }) {
       state.get("editor.history")[0].state.doc.toJSON(),
       newState.doc.toJSON()
     ),
-    selection: selectionContent.join("\n")
+    selection: prettyPrint(selectionContent.join("\n"), {
+      max_char: 60,
+      indent_size: 2
+    })
   });
 
   state.set("editor.selectedHistoryItem", 0);
