@@ -36,6 +36,7 @@
     "react-dock": "^0.2.3",
     "react-dom": "^15.4.2",
     "react-json-tree": "^0.10.7",
+    "react-syntax-highlighter": "^5.5.0",
     "react-tabs": "^0.8.2",
     "styled-components": "^2.0.0-15"
   },
@@ -56,7 +57,6 @@
     "prosemirror-example-setup": "*",
     "prosemirror-schema-basic": "*",
     "prosemirror-view": "*",
-    "react-syntax-highlighter": "^5.5.0",
     "rimraf": "^2.6.1",
     "semantic-release": "^6.3.2",
     "webpack": "^2.4.1"
