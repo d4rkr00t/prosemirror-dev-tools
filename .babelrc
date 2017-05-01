@@ -12,5 +12,10 @@
     "production": {
       "presets": ["env", "react"]
     }
+  },
+  "env": {
+    "test": {
+      "presets": ["env", "react","jest"]
+    }
   }
 }
