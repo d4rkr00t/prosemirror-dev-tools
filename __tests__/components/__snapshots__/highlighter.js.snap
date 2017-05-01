@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Item Highlight when child present 1`] = `
+<pre
+  className="sc-bdVaJa gRLIpl"
+  style={
+    Object {
+      "background": "transparent",
+      "color": "white",
+      "display": "block",
+      "overflowX": "auto",
+      "padding": "0.5em",
+    }
+  }
+>
+  <code>
+    1
+  </code>
+</pre>
+`;
