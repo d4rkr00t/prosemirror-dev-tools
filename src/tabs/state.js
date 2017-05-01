@@ -2,8 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import { connect } from "cerebral/react";
 import { state, signal } from "cerebral/tags";
-
-import formatSelectionObject from "./../utils/format-selection-object";
+import {
+  expandedStateFormatSelection,
+  collapsedStateFormatSelection
+} from "./../utils/format-selection-object";
 import { SplitView, SplitViewCol } from "../components/split-view";
 import JSONTree from "../components/json-tree";
 import {
@@ -148,8 +150,8 @@ export default connect(
               <JSONTree
                 data={
                   selectionExpanded
-                    ? formatSelectionObject(state.selection)
-                    : state.selection.toJSON()
+                    ? expandedStateFormatSelection(state.selection)
+                    : collapsedStateFormatSelection(state.selection)
                 }
                 hideRoot
               />
