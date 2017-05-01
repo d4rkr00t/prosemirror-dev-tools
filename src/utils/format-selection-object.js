@@ -1,15 +1,15 @@
 const copyProps = [
+  "jsonID",
+  "empty",
+  "anchor",
+  "from",
+  "head",
+  "to",
   "$anchor",
   "$head",
   "$cursor",
   "$to",
-  "$from",
-  "anchor",
-  "empty",
-  "from",
-  "head",
-  "to",
-  "jsonID"
+  "$from"
 ];
 
 const copySubProps = {
@@ -19,11 +19,11 @@ const copySubProps = {
 
 const isNode = ["nodeAfter", "nodeBefore", "parent"];
 
-export default function formatSelectionObject(selection) {
-  return copyProps.reduce(
+function filterProps(selection, props, subProps) {
+  return props.reduce(
     (acc, prop) => {
-      if (copySubProps[prop]) {
-        acc[prop] = copySubProps[prop].reduce(
+      if (subProps && subProps[prop]) {
+        acc[prop] = subProps[prop].reduce(
           (subAcc, subProp) => {
             subAcc[subProp] = isNode.indexOf(subProp) === -1 ||
               !selection[prop][subProp]
@@ -41,4 +41,12 @@ export default function formatSelectionObject(selection) {
     },
     {}
   );
+}
+
+export function expandedStateFormatSelection(selection) {
+  return filterProps(selection, copyProps, copySubProps);
+}
+
+export function collapsedStateFormatSelection(selection) {
+  return filterProps(selection, copyProps.slice(0, 6));
 }

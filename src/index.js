@@ -9,7 +9,7 @@ import DevTools from "./dev-tools";
 import addKeyBindings from "./keybindings";
 import theme from "./theme";
 
-export default function applyDevTools(editorView) {
+function applyDevTools(editorView) {
   const place = document.createElement("div");
   document.body.appendChild(place);
 
@@ -36,3 +36,6 @@ export default function applyDevTools(editorView) {
     place
   );
 }
+
+export default applyDevTools;
+export { applyDevTools };
