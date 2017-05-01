@@ -5,11 +5,39 @@ import diffPatcher from "jsondiffpatch";
 import { prettyPrint } from "html";
 
 const HISTORY_SIZE = 200;
+const SNAPSHOTS_KEY = "prosemirror-dev-tools-snapshots";
 
 const diff = diffPatcher.create({
   arrays: { detectMove: false },
   textDiff: { minLength: 1 }
 });
+
+export function createHistoryEntry(prevState, editorState) {
+  const serializer = DOMSerializer.fromSchema(editorState.schema);
+  const domFragment = serializer.serializeFragment(
+    editorState.selection.content().content
+  );
+
+  let selectionContent = [];
+  if (domFragment) {
+    let child = domFragment.firstChild;
+    while (child) {
+      selectionContent.push(child.outerHTML);
+      child = child.nextSibling;
+    }
+  }
+
+  return {
+    state: editorState,
+    timestamp: Date.now(),
+    diff: prevState &&
+      diff.diff(prevState.doc.toJSON(), editorState.doc.toJSON()),
+    selection: prettyPrint(selectionContent.join("\n"), {
+      max_char: 60,
+      indent_size: 2
+    })
+  };
+}
 
 export function shrinkEditorHistory({ state, props }) {
   const { tr } = props;
@@ -31,33 +59,10 @@ export function updateEditorHistory({ state, props }) {
 
   if (skipHistory) return;
 
-  const serializer = DOMSerializer.fromSchema(newState.schema);
-  const domFragment = serializer.serializeFragment(
-    newState.selection.content().content
+  state.unshift(
+    "editor.history",
+    createHistoryEntry(state.get("editor.history")[0].state, newState)
   );
-
-  let selectionContent = [];
-  if (domFragment) {
-    let child = domFragment.firstChild;
-    while (child) {
-      selectionContent.push(child.outerHTML);
-      child = child.nextSibling;
-    }
-  }
-
-  state.unshift("editor.history", {
-    state: newState,
-    timestamp: Date.now(),
-    diff: diff.diff(
-      state.get("editor.history")[0].state.doc.toJSON(),
-      newState.doc.toJSON()
-    ),
-    selection: prettyPrint(selectionContent.join("\n"), {
-      max_char: 60,
-      indent_size: 2
-    })
-  });
-
   state.set("editor.selectedHistoryItem", 0);
   state.set("editor.historyRolledBackTo", false);
 }
@@ -200,6 +205,46 @@ export function deactivatePicker({ state }) {
   state.set("editor.nodePicker", { top: 0, left: 0, width: 0, height: 0 });
 }
 
+export function loadSnapshot({ state, props }) {
+  const editorView = state.get("editor.view");
+  const editorState = editorView.state;
+
+  const newState = EditorState.fromJSON(
+    {
+      schema: editorState.schema,
+      plugins: editorState.plugins
+    },
+    props.snapshot.snapshot
+  );
+  state.set("editor.history", [createHistoryEntry(null, newState)]);
+  editorView.updateState(newState);
+}
+
+export function saveSnapshot({ state, props }) {
+  const snapshots = state.get("editor.snapshots");
+  const snapshotName = prompt("Enter snapshot name", Date.now());
+
+  if (!snapshotName) return;
+
+  snapshots.unshift({
+    name: snapshotName,
+    snapshot: props.snapshot,
+    timestamp: Date.now()
+  });
+  state.set("editor.snapshots", snapshots);
+
+  window.localStorage.setItem(SNAPSHOTS_KEY, JSON.stringify(snapshots));
+}
+
+export function deleteSnapshot({ state, props }) {
+  const snapshots = state.get("editor.snapshots");
+  const snapshot = props.snapshot;
+  const snapshotIndex = snapshots.indexOf(snapshot);
+  snapshots.splice(snapshotIndex, 1);
+  state.set("editor.snapshots", snapshots);
+  window.localStorage.setItem(SNAPSHOTS_KEY, JSON.stringify(snapshots));
+}
+
 export default function createEditorModule(editorView) {
   return {
     state: {
@@ -209,6 +254,7 @@ export default function createEditorModule(editorView) {
       selectedHistoryItem: 0,
       historyRolledBackTo: false,
       expandPath: [],
+      snapshots: JSON.parse(window.localStorage.getItem(SNAPSHOTS_KEY)) || [],
       nodePicker: { top: 0, left: 0, width: 0, height: 0 }
     },
     signals: {
@@ -220,7 +266,10 @@ export default function createEditorModule(editorView) {
       historyRolledBack: rollbackHistory,
       pickerActivated: activatePicker,
       pickerDeactivated: deactivatePicker,
-      JSONTreeNodeLogged: logNodeFromJSON
+      JSONTreeNodeLogged: logNodeFromJSON,
+      snapshotLoaded: loadSnapshot,
+      snapshotSaved: saveSnapshot,
+      snapshotDeleted: deleteSnapshot
     }
   };
 }

@@ -30,6 +30,7 @@ const mainTheme = {
 
   white: "#fff",
   white05: "rgba(255, 255, 255, .05)",
+  white10: "rgba(255, 255, 255, .1)",
   white20: "rgba(255, 255, 255, .2)",
   white60: "rgba(255, 255, 255, .6)",
   white80: "rgba(255, 255, 255, .8)",
