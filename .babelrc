@@ -1,6 +1,21 @@
 {
   "presets": [
-    "react",
-    "es2015"
-  ]
+    [
+      "env",
+      {
+        "modules": false
+      }
+    ],
+    "react"
+  ],
+  "env": {
+    "production": {
+      "presets": ["env", "react"]
+    }
+  },
+  "env": {
+    "test": {
+      "presets": ["env", "react","jest"]
+    }
+  }
 }
