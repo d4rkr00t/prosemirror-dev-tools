@@ -9,7 +9,9 @@ import HistoryTab from "./tabs/history";
 import SchemaTab from "./tabs/schema";
 import PluginsTab from "./tabs/plugins";
 import StructureTab from "./tabs/structure";
+import SnapshotsTab from "./tabs/snapshots";
 import { NodePicker, NodePickerTrigger } from "./components/node-picker";
+import SaveSnapshotButton from "./components/save-snapshot-button";
 
 const DockContainer = styled.div`
   width: 100%;
@@ -94,9 +96,11 @@ export default connect(
     tabIndex: state`tabIndex`,
     tabSelected: signal`tabSelected`,
     devToolsToggled: signal`devToolsToggled`,
+    state: state`editor.state`,
     nodePicker: state`editor.nodePicker`,
     pickerActivated: signal`editor.pickerActivated`,
-    pickerDeactivated: signal`editor.pickerDeactivated`
+    pickerDeactivated: signal`editor.pickerDeactivated`,
+    snapshotSaved: signal`editor.snapshotSaved`
   },
   function DevToolsExpanded({
     tabIndex,
@@ -104,7 +108,9 @@ export default connect(
     devToolsToggled,
     nodePicker,
     pickerActivated,
-    pickerDeactivated
+    pickerDeactivated,
+    state,
+    snapshotSaved
   }) {
     const pickerActive = !!(nodePicker.onClick && nodePicker.onMouseOver);
     return (
@@ -118,6 +124,11 @@ export default connect(
                 onClick={pickerActive ? pickerDeactivated : pickerActivated}
                 isActive={pickerActive}
               />
+              <SaveSnapshotButton
+                onClick={() => snapshotSaved({ snapshot: state.toJSON() })}
+              >
+                Save Snapshot
+              </SaveSnapshotButton>
               <Tabs
                 selectedIndex={tabIndex}
                 onSelect={index => tabSelected({ index })}
@@ -128,6 +139,7 @@ export default connect(
                   <Tab><TabLabel>Plugins</TabLabel></Tab>
                   <Tab><TabLabel>Schema</TabLabel></Tab>
                   <Tab><TabLabel>Structure</TabLabel></Tab>
+                  <Tab><TabLabel>Snapshots</TabLabel></Tab>
                 </TabList>
                 <TabPanel>
                   <TabPanelWrapper>
@@ -152,6 +164,11 @@ export default connect(
                 <TabPanel>
                   <TabPanelWrapper>
                     <StructureTab />
+                  </TabPanelWrapper>
+                </TabPanel>
+                <TabPanel>
+                  <TabPanelWrapper>
+                    <SnapshotsTab />
                   </TabPanelWrapper>
                 </TabPanel>
               </Tabs>
