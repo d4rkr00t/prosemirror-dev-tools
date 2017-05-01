@@ -30,6 +30,7 @@
   * [Plugins](#plugins)
   * [Schema](#schema)
   * [Structure](#structure)
+  * [Snapshots](#snapshots)
 * [Demo](#demo)
 * [Contributing](#contributing)
 * [License](#license)
@@ -106,6 +107,12 @@ Inspect current document schema with nodes and marks.
 Visual representation of current document tree.
 
 ![prosemirror-dev-tools structure tab](/docs/assets/structure-tab.png)
+
+### Snapshots
+
+Snapshots allow you to save current editor state and restore it later. State is stored in local storage.
+
+![prosemirror-dev-tools snapshots tab](/docs/assets/snapshots-tab.png)
 
 ## Demo
 
