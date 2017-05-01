@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button renders when active 1`] = `
+<button
+  className="sc-bdVaJa kKiekB"
+/>
+`;

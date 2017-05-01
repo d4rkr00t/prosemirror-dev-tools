@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListItemGroup renders when clicked 1`] = `
+<div>
+  <button
+    className="sc-bdVaJa bXvpxj"
+    onClick={[Function]}
+    onDoubleClick={[Function]}
+  />
+  <button
+    className="sc-bdVaJa bXvpxj"
+    onClick={[Function]}
+    onDoubleClick={[Function]}
+  />
+  <div>
+    <button
+      className="sc-bdVaJa bXvpxj"
+      onClick={[Function]}
+    >
+      <div
+        style={
+          Object {
+            "flexGrow": 1,
+          }
+        }
+      />
+      <div>
+        ▶
+      </div>
+    </button>
+    <div
+      className="sc-bwzfXH dlTaFc"
+    >
+      <button
+        className="sc-bdVaJa biMaei"
+        onClick={[Function]}
+        onDoubleClick={[Function]}
+      />
+      <button
+        className="sc-bdVaJa biMaei"
+        onClick={[Function]}
+        onDoubleClick={[Function]}
+      />
+      <button
+        className="sc-bdVaJa biMaei"
+        onClick={[Function]}
+        onDoubleClick={[Function]}
+      />
+      <button
+        className="sc-bdVaJa biMaei"
+        onClick={[Function]}
+        onDoubleClick={[Function]}
+      />
+    </div>
+  </div>
+</div>
+`;

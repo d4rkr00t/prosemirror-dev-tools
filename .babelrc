@@ -1,16 +1,23 @@
 {
-  "presets": [
-    [
-      "env",
-      {
-        "modules": false
-      }
+    "presets": [
+        [
+            "env",
+            {
+                "modules": false
+            }
+        ],
+        "react"
     ],
-    "react"
-  ],
-  "env": {
-    "production": {
-      "presets": ["env", "react"]
+    "env": {
+        "production": {
+            "presets": ["env", "react"]
+        },
+        "test": {
+            "presets": [
+                "env",
+                "react",
+                "jest"
+            ]
+        }
     }
-  }
 }

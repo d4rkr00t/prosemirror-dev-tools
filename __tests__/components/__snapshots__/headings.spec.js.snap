@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Heading renders without crashing 1`] = `
+<h2
+  className="sc-bdVaJa hnnrkQ"
+/>
+`;
+
+exports[`HeadingButton renders without crashing 1`] = `
+<button
+  className="sc-htpNat hbwhGQ"
+/>
+`;
+
+exports[`HeadingWithButton renders without crashing 1`] = `
+<div
+  className="sc-bwzfXH jIEWCi"
+/>
+`;
