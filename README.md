@@ -60,7 +60,7 @@ applyDevTools(view);
 Add script tag to your html file:
 
 ```html
-<script src="https://unpkg.com/prosemirror-dev-tools@1.3.0/dist/umd/prosemirror-dev-tools.min.js"></script>
+<script src="https://unpkg.com/prosemirror-dev-tools@1.3.1/dist/umd/prosemirror-dev-tools.min.js"></script>
 ```
 
 Wrap `EditorView` instance in applyDevTools method:
@@ -68,7 +68,10 @@ Wrap `EditorView` instance in applyDevTools method:
 ```js
 const view = new EditorView(/*...*/);
 
-ProseMirrorDevTools.applyDevTools(view);
+// From version 1.3.1 it's required for UMD build to provide EditorState class (not instance),
+// otherwise it was causing different artifacts when working with state e.g.rolling back to some history checkpoint
+// or when restoring from snapshot were broken due to EditorState classes were different in UMD bundle and in actual client code.
+ProseMirrorDevTools.applyDevTools(view, { EditorState: EditorState });
 ```
 
 ## Features

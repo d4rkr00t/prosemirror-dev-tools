@@ -12,9 +12,8 @@ export function selectTab({ state, props }) {
   state.set("tabIndex", props.index);
 }
 
-export default function createController(editorView) {
+export default function createController(editorView, props) {
   return Controller({
-    // devtools: Devtools({ remoteDebugger: "127.0.0.1:5353" }),
     state: {
       opened: false,
       tabIndex: 0
@@ -24,7 +23,7 @@ export default function createController(editorView) {
       tabSelected: selectTab
     },
     modules: {
-      editor: createEditorModule(editorView),
+      editor: createEditorModule(editorView, props),
       stateTab: createStateTabModule(),
       pluginsTab: createPluginsTabModule(),
       structureTab: createStructureTabModule(editorView.state.schema)

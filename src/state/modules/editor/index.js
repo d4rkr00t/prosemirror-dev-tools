@@ -1,8 +1,8 @@
-import { EditorState } from "prosemirror-state";
-import { DOMSerializer } from "prosemirror-model";
-import findNodeIn, { findNodeInJSON } from "../../utils/find-node";
+import { DOMSerializer } from "prosemirror-model/dist/to_dom";
 import diffPatcher from "jsondiffpatch";
 import { prettyPrint } from "html";
+import findNodeIn, { findNodeInJSON } from "../../../utils/find-node";
+import getEditorStateClass from "./get-editor-state";
 
 const HISTORY_SIZE = 200;
 const SNAPSHOTS_KEY = "prosemirror-dev-tools-snapshots";
@@ -75,7 +75,7 @@ export function selectHistoryItem({ state, props }) {
   state.set("editor.selectedHistoryItem", props.index);
 }
 
-export function rollbackHistory({ state, props }) {
+export function rollbackHistory(EditorState, { state, props }) {
   const { state: editorState } = state.get(`editor.history.${props.index}`);
   const editorView = state.get("editor.view");
 
@@ -205,7 +205,7 @@ export function deactivatePicker({ state }) {
   state.set("editor.nodePicker", { top: 0, left: 0, width: 0, height: 0 });
 }
 
-export function loadSnapshot({ state, props }) {
+export function loadSnapshot(EditorState, { state, props }) {
   const editorView = state.get("editor.view");
   const editorState = editorView.state;
 
@@ -245,7 +245,9 @@ export function deleteSnapshot({ state, props }) {
   window.localStorage.setItem(SNAPSHOTS_KEY, JSON.stringify(snapshots));
 }
 
-export default function createEditorModule(editorView) {
+export default function createEditorModule(editorView, props) {
+  const EditorState = getEditorStateClass(props);
+
   return {
     state: {
       view: editorView,
@@ -263,11 +265,11 @@ export default function createEditorModule(editorView) {
         [shrinkEditorHistory, updateEditorHistory]
       ],
       historyItemSelected: selectHistoryItem,
-      historyRolledBack: rollbackHistory,
+      historyRolledBack: rollbackHistory.bind(null, EditorState),
       pickerActivated: activatePicker,
       pickerDeactivated: deactivatePicker,
       JSONTreeNodeLogged: logNodeFromJSON,
-      snapshotLoaded: loadSnapshot,
+      snapshotLoaded: loadSnapshot.bind(null, EditorState),
       snapshotSaved: saveSnapshot,
       snapshotDeleted: deleteSnapshot
     }
