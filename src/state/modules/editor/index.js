@@ -217,6 +217,7 @@ export function loadSnapshot(EditorState, { state, props }) {
     props.snapshot.snapshot
   );
   state.set("editor.history", [createHistoryEntry(null, newState)]);
+  state.set("editor.state", newState);
   editorView.updateState(newState);
 }
 

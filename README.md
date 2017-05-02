@@ -60,7 +60,7 @@ applyDevTools(view);
 Add script tag to your html file:
 
 ```html
-<script src="https://unpkg.com/prosemirror-dev-tools@1.3.1/dist/umd/prosemirror-dev-tools.min.js"></script>
+<script src="https://unpkg.com/prosemirror-dev-tools@1.3.2/dist/umd/prosemirror-dev-tools.min.js"></script>
 ```
 
 Wrap `EditorView` instance in applyDevTools method:
