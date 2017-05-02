@@ -68,9 +68,9 @@ Wrap `EditorView` instance in applyDevTools method:
 ```js
 const view = new EditorView(/*...*/);
 
-// From version 1.3.1 it's required for UMD build to provide EditorState class (not instance),
-// otherwise it was causing different artifacts when working with state e.g.rolling back to some history checkpoint
-// or when restoring from snapshot were broken due to EditorState classes were different in UMD bundle and in actual client code.
+// From version 1.3.1 it's required for UMD build to provide EditorState class (not instance).
+// Previously it was causing different artifacts when working with state e.g. rolling back to some history checkpoint
+// or when restoring from snapshot due to EditorState classes were different in UMD bundle and in actual client code.
 ProseMirrorDevTools.applyDevTools(view, { EditorState: EditorState });
 ```
 
