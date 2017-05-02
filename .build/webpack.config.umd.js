@@ -24,5 +24,10 @@ module.exports = {
         loader: "babel-loader"
       }
     ]
+  },
+  resolve: {
+    alias: {
+      "./get-editor-state": "./get-editor-state.umd"
+    }
   }
 };

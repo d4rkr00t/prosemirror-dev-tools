@@ -9,11 +9,11 @@ import DevTools from "./dev-tools";
 import addKeyBindings from "./keybindings";
 import theme from "./theme";
 
-function applyDevTools(editorView) {
+function applyDevTools(editorView, props) {
   const place = document.createElement("div");
   document.body.appendChild(place);
 
-  const controller = createController(editorView);
+  const controller = createController(editorView, props);
   const editorUpdated = controller.getSignal("editor.updated");
   const schemaUpdated = controller.getSignal("structureTab.schemaUpdated");
 

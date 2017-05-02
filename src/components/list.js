@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const noop = () => {};
 
-export const ListItem = styled.button`
+export const ListItem = styled.div`
   min-width: 190px;
   width: 100%;
   display: flex;
