@@ -13,11 +13,7 @@
             "presets": ["env", "react"]
         },
         "test": {
-            "presets": [
-                "env",
-                "react",
-                "jest"
-            ]
+            "presets": ["env", "react"]
         }
     }
 }
