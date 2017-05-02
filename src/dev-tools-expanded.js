@@ -94,8 +94,10 @@ Tabs.setUseDefaultStyles(false);
 export default connect(
   {
     tabIndex: state`tabIndex`,
+    devToolsSize: state`defaultSize`,
     tabSelected: signal`tabSelected`,
     devToolsToggled: signal`devToolsToggled`,
+    devToolsSizeChanged: signal`devToolsSizeChanged`,
     state: state`editor.state`,
     nodePicker: state`editor.nodePicker`,
     pickerActivated: signal`editor.pickerActivated`,
@@ -104,8 +106,10 @@ export default connect(
   },
   function DevToolsExpanded({
     tabIndex,
+    devToolsSize,
     tabSelected,
     devToolsToggled,
+    devToolsSizeChanged,
     nodePicker,
     pickerActivated,
     pickerDeactivated,
@@ -116,7 +120,13 @@ export default connect(
     return (
       <div>
         <NodePicker />
-        <Dock position="bottom" dimMode="none" isVisible defaultSize={0.5}>
+        <Dock
+          position="bottom"
+          dimMode="none"
+          isVisible
+          defaultSize={devToolsSize}
+          onSizeChange={size => devToolsSizeChanged({ size })}
+        >
           {() => (
             <DockContainer>
               <CloseButton onClick={() => devToolsToggled()}>×</CloseButton>
