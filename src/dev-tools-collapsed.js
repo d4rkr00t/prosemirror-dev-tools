@@ -10,6 +10,7 @@ const FloattingButton = styled.div`
   border-radius: 50%;
   padding: 6px 8px;
   transition: opacity .3s;
+  z-index: 99999;
 
   &:hover {
     opacity: .7;
