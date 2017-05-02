@@ -12,13 +12,25 @@ const nodesColors = [
   "#E45F44", // deep orange
   "#A6A4AE", // blue grey
   "#FCC047", // yellow
-  "#FFC129" // amber
+  "#FFC129", // amber
+  "#D3929C", // can can
+  "#4CBCD4", // cyan
+  "#8D7BC0" // indigo
 ];
+
+export function calculateSafeIndex(index, total) {
+  const quotient = index / total;
+  return Math.round(total * (quotient - Math.floor(quotient)));
+}
 
 export function buildColors(schema) {
   return Object.keys(schema.nodes).reduce(
     (acc, node, index) => {
-      acc[node] = nodesColors[index];
+      const safeIndex = index >= nodesColors.length
+        ? calculateSafeIndex(index, nodesColors.length)
+        : index;
+
+      acc[node] = nodesColors[safeIndex];
       return acc;
     },
     {}
