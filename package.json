@@ -79,9 +79,6 @@
       "git add"
     ]
   },
-  "release": {
-    "branch": "release"
-  },
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
