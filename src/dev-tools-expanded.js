@@ -10,6 +10,7 @@ import SchemaTab from "./tabs/schema";
 import PluginsTab from "./tabs/plugins";
 import StructureTab from "./tabs/structure";
 import SnapshotsTab from "./tabs/snapshots";
+import CSSReset from "./components/css-reset";
 import { NodePicker, NodePickerTrigger } from "./components/node-picker";
 import SaveSnapshotButton from "./components/save-snapshot-button";
 
@@ -118,7 +119,7 @@ export default connect(
   }) {
     const pickerActive = !!(nodePicker.onClick && nodePicker.onMouseOver);
     return (
-      <div>
+      <CSSReset>
         <NodePicker />
         <Dock
           position="bottom"
@@ -185,7 +186,7 @@ export default connect(
             </DockContainer>
           )}
         </Dock>
-      </div>
+      </CSSReset>
     );
   }
 );
