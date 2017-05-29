@@ -209,13 +209,12 @@ export function loadSnapshot(EditorState, { state, props }) {
   const editorView = state.get("editor.view");
   const editorState = editorView.state;
 
-  const newState = EditorState.fromJSON(
-    {
-      schema: editorState.schema,
-      plugins: editorState.plugins
-    },
-    props.snapshot.snapshot
-  );
+  const newState = EditorState.create({
+    schema: editorState.schema,
+    plugins: editorState.plugins,
+    doc: editorState.schema.nodeFromJSON(props.snapshot.snapshot)
+  });
+
   state.set("editor.history", [createHistoryEntry(null, newState)]);
   state.set("editor.state", newState);
   editorView.updateState(newState);

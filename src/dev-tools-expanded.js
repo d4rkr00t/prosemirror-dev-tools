@@ -136,7 +136,7 @@ export default connect(
                 isActive={pickerActive}
               />
               <SaveSnapshotButton
-                onClick={() => snapshotSaved({ snapshot: state.toJSON() })}
+                onClick={() => snapshotSaved({ snapshot: state.doc.toJSON() })}
               >
                 Save Snapshot
               </SaveSnapshotButton>
