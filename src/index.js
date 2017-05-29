@@ -9,10 +9,24 @@ import DevTools from "./dev-tools";
 import addKeyBindings from "./keybindings";
 import theme from "./theme";
 
-function applyDevTools(editorView, props) {
-  const place = document.createElement("div");
-  document.body.appendChild(place);
+const DEVTOOLS_CLASS_NAME = "__prosemirror-dev-tools__";
 
+function createPlace() {
+  let place = document.querySelector(`.${DEVTOOLS_CLASS_NAME}`);
+
+  if (!place) {
+    place = document.createElement("div");
+    place.className = DEVTOOLS_CLASS_NAME;
+    document.body.appendChild(place);
+  } else {
+    place.innerHTML = "";
+  }
+
+  return place;
+}
+
+function applyDevTools(editorView, props) {
+  const place = createPlace();
   const controller = createController(editorView, props);
   const editorUpdated = controller.getSignal("editor.updated");
   const schemaUpdated = controller.getSignal("structureTab.schemaUpdated");
