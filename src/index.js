@@ -19,6 +19,7 @@ function createPlace() {
     place.className = DEVTOOLS_CLASS_NAME;
     document.body.appendChild(place);
   } else {
+    ReactDOM.unmountComponentAtNode(place);
     place.innerHTML = "";
   }
 
