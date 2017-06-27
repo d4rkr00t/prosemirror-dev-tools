@@ -19,10 +19,10 @@ const DockContainer = styled.div`
   height: 100%;
   overflow: hidden;
   background: ${props => props.theme.mainBg};
-  font-family: Helvetica Neue,Calibri Light,Roboto,sans-serif;
+  font-family: Helvetica Neue, Calibri Light, Roboto, sans-serif;
   font-size: 13px;
 
-  .ReactTabs {
+  .tabs {
     height: 100%;
     width: 100%;
 
@@ -31,14 +31,18 @@ const DockContainer = styled.div`
       padding: 0;
     }
 
-    .ReactTabs__TabList {
+    .tabs__tablist {
       display: flex;
       list-style: none;
       border-bottom: 1px solid ${props => props.theme.main20};
     }
 
-    .ReactTabs__TabPanel {
+    .tabs__tabpanel {
       height: 100%;
+    }
+
+    .tabs--selected {
+      border-bottom: 2px solid ${props => props.theme.main};
     }
   }
 `;
@@ -58,10 +62,6 @@ const TabLabel = styled.div`
 
   &:focus {
     outline: none;
-  }
-
-  .ReactTabs__Tab--selected & {
-    border-bottom: 2px solid ${props => props.theme.main};
   }
 `;
 
@@ -90,7 +90,7 @@ const CloseButton = styled.button`
   }
 `;
 
-Tabs.setUseDefaultStyles(false);
+// Tabs.setUseDefaultStyles(false);
 
 export default connect(
   {
@@ -128,7 +128,7 @@ export default connect(
           defaultSize={devToolsSize}
           onSizeChange={size => devToolsSizeChanged({ size })}
         >
-          {() => (
+          {() =>
             <DockContainer>
               <CloseButton onClick={() => devToolsToggled()}>×</CloseButton>
               <NodePickerTrigger
@@ -141,16 +141,30 @@ export default connect(
                 Save Snapshot
               </SaveSnapshotButton>
               <Tabs
+                className="tabs"
+                selectedTabClassName="tabs--selected"
                 selectedIndex={tabIndex}
                 onSelect={index => tabSelected({ index })}
               >
-                <TabList>
-                  <Tab><TabLabel>State</TabLabel></Tab>
-                  <Tab><TabLabel>History</TabLabel></Tab>
-                  <Tab><TabLabel>Plugins</TabLabel></Tab>
-                  <Tab><TabLabel>Schema</TabLabel></Tab>
-                  <Tab><TabLabel>Structure</TabLabel></Tab>
-                  <Tab><TabLabel>Snapshots</TabLabel></Tab>
+                <TabList className="tabs__tablist">
+                  <Tab>
+                    <TabLabel>State</TabLabel>
+                  </Tab>
+                  <Tab>
+                    <TabLabel>History</TabLabel>
+                  </Tab>
+                  <Tab>
+                    <TabLabel>Plugins</TabLabel>
+                  </Tab>
+                  <Tab>
+                    <TabLabel>Schema</TabLabel>
+                  </Tab>
+                  <Tab>
+                    <TabLabel>Structure</TabLabel>
+                  </Tab>
+                  <Tab>
+                    <TabLabel>Snapshots</TabLabel>
+                  </Tab>
                 </TabList>
                 <TabPanel>
                   <TabPanelWrapper>
@@ -183,8 +197,7 @@ export default connect(
                   </TabPanelWrapper>
                 </TabPanel>
               </Tabs>
-            </DockContainer>
-          )}
+            </DockContainer>}
         </Dock>
       </CSSReset>
     );
