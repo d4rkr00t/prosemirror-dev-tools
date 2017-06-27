@@ -1,3 +1,5 @@
+import "ie-array-find-polyfill";
+import objectAssign from "es6-object-assign";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Container } from "cerebral/react";
@@ -10,6 +12,8 @@ import addKeyBindings from "./keybindings";
 import theme from "./theme";
 
 const DEVTOOLS_CLASS_NAME = "__prosemirror-dev-tools__";
+
+objectAssign.polyfill();
 
 function createPlace() {
   let place = document.querySelector(`.${DEVTOOLS_CLASS_NAME}`);

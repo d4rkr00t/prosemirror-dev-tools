@@ -30,8 +30,10 @@
   "dependencies": {
     "cerebral": "2.0.0-b-alpha.44b98c71",
     "date-fns": "^1.28.2",
+    "es6-object-assign": "^1.1.0",
     "highlight.js": "^9.11.0",
     "html": "^1.0.0",
+    "ie-array-find-polyfill": "^1.1.0",
     "javascript-stringify": "^1.6.0",
     "jsondiffpatch": "^0.2.4",
     "prosemirror-model": "*",
