@@ -37,7 +37,7 @@ const DockContainer = styled.div`
       border-bottom: 1px solid ${props => props.theme.main20};
     }
 
-    .tabs__tabpanel {
+    .tabs_tab-panel--selected {
       height: 100%;
     }
 
@@ -143,6 +143,7 @@ export default connect(
               <Tabs
                 className="tabs"
                 selectedTabClassName="tabs--selected"
+                selectedTabPanelClassName="tabs_tab-panel--selected"
                 selectedIndex={tabIndex}
                 onSelect={index => tabSelected({ index })}
               >
