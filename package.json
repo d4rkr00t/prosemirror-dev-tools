@@ -38,13 +38,15 @@
     "jsondiffpatch": "^0.2.4",
     "prosemirror-model": "*",
     "prosemirror-state": "*",
-    "react": "^15.6.1",
     "react-dock": "^0.2.3",
-    "react-dom": "^15.6.1",
     "react-json-tree": "^0.10.7",
     "react-syntax-highlighter": "^5.5.0",
     "react-tabs": "^1.1.0",
     "styled-components": "^2.1.0"
+  },
+  "peerDependencies": {
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
   },
   "devDependencies": {
     "aik": "^0.16.1",
@@ -71,15 +73,9 @@
   "eslintConfig": {
     "extends": "./node_modules/aik/lib/eslint-config.js"
   },
-  "pre-commit": [
-    "lint:staged"
-  ],
+  "pre-commit": ["lint:staged"],
   "lint-staged": {
-    "*.js": [
-      "eslint",
-      "prettier --write",
-      "git add"
-    ]
+    "*.js": ["eslint", "prettier --write", "git add"]
   },
   "config": {
     "commitizen": {
