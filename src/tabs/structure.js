@@ -11,40 +11,51 @@ import {
   HeadingButton
 } from "./../components/heading";
 
-const GraphWrapper = styled.div`
-  margin-top: 12px;
-`;
+const GraphWrapper = styled.div`margin-top: 12px;`;
 
 const BlockNodeWrapper = styled.div``;
 
 const BlockNodeContentView = styled.div`
-  padding: 0 0 0 12px;
+  padding: 0 12px;
   box-sizing: border-box;
   border-left: 1px solid ${props => props.theme.white20};
+  border-right: 1px solid ${props => props.theme.white20};
 `;
 
 const BlockNodeContentViewWithInline = styled.div`
-  padding: 0 0 0 12px;
+  padding: 0 12px;
   display: flex;
   width: 100%;
   box-sizing: border-box;
   border-left: 1px solid ${props => props.theme.white20};
+  border-right: 1px solid ${props => props.theme.white20};
+  flex-wrap: wrap;
 `;
 
 const BlockNodeView = styled.div`
   width: 100%;
-  padding: 3px 12px;
   background: ${props => props.bg};
   margin-bottom: 3px;
   box-sizing: border-box;
+  display: flex;
+`;
+
+const Side = styled.div`
+  padding: 3px 6px;
+  background: rgba(255, 255, 255, .3);
+`;
+
+const Center = styled.div`
+  flex-grow: 1;
+  padding: 3px 9px;
+  white-space: pre;
 `;
 
 const InlineNodeView = styled.div`
   flex-grow: 1;
-  padding: 3px 12px;
   background: ${props => props.bg};
-  margin-left: 3px;
   margin-bottom: 3px;
+  display: flex;
   box-sizing: border-box;
 `;
 
@@ -55,59 +66,92 @@ export function BlockNodeContent(props) {
   const content = props.content.content;
 
   if (content[0].isBlock) {
+    let startPos = props.startPos + 1;
     return (
       <BlockNodeContentView>
-        {content.map((childNode, index) => (
-          <BlockNode
-            key={index}
-            node={childNode}
-            colors={props.colors}
-            onNodeSelected={props.onNodeSelected}
-          />
-        ))}
+        {content.map((childNode, index) => {
+          const pos = startPos;
+          startPos += childNode.nodeSize;
+          return (
+            <BlockNode
+              key={index}
+              node={childNode}
+              colors={props.colors}
+              onNodeSelected={props.onNodeSelected}
+              startPos={pos}
+            />
+          );
+        })}
       </BlockNodeContentView>
     );
   }
 
+  let startPos = props.startPos;
   return (
     <BlockNodeContentViewWithInline>
-      {content.map((childNode, index) => (
-        <InlineNode
-          key={index}
-          node={childNode}
-          bg={props.colors[childNode.type.name]}
-          onNodeSelected={props.onNodeSelected}
-        />
-      ))}
+      {content.map((childNode, index) => {
+        const pos = startPos;
+        startPos += childNode.nodeSize;
+        return (
+          <InlineNode
+            key={index}
+            index={index}
+            node={childNode}
+            bg={props.colors[childNode.type.name]}
+            onNodeSelected={props.onNodeSelected}
+            startPos={pos}
+          />
+        );
+      })}
     </BlockNodeContentViewWithInline>
   );
 }
 
 export function BlockNode(props) {
-  const { colors, node } = props;
+  const { colors, node, startPos } = props;
   const color = colors[node.type.name];
   return (
     <BlockNodeWrapper>
       <BlockNodeView bg={color} onClick={() => props.onNodeSelected({ node })}>
-        {props.node.type.name}
+        <Side>
+          {startPos}
+        </Side>
+        <Center>
+          {node.type.name}
+        </Center>
+        <Side>
+          {startPos + node.nodeSize - 1}
+        </Side>
       </BlockNodeView>
       <BlockNodeContent
         content={node.content}
         colors={colors}
         onNodeSelected={props.onNodeSelected}
+        startPos={startPos}
       />
     </BlockNodeWrapper>
   );
 }
 
 export function InlineNode(props) {
-  const { node, bg } = props;
-  const marks = node.marks.length === 1
-    ? ` - [${node.marks[0].type.name}]`
-    : node.marks.length > 1 ? ` - [${node.marks.length} marks]` : "";
+  const { node, bg, startPos, index } = props;
+  const marks =
+    node.marks.length === 1
+      ? ` - [${node.marks[0].type.name}]`
+      : node.marks.length > 1 ? ` - [${node.marks.length} marks]` : "";
   return (
     <InlineNodeView onClick={() => props.onNodeSelected({ node })} bg={bg}>
-      {node.type.name} {marks}
+      {index === 0
+        ? <Side>
+            {startPos}
+          </Side>
+        : null}
+      <Center>
+        {node.type.name} {marks}
+      </Center>
+      <Side>
+        {startPos + node.nodeSize}
+      </Side>
     </InlineNodeView>
   );
 }
@@ -129,6 +173,7 @@ export default connect(
             <BlockNode
               colors={colors}
               node={state.doc}
+              startPos={0}
               onNodeSelected={nodeSelected}
             />
           </GraphWrapper>
@@ -143,7 +188,8 @@ export default connect(
           <JSONTree
             data={selected.toJSON()}
             hideRoot
-            shouldExpandNode={() => selected.type.name !== "doc" ? true : false}
+            shouldExpandNode={() =>
+              selected.type.name !== "doc" ? true : false}
           />
         </SplitViewCol>
       </SplitView>
