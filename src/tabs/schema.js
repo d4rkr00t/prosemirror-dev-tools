@@ -12,13 +12,12 @@ export function postprocessValue(ignore, data) {
   if (!data || Object.prototype.toString.call(data) !== "[object Object]")
     return data;
 
-  return Object.keys(data).filter(key => ignore.indexOf(key) === -1).reduce((
-    res,
-    key
-  ) => {
-    res[key] = data[key];
-    return res;
-  }, {});
+  return Object.keys(data)
+    .filter(key => ignore.indexOf(key) === -1)
+    .reduce((res, key) => {
+      res[key] = data[key];
+      return res;
+    }, {});
 }
 
 export default connect(

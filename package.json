@@ -34,7 +34,7 @@
     "html": "^1.0.0",
     "ie-array-find-polyfill": "^1.1.0",
     "javascript-stringify": "^1.6.0",
-    "jsondiffpatch": "^0.2.4",
+    "jsondiffpatch": "github:d4rkr00t/jsondiffpatch#d80390b4354befe55802e292122b8059462c1b7d",
     "prosemirror-model": "*",
     "prosemirror-state": "*",
     "react-dock": "^0.2.3",
