@@ -28,13 +28,9 @@ const Section = styled.div`
   }
 `;
 
-const Group = styled.div`
-  margin: 0.5em 0px 0.5em 1em;
-`;
+const Group = styled.div`margin: 0.5em 0px 0.5em 1em;`;
 
-const GroupRow = styled.div`
-  padding-top: 0.25em;
-`;
+const GroupRow = styled.div`padding-top: 0.25em;`;
 
 const Key = styled.span`
   display: inline-block;
@@ -42,9 +38,7 @@ const Key = styled.span`
   margin: 0px 0.5em 0px 0px;
 `;
 
-const ValueNum = styled.span`
-  color: ${props => props.theme.syntax.base09};
-`;
+const ValueNum = styled.span`color: ${props => props.theme.syntax.base09};`;
 
 const LogNodeButton = styled.button`
   color: ${props => props.theme.white60};
@@ -84,11 +78,37 @@ export function getItemString(doc, action) {
     );
 
     if (type === "Object" && value.type) {
-      return <span>{"{} "}{value.type}{" "}{logButton}</span>;
+      return (
+        <span>
+          {"{} "}
+          {value.type} {logButton}
+        </span>
+      );
     }
 
-    return <span>{defaultView}{" "}{keysCount}{" "}{logButton}</span>;
+    return (
+      <span>
+        {defaultView} {keysCount} {logButton}
+      </span>
+    );
   };
+}
+
+function getItemStringForMark(type, value, defaultView, keysCount) {
+  if (type === "Object" && value.type) {
+    return (
+      <span>
+        {"{} "}
+        {value.type}
+      </span>
+    );
+  }
+
+  return (
+    <span>
+      {defaultView} {keysCount}
+    </span>
+  );
 }
 
 export function shouldExpandNode(expandPath, nodePath) {
@@ -108,6 +128,7 @@ export function shouldExpandNode(expandPath, nodePath) {
 export default connect(
   {
     state: state`editor.state`,
+    activeMarks: state`editor.activeMarks`,
     expandPath: state`editor.expandPath`,
     selectionExpanded: state`stateTab.selectionExpanded`,
     selectionToggled: signal`stateTab.selectionToggled`,
@@ -115,6 +136,7 @@ export default connect(
   },
   function StateTab({
     state,
+    activeMarks,
     selectionExpanded,
     selectionToggled,
     expandPath,
@@ -158,15 +180,35 @@ export default connect(
             </JSONTreeWrapper>
           </Section>
           <Section>
+            <Heading>Active Marks</Heading>
+            <JSONTreeWrapper>
+              {activeMarks.length
+                ? <JSONTree
+                    data={activeMarks}
+                    hideRoot
+                    getItemString={getItemStringForMark}
+                  />
+                : <Group>
+                    <GroupRow>
+                      <Key>no active marks</Key>
+                    </GroupRow>
+                  </Group>}
+            </JSONTreeWrapper>
+          </Section>
+          <Section>
             <Heading>Document Stats</Heading>
             <Group>
               <GroupRow>
                 <Key>nodeSize:</Key>
-                <ValueNum>{state.doc.nodeSize}</ValueNum>
+                <ValueNum>
+                  {state.doc.nodeSize}
+                </ValueNum>
               </GroupRow>
               <GroupRow>
                 <Key>childCount:</Key>
-                <ValueNum>{state.doc.childCount}</ValueNum>
+                <ValueNum>
+                  {state.doc.childCount}
+                </ValueNum>
               </GroupRow>
             </Group>
           </Section>
