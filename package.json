@@ -66,6 +66,8 @@
     "prosemirror-example-setup": "*",
     "prosemirror-schema-basic": "*",
     "prosemirror-view": "*",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
     "rimraf": "^2.6.1",
     "webpack": "^2.4.1"
   },
