@@ -30,8 +30,8 @@ export function createHistoryEntry(prevState, editorState) {
   return {
     state: editorState,
     timestamp: Date.now(),
-    diff: prevState &&
-      diff.diff(prevState.doc.toJSON(), editorState.doc.toJSON()),
+    diff:
+      prevState && diff.diff(prevState.doc.toJSON(), editorState.doc.toJSON()),
     selection: prettyPrint(selectionContent.join("\n"), {
       max_char: 60,
       indent_size: 2
@@ -45,9 +45,10 @@ export function shrinkEditorHistory({ state, props }) {
 
   if (skipHistory) return;
 
-  const startIndex = state.get("editor.historyRolledBackTo") !== false
-    ? state.get("editor.historyRolledBackTo")
-    : 0;
+  const startIndex =
+    state.get("editor.historyRolledBackTo") !== false
+      ? state.get("editor.historyRolledBackTo")
+      : 0;
 
   const history = state.get("editor.history");
   state.set("editor.history", history.slice(startIndex, HISTORY_SIZE));
@@ -245,6 +246,31 @@ export function deleteSnapshot({ state, props }) {
   window.localStorage.setItem(SNAPSHOTS_KEY, JSON.stringify(snapshots));
 }
 
+export function updateActiveMarks({ state, props }) {
+  const editorState = props.newState;
+  const selection = editorState.selection;
+  let marks = [];
+
+  if (selection.empty) {
+    marks = selection.storedMarks || selection.$from.marks();
+  } else {
+    editorState.doc.nodesBetween(selection.from, selection.to, node => {
+      marks = marks.concat(node.marks);
+    });
+  }
+
+  marks = marks
+    .reduce((acc, mark) => {
+      if (acc.indexOf(mark) === -1) {
+        acc.push(mark);
+      }
+      return acc;
+    }, [])
+    .map(m => m.toJSON());
+
+  state.set("editor.activeMarks", marks);
+}
+
 export default function createEditorModule(editorView, props) {
   const EditorState = getEditorStateClass(props);
 
@@ -252,6 +278,7 @@ export default function createEditorModule(editorView, props) {
     state: {
       view: editorView,
       state: editorView.state,
+      activeMarks: [],
       history: [{ state: editorView.state, timestamp: Date.now() }],
       selectedHistoryItem: 0,
       historyRolledBackTo: false,
@@ -261,7 +288,7 @@ export default function createEditorModule(editorView, props) {
     },
     signals: {
       updated: [
-        updateCurrentEditorState,
+        [updateCurrentEditorState, updateActiveMarks],
         [shrinkEditorHistory, updateEditorHistory]
       ],
       historyItemSelected: selectHistoryItem,
