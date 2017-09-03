@@ -23,13 +23,13 @@ const Section = styled.div`
 const formatTimestamp = timestamp =>
   format(new Date(timestamp), "HH:mm:ss:SSS");
 
-export function SelectionSection(props) {
-  if (!props.selection) return null;
+export function SelectionContentSection(props) {
+  if (!props.selectionContent) return null;
 
   return (
     <Section>
       <Heading>Selection Content</Heading>
-      <Highlighter>{props.selection}</Highlighter>
+      <Highlighter>{props.selectionContent}</Highlighter>
     </Section>
   );
 }
@@ -41,6 +41,17 @@ export function DocDiffSection(props) {
     <Section>
       <Heading>Doc diff</Heading>
       <JSONDiff delta={props.diff} />
+    </Section>
+  );
+}
+
+export function SelectionSection(props) {
+  if (!props.selection) return null;
+
+  return (
+    <Section>
+      <Heading>Selection diff</Heading>
+      <JSONDiff delta={props.selection} />
     </Section>
   );
 }
@@ -64,37 +75,31 @@ export default connect(
     const selectedItem = history[selectedItemIndex];
     const historyRolledBackToItem = history[historyRolledBackTo];
     const historyList = history
-      .reduce(
-        (h, item, index) => {
-          const prev = h[h.length - 1];
+      .reduce((h, item, index) => {
+        const prev = h[h.length - 1];
 
-          item.index = index;
+        item.index = index;
 
-          if (!item.diff) {
-            if (!prev || !Array.isArray(prev)) {
-              h.push([item]);
-            } else {
-              prev.push(item);
-            }
+        if (!item.diff) {
+          if (!prev || !Array.isArray(prev)) {
+            h.push([item]);
           } else {
-            h.push(item);
+            prev.push(item);
           }
+        } else {
+          h.push(item);
+        }
 
-          return h;
-        },
-        []
-      )
-      .reduce(
-        (h, item) => {
-          if (Array.isArray(item) && item.length === 1) {
-            h.push(item[0]);
-          } else {
-            h.push(item);
-          }
-          return h;
-        },
-        []
-      );
+        return h;
+      }, [])
+      .reduce((h, item) => {
+        if (Array.isArray(item) && item.length === 1) {
+          h.push(item[0]);
+        } else {
+          h.push(item);
+        }
+        return h;
+      }, []);
 
     const isSelected = item => item.timestamp === selectedItem.timestamp;
     const isPrevious = item =>
@@ -128,9 +133,13 @@ export default connect(
         <SplitViewCol grow sep>
           <DocDiffSection diff={selectedItem.diff} />
           <SelectionSection selection={selectedItem.selection} />
+          <SelectionContentSection
+            selectionContent={selectedItem.selectionContent}
+          />
           {!selectedItem.diff &&
-            !selectedItem.selection &&
-            <InfoPanel>Doc are equal.</InfoPanel>}
+          !selectedItem.selectionContent && (
+            <InfoPanel>Doc are equal.</InfoPanel>
+          )}
         </SplitViewCol>
       </SplitView>
     );

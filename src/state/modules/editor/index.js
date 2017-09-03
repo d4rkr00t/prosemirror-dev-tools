@@ -12,11 +12,21 @@ const diff = diffPatcher.create({
   textDiff: { minLength: 1 }
 });
 
+export function buildSelection(selection) {
+  return {
+    type: selection.type,
+    empty: selection.empty,
+    anchor: selection.anchor,
+    head: selection.head,
+    from: selection.from,
+    to: selection.to
+  };
+}
+
 export function createHistoryEntry(prevState, editorState) {
   const serializer = DOMSerializer.fromSchema(editorState.schema);
-  const domFragment = serializer.serializeFragment(
-    editorState.selection.content().content
-  );
+  const selection = editorState.selection;
+  const domFragment = serializer.serializeFragment(selection.content().content);
 
   let selectionContent = [];
   if (domFragment) {
@@ -32,7 +42,10 @@ export function createHistoryEntry(prevState, editorState) {
     timestamp: Date.now(),
     diff:
       prevState && diff.diff(prevState.doc.toJSON(), editorState.doc.toJSON()),
-    selection: prettyPrint(selectionContent.join("\n"), {
+    selection:
+      prevState &&
+      diff.diff(buildSelection(prevState.selection), buildSelection(selection)),
+    selectionContent: prettyPrint(selectionContent.join("\n"), {
       max_char: 60,
       indent_size: 2
     })
