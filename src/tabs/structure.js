@@ -38,11 +38,15 @@ const BlockNodeView = styled.div`
   margin-bottom: 3px;
   box-sizing: border-box;
   display: flex;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const Side = styled.div`
   padding: 3px 6px;
-  background: rgba(255, 255, 255, .3);
+  background: rgba(255, 255, 255, 0.3);
 `;
 
 const Center = styled.div`
@@ -57,6 +61,10 @@ const InlineNodeView = styled.div`
   margin-bottom: 3px;
   display: flex;
   box-sizing: border-box;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export function BlockNodeContent(props) {
@@ -113,15 +121,9 @@ export function BlockNode(props) {
   return (
     <BlockNodeWrapper>
       <BlockNodeView bg={color} onClick={() => props.onNodeSelected({ node })}>
-        <Side>
-          {startPos}
-        </Side>
-        <Center>
-          {node.type.name}
-        </Center>
-        <Side>
-          {startPos + node.nodeSize - 1}
-        </Side>
+        <Side>{startPos}</Side>
+        <Center>{node.type.name}</Center>
+        <Side>{startPos + node.nodeSize - 1}</Side>
       </BlockNodeView>
       <BlockNodeContent
         content={node.content}
@@ -141,17 +143,11 @@ export function InlineNode(props) {
       : node.marks.length > 1 ? ` - [${node.marks.length} marks]` : "";
   return (
     <InlineNodeView onClick={() => props.onNodeSelected({ node })} bg={bg}>
-      {index === 0
-        ? <Side>
-            {startPos}
-          </Side>
-        : null}
+      {index === 0 ? <Side>{startPos}</Side> : null}
       <Center>
         {node.type.name} {marks}
       </Center>
-      <Side>
-        {startPos + node.nodeSize}
-      </Side>
+      <Side>{startPos + node.nodeSize}</Side>
     </InlineNodeView>
   );
 }
