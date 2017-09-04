@@ -1,6 +1,6 @@
 {
   "name": "prosemirror-dev-tools",
-  "version": "1.3.6",
+  "version": "1.4.0",
   "description": "Dev Tools for ProseMirror",
   "main": "dist/cjs/index.js",
   "scripts": {
@@ -9,8 +9,7 @@
     "start": "aik example/index.js",
     "prebuild": "rimraf ./dist",
     "build": "npm run build:umd && npm run build:cjs",
-    "build:umd":
-      "webpack --optimize-minimize --config ./.build/webpack.config.umd.js",
+    "build:umd": "webpack --optimize-minimize --config ./.build/webpack.config.umd.js",
     "build:cjs": "BABEL_ENV=production babel src --out-dir dist/cjs",
     "lint:all": "eslint ./src",
     "lint:staged": "lint-staged",
@@ -35,8 +34,7 @@
     "html": "^1.0.0",
     "ie-array-find-polyfill": "^1.1.0",
     "javascript-stringify": "^1.6.0",
-    "jsondiffpatch":
-      "github:d4rkr00t/jsondiffpatch#d80390b4354befe55802e292122b8059462c1b7d",
+    "jsondiffpatch": "github:d4rkr00t/jsondiffpatch#d80390b4354befe55802e292122b8059462c1b7d",
     "prosemirror-model": "*",
     "prosemirror-state": "*",
     "react-dock": "^0.2.3",
@@ -76,9 +74,15 @@
   "eslintConfig": {
     "extends": "./node_modules/aik/lib/eslint-config.js"
   },
-  "pre-commit": ["lint:staged"],
+  "pre-commit": [
+    "lint:staged"
+  ],
   "lint-staged": {
-    "*.js": ["eslint", "prettier --write", "git add"]
+    "*.js": [
+      "eslint",
+      "prettier --write",
+      "git add"
+    ]
   },
   "config": {
     "commitizen": {
