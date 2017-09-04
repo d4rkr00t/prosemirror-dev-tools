@@ -1,4 +1,4 @@
-<big><h1 align="center">ProseMirror Dev Tools</h1></big>
+![prosemirror-dev-tools](/docs/assets/logo.png)
 <p align="center">
   <a href="https://npmjs.org/package/prosemirror-dev-tools">
     <img src="https://img.shields.io/npm/v/prosemirror-dev-tools.svg" alt="NPM Version">
@@ -80,6 +80,7 @@ ProseMirrorDevTools.applyDevTools(view, { EditorState: EditorState });
 
 * Inspect document – all nodes and marks
 * Inspect selection – position, head, anchor and etc.
+* Inspect active marks
 * See document stats – size, child count
 
 ![prosemirror-dev-tools state tab](/docs/assets/state-tab.png)
@@ -89,6 +90,7 @@ ProseMirrorDevTools.applyDevTools(view, { EditorState: EditorState });
 * Inspect document changes over time
 * Time travel between states
 * See selection content for particular state in time
+* See selection diff
 
 ![prosemirror-dev-tools history tab](/docs/assets/history-tab.png)
 
@@ -107,7 +109,7 @@ Inspect current document schema with nodes and marks.
 
 ### Structure
 
-Visual representation of current document tree.
+Visual representation of current document tree with positions at the beginning and the end of every node.
 
 ![prosemirror-dev-tools structure tab](/docs/assets/structure-tab.png)
 

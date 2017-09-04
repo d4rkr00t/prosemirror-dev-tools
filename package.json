@@ -9,7 +9,8 @@
     "start": "aik example/index.js",
     "prebuild": "rimraf ./dist",
     "build": "npm run build:umd && npm run build:cjs",
-    "build:umd": "webpack --optimize-minimize --config ./.build/webpack.config.umd.js",
+    "build:umd":
+      "webpack --optimize-minimize --config ./.build/webpack.config.umd.js",
     "build:cjs": "BABEL_ENV=production babel src --out-dir dist/cjs",
     "lint:all": "eslint ./src",
     "lint:staged": "lint-staged",
@@ -34,7 +35,8 @@
     "html": "^1.0.0",
     "ie-array-find-polyfill": "^1.1.0",
     "javascript-stringify": "^1.6.0",
-    "jsondiffpatch": "github:d4rkr00t/jsondiffpatch#d80390b4354befe55802e292122b8059462c1b7d",
+    "jsondiffpatch":
+      "github:d4rkr00t/jsondiffpatch#d80390b4354befe55802e292122b8059462c1b7d",
     "prosemirror-model": "*",
     "prosemirror-state": "*",
     "react-dock": "^0.2.3",
@@ -50,9 +52,9 @@
   "devDependencies": {
     "aik": "^0.16.1",
     "babel-cli": "^6.24.1",
-    "babel-core": "^6.24.1",
+    "babel-core": "^6.26.0",
     "babel-loader": "^7.1.0",
-    "babel-preset-env": "^1.4.0",
+    "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
     "commitizen": "^2.9.6",
     "conventional-github-releaser": "^1.1.12",
