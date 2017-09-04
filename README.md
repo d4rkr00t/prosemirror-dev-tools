@@ -60,7 +60,7 @@ applyDevTools(view);
 Add script tag to your html file:
 
 ```html
-<script src="https://unpkg.com/prosemirror-dev-tools@1.3.2/dist/umd/prosemirror-dev-tools.min.js"></script>
+<script src="https://unpkg.com/prosemirror-dev-tools@1.4.0/dist/umd/prosemirror-dev-tools.min.js"></script>
 ```
 
 Wrap `EditorView` instance in applyDevTools method:
@@ -122,7 +122,7 @@ Snapshots allow you to save current editor state and restore it later. State is 
 ## Demo
 
 * [Demo](https://codepen.io/iamsysoev/full/QvpELv/) of prosemirror-dev-tools on codepen.io.
-* [Example Setup](/example)
+* [Example Setup](https://codesandbox.io/s/7jxmjjqz2x)
 
 ## Contributing
 
