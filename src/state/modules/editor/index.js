@@ -1,4 +1,4 @@
-import { DOMSerializer } from "prosemirror-model/dist/to_dom";
+import { DOMSerializer } from "prosemirror-model";
 import diffPatcher from "jsondiffpatch";
 import { prettyPrint } from "html";
 import findNodeIn, { findNodeInJSON } from "../../../utils/find-node";
