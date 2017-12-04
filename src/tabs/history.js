@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "cerebral/react";
+import { connect } from "@cerebral/react";
 import { state, signal } from "cerebral/tags";
 import styled from "styled-components";
 import format from "date-fns/format";
@@ -124,10 +124,12 @@ export default connect(
             customItemBackground={props =>
               props.isSelected
                 ? props.theme.main40
-                : props.isPrevious ? props.theme.main20 : "transparent"}
+                : props.isPrevious ? props.theme.main20 : "transparent"
+            }
             onListItemClick={item => historyItemSelected({ index: item.index })}
             onListItemDoubleClick={item =>
-              historyRolledBack({ index: item.index })}
+              historyRolledBack({ index: item.index })
+            }
           />
         </SplitViewCol>
         <SplitViewCol grow sep>
@@ -137,9 +139,9 @@ export default connect(
             selectionContent={selectedItem.selectionContent}
           />
           {!selectedItem.diff &&
-          !selectedItem.selectionContent && (
-            <InfoPanel>Doc are equal.</InfoPanel>
-          )}
+            !selectedItem.selectionContent && (
+              <InfoPanel>Doc are equal.</InfoPanel>
+            )}
         </SplitViewCol>
       </SplitView>
     );

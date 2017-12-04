@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { connect } from "cerebral/react";
+import { connect } from "@cerebral/react";
 import { state, signal } from "cerebral/tags";
 
 import { SplitView, SplitViewCol } from "../components/split-view";
@@ -11,7 +11,9 @@ import {
   HeadingButton
 } from "./../components/heading";
 
-const GraphWrapper = styled.div`margin-top: 12px;`;
+const GraphWrapper = styled.div`
+  margin-top: 12px;
+`;
 
 const BlockNodeWrapper = styled.div``;
 
@@ -185,7 +187,8 @@ export default connect(
             data={selected.toJSON()}
             hideRoot
             shouldExpandNode={() =>
-              selected.type.name !== "doc" ? true : false}
+              selected.type.name !== "doc" ? true : false
+            }
           />
         </SplitViewCol>
       </SplitView>

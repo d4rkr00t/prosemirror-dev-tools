@@ -2,10 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import SyntaxHighlighter, {
   registerLanguage
-} from "react-syntax-highlighter/dist/light";
-import htmlLang from "highlight.js/lib/languages/xml";
-import colorTheme
-  from "react-syntax-highlighter/dist/styles/tomorrow-night-blue";
+} from "react-syntax-highlighter/light";
+import htmlLang from "react-syntax-highlighter/languages/hljs/xml";
+import colorTheme from "react-syntax-highlighter/styles/hljs/tomorrow-night-blue";
 
 colorTheme.hljs.background = "transparent";
 
