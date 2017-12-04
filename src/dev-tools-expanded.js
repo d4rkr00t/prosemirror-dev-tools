@@ -2,7 +2,7 @@ import React from "react";
 import Dock from "react-dock";
 import styled from "styled-components";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import { connect } from "cerebral/react";
+import { connect } from "@cerebral/react";
 import { state, signal } from "cerebral/tags";
 import StateTab from "./tabs/state";
 import HistoryTab from "./tabs/history";
@@ -128,7 +128,7 @@ export default connect(
           defaultSize={devToolsSize}
           onSizeChange={size => devToolsSizeChanged({ size })}
         >
-          {() =>
+          {() => (
             <DockContainer>
               <CloseButton onClick={() => devToolsToggled()}>×</CloseButton>
               <NodePickerTrigger
@@ -198,7 +198,8 @@ export default connect(
                   </TabPanelWrapper>
                 </TabPanel>
               </Tabs>
-            </DockContainer>}
+            </DockContainer>
+          )}
         </Dock>
       </CSSReset>
     );

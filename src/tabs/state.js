@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { connect } from "cerebral/react";
+import { connect } from "@cerebral/react";
 import { state, signal } from "cerebral/tags";
 import {
   expandedStateFormatSelection,
@@ -28,9 +28,13 @@ const Section = styled.div`
   }
 `;
 
-const Group = styled.div`margin: 0.5em 0px 0.5em 1em;`;
+const Group = styled.div`
+  margin: 0.5em 0px 0.5em 1em;
+`;
 
-const GroupRow = styled.div`padding-top: 0.25em;`;
+const GroupRow = styled.div`
+  padding-top: 0.25em;
+`;
 
 const Key = styled.span`
   display: inline-block;
@@ -38,13 +42,15 @@ const Key = styled.span`
   margin: 0px 0.5em 0px 0px;
 `;
 
-const ValueNum = styled.span`color: ${props => props.theme.syntax.base09};`;
+const ValueNum = styled.span`
+  color: ${props => props.theme.syntax.base09};
+`;
 
 const LogNodeButton = styled.button`
   color: ${props => props.theme.white60};
   background: none;
   border: none;
-  transition: background .3s, color .3s;
+  transition: background 0.3s, color 0.3s;
   border-radius: 3px;
 
   &:hover {
@@ -157,7 +163,8 @@ export default connect(
             hideRoot
             getItemString={getItemString(doc, JSONTreeNodeLogged)}
             shouldExpandNode={nodePath =>
-              shouldExpandNode(expandPath, nodePath)}
+              shouldExpandNode(expandPath, nodePath)
+            }
           />
         </SplitViewCol>
         <SplitViewCol sep minWidth={220}>
@@ -182,17 +189,19 @@ export default connect(
           <Section>
             <Heading>Active Marks</Heading>
             <JSONTreeWrapper>
-              {activeMarks.length
-                ? <JSONTree
-                    data={activeMarks}
-                    hideRoot
-                    getItemString={getItemStringForMark}
-                  />
-                : <Group>
-                    <GroupRow>
-                      <Key>no active marks</Key>
-                    </GroupRow>
-                  </Group>}
+              {activeMarks.length ? (
+                <JSONTree
+                  data={activeMarks}
+                  hideRoot
+                  getItemString={getItemStringForMark}
+                />
+              ) : (
+                <Group>
+                  <GroupRow>
+                    <Key>no active marks</Key>
+                  </GroupRow>
+                </Group>
+              )}
             </JSONTreeWrapper>
           </Section>
           <Section>
@@ -200,15 +209,11 @@ export default connect(
             <Group>
               <GroupRow>
                 <Key>nodeSize:</Key>
-                <ValueNum>
-                  {state.doc.nodeSize}
-                </ValueNum>
+                <ValueNum>{state.doc.nodeSize}</ValueNum>
               </GroupRow>
               <GroupRow>
                 <Key>childCount:</Key>
-                <ValueNum>
-                  {state.doc.childCount}
-                </ValueNum>
+                <ValueNum>{state.doc.childCount}</ValueNum>
               </GroupRow>
             </Group>
           </Section>

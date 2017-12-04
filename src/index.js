@@ -2,7 +2,7 @@ import "ie-array-find-polyfill";
 import objectAssign from "es6-object-assign";
 import React from "react";
 import ReactDOM from "react-dom";
-import { Container } from "cerebral/react";
+import { Container } from "@cerebral/react";
 import { ThemeProvider } from "styled-components";
 
 import createController from "./state/controller";
@@ -37,10 +37,25 @@ function applyDevTools(editorView, props) {
   const schemaUpdated = controller.getSignal("structureTab.schemaUpdated");
 
   subscribeOnUpdates(editorView, (tr, oldState, newState) => {
-    editorUpdated({ tr, oldState, newState });
+    editorUpdated({
+      tr,
+      oldState,
+      newState,
+      toJSON() {
+        return {
+          oldState: oldState.toJSON(),
+          newState: newState.toJSON()
+        };
+      }
+    });
 
     if (oldState.schema === newState.schema) {
-      schemaUpdated({ schema: newState.schema });
+      schemaUpdated({
+        schema: newState.schema,
+        toJSON() {
+          return {};
+        }
+      });
     }
   });
 

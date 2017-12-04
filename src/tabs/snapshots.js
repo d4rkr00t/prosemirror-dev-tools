@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { connect } from "cerebral/react";
+import { connect } from "@cerebral/react";
 import { state, signal } from "cerebral/tags";
 import { SplitView, SplitViewCol } from "../components/split-view";
 import { List } from "../components/list";
@@ -14,7 +14,7 @@ const ActionButton = styled.button`
   color: ${props => props.theme.white80};
   background: ${props => props.theme.white10};
   text-transform: uppercase;
-  transition: background .3s, color .3s;
+  transition: background 0.3s, color 0.3s;
   border-radius: 2px;
   border: none;
 
@@ -80,15 +80,17 @@ export default connect(
     return (
       <SplitView>
         <SplitViewCol noPaddings grow>
-          {snapshots && snapshots.length
-            ? <SnapshotsList
-                snapshots={snapshots}
-                snapshotLoaded={snapshotLoaded}
-                snapshotDeleted={snapshotDeleted}
-              />
-            : <InfoPanel>
-                No saved snapshots yet. Press "Save Snapshot" button to add one.
-              </InfoPanel>}
+          {snapshots && snapshots.length ? (
+            <SnapshotsList
+              snapshots={snapshots}
+              snapshotLoaded={snapshotLoaded}
+              snapshotDeleted={snapshotDeleted}
+            />
+          ) : (
+            <InfoPanel>
+              No saved snapshots yet. Press "Save Snapshot" button to add one.
+            </InfoPanel>
+          )}
         </SplitViewCol>
       </SplitView>
     );

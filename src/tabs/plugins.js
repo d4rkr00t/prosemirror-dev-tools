@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "cerebral/react";
+import { connect } from "@cerebral/react";
 import { state, signal } from "cerebral/tags";
 
 import { InfoPanel } from "../components/info-panel";
@@ -48,9 +48,11 @@ export default connect(
           />
         </SplitViewCol>
         <SplitViewCol grow sep>
-          {selectedPluginState
-            ? <PluginState pluginState={selectedPluginState} />
-            : <InfoPanel>Plugin doesn't have any state</InfoPanel>}
+          {selectedPluginState ? (
+            <PluginState pluginState={selectedPluginState} />
+          ) : (
+            <InfoPanel>Plugin doesn't have any state</InfoPanel>
+          )}
         </SplitViewCol>
       </SplitView>
     );
