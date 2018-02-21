@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { connect } from "@cerebral/react";
-import { state, signal } from "cerebral/tags";
+import { Subscribe } from "unstated";
+import EditorStateContainer from "../state/editor";
+import StateTabStateContainer from "../state/state-tab";
 import {
   expandedStateFormatSelection,
   collapsedStateFormatSelection
@@ -131,94 +132,88 @@ export function shouldExpandNode(expandPath, nodePath) {
   return false;
 }
 
-export default connect(
-  {
-    state: state`editor.state`,
-    activeMarks: state`editor.activeMarks`,
-    expandPath: state`editor.expandPath`,
-    selectionExpanded: state`stateTab.selectionExpanded`,
-    selectionToggled: signal`stateTab.selectionToggled`,
-    JSONTreeNodeLogged: signal`editor.JSONTreeNodeLogged`
-  },
-  function StateTab({
-    state,
-    activeMarks,
-    selectionExpanded,
-    selectionToggled,
-    expandPath,
-    JSONTreeNodeLogged
-  }) {
-    const doc = state.doc.toJSON();
-    return (
-      <SplitView>
-        <SplitViewCol grow>
-          <HeadingWithButton>
-            <Heading>Current Doc</Heading>
-            <HeadingButton onClick={() => console.log(state)}>
-              Log State
-            </HeadingButton>
-          </HeadingWithButton>
-          <JSONTree
-            data={doc}
-            hideRoot
-            getItemString={getItemString(doc, JSONTreeNodeLogged)}
-            shouldExpandNode={nodePath =>
-              shouldExpandNode(expandPath, nodePath)
-            }
-          />
-        </SplitViewCol>
-        <SplitViewCol sep minWidth={220}>
-          <Section>
-            <HeadingWithButton>
-              <Heading>Selection</Heading>
-              <HeadingButton onClick={() => selectionToggled()}>
-                {selectionExpanded ? "▼" : "▶"}
-              </HeadingButton>
-            </HeadingWithButton>
-            <JSONTreeWrapper>
+export default function StateTab() {
+  return (
+    <Subscribe to={[EditorStateContainer, StateTabStateContainer]}>
+      {(editorState, stateTab) => {
+        const { logNodeFromJSON } = editorState;
+        const { state, activeMarks, expandPath } = editorState.state;
+        const { toggleSelection } = stateTab;
+        const { selectionExpanded } = stateTab.state;
+        const doc = state.doc.toJSON();
+
+        return (
+          <SplitView>
+            <SplitViewCol grow>
+              <HeadingWithButton>
+                <Heading>Current Doc</Heading>
+                <HeadingButton onClick={() => console.log(state)}>
+                  Log State
+                </HeadingButton>
+              </HeadingWithButton>
               <JSONTree
-                data={
-                  selectionExpanded
-                    ? expandedStateFormatSelection(state.selection)
-                    : collapsedStateFormatSelection(state.selection)
-                }
+                data={doc}
                 hideRoot
+                getItemString={getItemString(doc, logNodeFromJSON)}
+                shouldExpandNode={nodePath =>
+                  shouldExpandNode(expandPath, nodePath)
+                }
               />
-            </JSONTreeWrapper>
-          </Section>
-          <Section>
-            <Heading>Active Marks</Heading>
-            <JSONTreeWrapper>
-              {activeMarks.length ? (
-                <JSONTree
-                  data={activeMarks}
-                  hideRoot
-                  getItemString={getItemStringForMark}
-                />
-              ) : (
+            </SplitViewCol>
+            <SplitViewCol sep minWidth={220}>
+              <Section>
+                <HeadingWithButton>
+                  <Heading>Selection</Heading>
+                  <HeadingButton onClick={() => toggleSelection()}>
+                    {selectionExpanded ? "▼" : "▶"}
+                  </HeadingButton>
+                </HeadingWithButton>
+                <JSONTreeWrapper>
+                  <JSONTree
+                    data={
+                      selectionExpanded
+                        ? expandedStateFormatSelection(state.selection)
+                        : collapsedStateFormatSelection(state.selection)
+                    }
+                    hideRoot
+                  />
+                </JSONTreeWrapper>
+              </Section>
+              <Section>
+                <Heading>Active Marks</Heading>
+                <JSONTreeWrapper>
+                  {activeMarks.length ? (
+                    <JSONTree
+                      data={activeMarks}
+                      hideRoot
+                      getItemString={getItemStringForMark}
+                    />
+                  ) : (
+                    <Group>
+                      <GroupRow>
+                        <Key>no active marks</Key>
+                      </GroupRow>
+                    </Group>
+                  )}
+                </JSONTreeWrapper>
+              </Section>
+              <Section>
+                <Heading>Document Stats</Heading>
                 <Group>
                   <GroupRow>
-                    <Key>no active marks</Key>
+                    <Key>nodeSize:</Key>
+                    <ValueNum>{state.doc.nodeSize}</ValueNum>
+                  </GroupRow>
+                  <GroupRow>
+                    <Key>childCount:</Key>
+                    <ValueNum>{state.doc.childCount}</ValueNum>
                   </GroupRow>
                 </Group>
-              )}
-            </JSONTreeWrapper>
-          </Section>
-          <Section>
-            <Heading>Document Stats</Heading>
-            <Group>
-              <GroupRow>
-                <Key>nodeSize:</Key>
-                <ValueNum>{state.doc.nodeSize}</ValueNum>
-              </GroupRow>
-              <GroupRow>
-                <Key>childCount:</Key>
-                <ValueNum>{state.doc.childCount}</ValueNum>
-              </GroupRow>
-            </Group>
-          </Section>
-        </SplitViewCol>
-      </SplitView>
-    );
-  }
-);
+              </Section>
+            </SplitViewCol>
+          </SplitView>
+        );
+      }}
+    </Subscribe>
+  );
+}

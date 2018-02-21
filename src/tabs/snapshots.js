@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { connect } from "@cerebral/react";
-import { state, signal } from "cerebral/tags";
+import { Subscribe } from "unstated";
+import EditorStateContainer from "../state/editor";
 import { SplitView, SplitViewCol } from "../components/split-view";
 import { List } from "../components/list";
 import { InfoPanel } from "../components/info-panel";
@@ -48,7 +48,7 @@ const ListItemTitle = styled.div`
   flex-grow: 1;
 `;
 
-export function SnapshotsList({ snapshots, snapshotDeleted, snapshotLoaded }) {
+export function SnapshotsList({ snapshots, deleteSnapshot, loadSnapshot }) {
   return (
     <List
       getKey={item => item.name + item.timestamp}
@@ -57,10 +57,10 @@ export function SnapshotsList({ snapshots, snapshotDeleted, snapshotLoaded }) {
         <ListItem>
           <ListItemTitle>{item.name}</ListItemTitle>
           <div>
-            <ActionButton onClick={() => snapshotDeleted({ snapshot: item })}>
+            <ActionButton onClick={() => deleteSnapshot(item)}>
               delete
             </ActionButton>
-            <ActionButton onClick={() => snapshotLoaded({ snapshot: item })}>
+            <ActionButton onClick={() => loadSnapshot(item)}>
               restore
             </ActionButton>
           </div>
@@ -70,29 +70,29 @@ export function SnapshotsList({ snapshots, snapshotDeleted, snapshotLoaded }) {
   );
 }
 
-export default connect(
-  {
-    snapshots: state`editor.snapshots`,
-    snapshotLoaded: signal`editor.snapshotLoaded`,
-    snapshotDeleted: signal`editor.snapshotDeleted`
-  },
-  function SnapshotsTab({ snapshots, snapshotLoaded, snapshotDeleted }) {
-    return (
-      <SplitView>
-        <SplitViewCol noPaddings grow>
-          {snapshots && snapshots.length ? (
-            <SnapshotsList
-              snapshots={snapshots}
-              snapshotLoaded={snapshotLoaded}
-              snapshotDeleted={snapshotDeleted}
-            />
-          ) : (
-            <InfoPanel>
-              No saved snapshots yet. Press "Save Snapshot" button to add one.
-            </InfoPanel>
-          )}
-        </SplitViewCol>
-      </SplitView>
-    );
-  }
-);
+export default function SnapshotsTab() {
+  return (
+    <Subscribe to={[EditorStateContainer]}>
+      {({ state: { snapshots }, loadSnapshot, deleteSnapshot }) => {
+        return (
+          <SplitView>
+            <SplitViewCol noPaddings grow>
+              {snapshots && snapshots.length ? (
+                <SnapshotsList
+                  snapshots={snapshots}
+                  loadSnapshot={loadSnapshot}
+                  deleteSnapshot={deleteSnapshot}
+                />
+              ) : (
+                <InfoPanel>
+                  No saved snapshots yet. Press "Save Snapshot" button to add
+                  one.
+                </InfoPanel>
+              )}
+            </SplitViewCol>
+          </SplitView>
+        );
+      }}
+    </Subscribe>
+  );
+}

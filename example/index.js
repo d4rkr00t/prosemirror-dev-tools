@@ -1,3 +1,4 @@
+// aik-mode:react
 import applyDevTools from "../src";
 import "./editor.css";
 

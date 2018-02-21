@@ -1,7 +1,6 @@
 import React from "react";
-import { connect } from "@cerebral/react";
-import { state } from "cerebral/tags";
-
+import { Subscribe } from "unstated";
+import EditorStateContainer from "../state/editor";
 import { SplitView, SplitViewCol } from "../components/split-view";
 import JSONTree from "../components/json-tree";
 import { Heading } from "./../components/heading";
@@ -20,28 +19,29 @@ export function postprocessValue(ignore, data) {
     }, {});
 }
 
-export default connect(
-  {
-    state: state`editor.state`
-  },
-  function SchemaView({ state }) {
-    return (
-      <SplitView>
-        <SplitViewCol grow>
-          <Heading>Nodes</Heading>
-          <JSONTree
-            data={state.schema.nodes}
-            postprocessValue={postprocessValue.bind(null, ignoreFields)}
-          />
-        </SplitViewCol>
-        <SplitViewCol grow sep>
-          <Heading>Marks</Heading>
-          <JSONTree
-            data={state.schema.marks}
-            postprocessValue={postprocessValue.bind(null, ignoreFields)}
-          />
-        </SplitViewCol>
-      </SplitView>
-    );
-  }
-);
+export default function SchemaView() {
+  return (
+    <Subscribe to={[EditorStateContainer]}>
+      {({ state: { state } }) => {
+        return (
+          <SplitView>
+            <SplitViewCol grow>
+              <Heading>Nodes</Heading>
+              <JSONTree
+                data={state.schema.nodes}
+                postprocessValue={postprocessValue.bind(null, ignoreFields)}
+              />
+            </SplitViewCol>
+            <SplitViewCol grow sep>
+              <Heading>Marks</Heading>
+              <JSONTree
+                data={state.schema.marks}
+                postprocessValue={postprocessValue.bind(null, ignoreFields)}
+              />
+            </SplitViewCol>
+          </SplitView>
+        );
+      }}
+    </Subscribe>
+  );
+}

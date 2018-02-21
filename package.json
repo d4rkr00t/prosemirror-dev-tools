@@ -30,31 +30,32 @@
     "url": "https://github.com/d4rkr00t/prosemirror-dev-tools"
   },
   "dependencies": {
-    "@cerebral/react": "^2.6.0",
-    "cerebral": "^3.6.0",
     "date-fns": "^1.28.2",
     "es6-object-assign": "^1.1.0",
     "html": "^1.0.0",
     "ie-array-find-polyfill": "^1.1.0",
     "javascript-stringify": "^1.6.0",
     "jsondiffpatch": "github:d4rkr00t/jsondiffpatch#d80390b4354befe55802e292122b8059462c1b7d",
-    "prosemirror-model": ">=0.23.0",
-    "prosemirror-state": ">=0.23.0",
+    "prosemirror-model": ">=1.0.0",
+    "prosemirror-state": ">=1.0.0",
     "react-dock": "^0.2.3",
     "react-json-tree": "^0.11.0",
     "react-syntax-highlighter": "^6.0.4",
     "react-tabs": "^2.1.1",
-    "styled-components": "^2.1.0"
+    "styled-components": "^2.1.0",
+    "unstated": "^1.0.3"
   },
   "peerDependencies": {
     "react": ">=15.6.1",
     "react-dom": ">=15.6.1"
   },
   "devDependencies": {
-    "aik": "^0.16.1",
+    "aik": "^0.17.0",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.0",
+    "babel-plugin-syntax-class-properties": "^6.13.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
     "commitizen": "^2.9.6",
@@ -65,7 +66,7 @@
     "lint-staged": "^6.0.0",
     "pmm": "^1.3.1",
     "pre-commit": "^1.2.2",
-    "prettier": "^1.5.1",
+    "prettier": "^1.10.2",
     "prosemirror-example-setup": "*",
     "prosemirror-schema-basic": "*",
     "prosemirror-view": "*",

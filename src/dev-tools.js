@@ -1,19 +1,22 @@
 import React from "react";
-import { connect } from "@cerebral/react";
-import { state, signal } from "cerebral/tags";
+import { Subscribe } from "unstated";
+import GlobalStateContainer from "./state/global";
+import EditorStateContainer from "./state/editor";
 import DevToolsCollapsed from "./dev-tools-collapsed";
 import DevToolsExpanded from "./dev-tools-expanded";
 
-export default connect(
-  {
-    opened: state`opened`,
-    devToolsToggled: signal`devToolsToggled`
-  },
-  function DevTools({ opened, devToolsToggled }) {
-    if (opened) {
-      return <DevToolsExpanded onClick={() => devToolsToggled()} />;
-    } else {
-      return <DevToolsCollapsed onClick={() => devToolsToggled()} />;
-    }
-  }
-);
+export default function DevTools({ editorView, props }) {
+  return (
+    <Subscribe to={[GlobalStateContainer, EditorStateContainer]}>
+      {({ state, toggleDevTools }, { registerEditorView }) => {
+        registerEditorView(editorView, props);
+
+        return state.opened ? (
+          <DevToolsExpanded />
+        ) : (
+          <DevToolsCollapsed onClick={toggleDevTools} />
+        );
+      }}
+    </Subscribe>
+  );
+}
