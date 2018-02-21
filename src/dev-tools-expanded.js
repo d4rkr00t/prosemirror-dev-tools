@@ -2,8 +2,9 @@ import React from "react";
 import Dock from "react-dock";
 import styled from "styled-components";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import { connect } from "@cerebral/react";
-import { state, signal } from "cerebral/tags";
+import { Subscribe } from "unstated";
+import GlobalStateContainer from "./state/global";
+import EditorStateContainer from "./state/editor";
 import StateTab from "./tabs/state";
 import HistoryTab from "./tabs/history";
 import SchemaTab from "./tabs/schema";
@@ -90,118 +91,116 @@ const CloseButton = styled.button`
   }
 `;
 
-// Tabs.setUseDefaultStyles(false);
-
-export default connect(
-  {
-    tabIndex: state`tabIndex`,
-    devToolsSize: state`defaultSize`,
-    tabSelected: signal`tabSelected`,
-    devToolsToggled: signal`devToolsToggled`,
-    devToolsSizeChanged: signal`devToolsSizeChanged`,
-    state: state`editor.state`,
-    nodePicker: state`editor.nodePicker`,
-    pickerActivated: signal`editor.pickerActivated`,
-    pickerDeactivated: signal`editor.pickerDeactivated`,
-    snapshotSaved: signal`editor.snapshotSaved`
-  },
-  function DevToolsExpanded({
-    tabIndex,
-    devToolsSize,
-    tabSelected,
-    devToolsToggled,
-    devToolsSizeChanged,
-    nodePicker,
-    pickerActivated,
-    pickerDeactivated,
-    state,
-    snapshotSaved
-  }) {
-    const pickerActive = !!(nodePicker.onClick && nodePicker.onMouseOver);
-    return (
-      <CSSReset>
-        <NodePicker />
-        <Dock
-          position="bottom"
-          dimMode="none"
-          isVisible
-          defaultSize={devToolsSize}
-          onSizeChange={size => devToolsSizeChanged({ size })}
-        >
-          {() => (
-            <DockContainer>
-              <CloseButton onClick={() => devToolsToggled()}>×</CloseButton>
-              <NodePickerTrigger
-                onClick={pickerActive ? pickerDeactivated : pickerActivated}
-                isActive={pickerActive}
-              />
-              <SaveSnapshotButton
-                onClick={() => snapshotSaved({ snapshot: state.doc.toJSON() })}
-              >
-                Save Snapshot
-              </SaveSnapshotButton>
-              <Tabs
-                className="tabs"
-                selectedTabClassName="tabs--selected"
-                selectedTabPanelClassName="tabs_tab-panel--selected"
-                selectedIndex={tabIndex}
-                onSelect={index => tabSelected({ index })}
-              >
-                <TabList className="tabs__tablist">
-                  <Tab>
-                    <TabLabel>State</TabLabel>
-                  </Tab>
-                  <Tab>
-                    <TabLabel>History</TabLabel>
-                  </Tab>
-                  <Tab>
-                    <TabLabel>Plugins</TabLabel>
-                  </Tab>
-                  <Tab>
-                    <TabLabel>Schema</TabLabel>
-                  </Tab>
-                  <Tab>
-                    <TabLabel>Structure</TabLabel>
-                  </Tab>
-                  <Tab>
-                    <TabLabel>Snapshots</TabLabel>
-                  </Tab>
-                </TabList>
-                <TabPanel>
-                  <TabPanelWrapper>
-                    <StateTab />
-                  </TabPanelWrapper>
-                </TabPanel>
-                <TabPanel>
-                  <TabPanelWrapper>
-                    <HistoryTab />
-                  </TabPanelWrapper>
-                </TabPanel>
-                <TabPanel>
-                  <TabPanelWrapper>
-                    <PluginsTab />
-                  </TabPanelWrapper>
-                </TabPanel>
-                <TabPanel>
-                  <TabPanelWrapper>
-                    <SchemaTab />
-                  </TabPanelWrapper>
-                </TabPanel>
-                <TabPanel>
-                  <TabPanelWrapper>
-                    <StructureTab />
-                  </TabPanelWrapper>
-                </TabPanel>
-                <TabPanel>
-                  <TabPanelWrapper>
-                    <SnapshotsTab />
-                  </TabPanelWrapper>
-                </TabPanel>
-              </Tabs>
-            </DockContainer>
-          )}
-        </Dock>
-      </CSSReset>
-    );
-  }
-);
+export default function DevToolsExpanded() {
+  return (
+    <Subscribe to={[GlobalStateContainer, EditorStateContainer]}>
+      {(globalState, editorState) => {
+        const { defaultSize, tabIndex } = globalState.state;
+        const { toggleDevTools, updateBodyMargin, selectTab } = globalState;
+        const {
+          activatePicker,
+          deactivatePicker,
+          updateNodePickerPossition,
+          nodePickerSelect,
+          saveSnapshot
+        } = editorState;
+        const { nodePicker, state } = editorState.state;
+        return (
+          <CSSReset>
+            <NodePicker
+              nodePicker={nodePicker}
+              onClose={deactivatePicker}
+              onMouseMove={updateNodePickerPossition}
+              onSelect={target => {
+                nodePickerSelect(target);
+                selectTab(0); // Switch to the "State" tab.
+              }}
+            />
+            <Dock
+              position="bottom"
+              dimMode="none"
+              isVisible
+              defaultSize={defaultSize}
+              onSizeChange={updateBodyMargin}
+            >
+              {() => (
+                <DockContainer>
+                  <CloseButton onClick={toggleDevTools}>×</CloseButton>
+                  <NodePickerTrigger
+                    onClick={
+                      nodePicker.active ? deactivatePicker : activatePicker
+                    }
+                    isActive={nodePicker.active}
+                  />
+                  <SaveSnapshotButton
+                    onClick={() => saveSnapshot(state.doc.toJSON())}
+                  >
+                    Save Snapshot
+                  </SaveSnapshotButton>
+                  <Tabs
+                    className="tabs"
+                    selectedTabClassName="tabs--selected"
+                    selectedTabPanelClassName="tabs_tab-panel--selected"
+                    selectedIndex={tabIndex}
+                    onSelect={selectTab}
+                  >
+                    <TabList className="tabs__tablist">
+                      <Tab>
+                        <TabLabel>State</TabLabel>
+                      </Tab>
+                      <Tab>
+                        <TabLabel>History</TabLabel>
+                      </Tab>
+                      <Tab>
+                        <TabLabel>Plugins</TabLabel>
+                      </Tab>
+                      <Tab>
+                        <TabLabel>Schema</TabLabel>
+                      </Tab>
+                      <Tab>
+                        <TabLabel>Structure</TabLabel>
+                      </Tab>
+                      <Tab>
+                        <TabLabel>Snapshots</TabLabel>
+                      </Tab>
+                    </TabList>
+                    <TabPanel>
+                      <TabPanelWrapper>
+                        <StateTab />
+                      </TabPanelWrapper>
+                    </TabPanel>
+                    <TabPanel>
+                      <TabPanelWrapper>
+                        <HistoryTab />
+                      </TabPanelWrapper>
+                    </TabPanel>
+                    <TabPanel>
+                      <TabPanelWrapper>
+                        <PluginsTab />
+                      </TabPanelWrapper>
+                    </TabPanel>
+                    <TabPanel>
+                      <TabPanelWrapper>
+                        <SchemaTab />
+                      </TabPanelWrapper>
+                    </TabPanel>
+                    <TabPanel>
+                      <TabPanelWrapper>
+                        <StructureTab />
+                      </TabPanelWrapper>
+                    </TabPanel>
+                    <TabPanel>
+                      <TabPanelWrapper>
+                        <SnapshotsTab />
+                      </TabPanelWrapper>
+                    </TabPanel>
+                  </Tabs>
+                </DockContainer>
+              )}
+            </Dock>
+          </CSSReset>
+        );
+      }}
+    </Subscribe>
+  );
+}

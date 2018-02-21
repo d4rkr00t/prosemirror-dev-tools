@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { connect } from "@cerebral/react";
-import { state, signal } from "cerebral/tags";
-
+import { Subscribe } from "unstated";
+import EditorStateContainer from "../state/editor";
+import StructureTabStateContainer from "../state/structure-tab";
 import { SplitView, SplitViewCol } from "../components/split-view";
 import JSONTree from "../components/json-tree";
 import {
@@ -154,44 +154,45 @@ export function InlineNode(props) {
   );
 }
 
-export default connect(
-  {
-    state: state`editor.state`,
-    selectedNode: state`structureTab.selectedNode`,
-    colors: state`structureTab.colors`,
-    nodeSelected: signal`structureTab.nodeSelected`
-  },
-  function GraphTab({ state, colors, selectedNode, nodeSelected }) {
-    const selected = selectedNode ? selectedNode : state.doc;
-    return (
-      <SplitView>
-        <SplitViewCol grow>
-          <Heading>Current Doc</Heading>
-          <GraphWrapper>
-            <BlockNode
-              colors={colors}
-              node={state.doc}
-              startPos={0}
-              onNodeSelected={nodeSelected}
-            />
-          </GraphWrapper>
-        </SplitViewCol>
-        <SplitViewCol sep minWidth={200} maxWidth={300}>
-          <HeadingWithButton>
-            <Heading>Node Info</Heading>
-            <HeadingButton onClick={() => console.log(selected)}>
-              Log Node
-            </HeadingButton>
-          </HeadingWithButton>
-          <JSONTree
-            data={selected.toJSON()}
-            hideRoot
-            shouldExpandNode={() =>
-              selected.type.name !== "doc" ? true : false
-            }
-          />
-        </SplitViewCol>
-      </SplitView>
-    );
-  }
-);
+export default function GraphTab() {
+  return (
+    <Subscribe to={[EditorStateContainer, StructureTabStateContainer]}>
+      {(editorState, structureTabState) => {
+        const { state, nodeColors } = editorState.state;
+        const { selectedNode } = structureTabState.state;
+        const selected = selectedNode ? selectedNode : state.doc;
+
+        return (
+          <SplitView>
+            <SplitViewCol grow>
+              <Heading>Current Doc</Heading>
+              <GraphWrapper>
+                <BlockNode
+                  colors={nodeColors}
+                  node={state.doc}
+                  startPos={0}
+                  onNodeSelected={structureTabState.selectNode}
+                />
+              </GraphWrapper>
+            </SplitViewCol>
+            <SplitViewCol sep minWidth={200} maxWidth={300}>
+              <HeadingWithButton>
+                <Heading>Node Info</Heading>
+                <HeadingButton onClick={() => console.log(selected)}>
+                  Log Node
+                </HeadingButton>
+              </HeadingWithButton>
+              <JSONTree
+                data={selected.toJSON()}
+                hideRoot
+                shouldExpandNode={() =>
+                  selected.type.name !== "doc" ? true : false
+                }
+              />
+            </SplitViewCol>
+          </SplitView>
+        );
+      }}
+    </Subscribe>
+  );
+}
