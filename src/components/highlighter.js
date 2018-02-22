@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import glamorous from "glamorous/dist/glamorous.esm.tiny";
 import SyntaxHighlighter, {
   registerLanguage
 } from "react-syntax-highlighter/light";
@@ -10,10 +10,11 @@ colorTheme.hljs.background = "transparent";
 
 registerLanguage("html", htmlLang);
 
-const CustomPre = styled.pre`
-  padding: 9px 0 18px 0 !important;
-  margin: 0;
-`;
+const CustomPre = glamorous("pre")({
+  padding: "9px 0 18px 0 !important",
+  margin: 0
+});
+CustomPre.displayName = "CustomPre";
 
 export function Highlighter(props) {
   if (!props.children) return null;

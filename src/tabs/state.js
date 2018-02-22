@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import glamorous from "glamorous/dist/glamorous.esm.tiny";
 import { Subscribe } from "unstated";
 import EditorStateContainer from "../state/editor";
 import StateTabStateContainer from "../state/state-tab";
@@ -14,56 +14,64 @@ import {
   HeadingWithButton,
   HeadingButton
 } from "./../components/heading";
+import theme from "../theme";
 
-const JSONTreeWrapper = styled.div`
-  padding: 0 0 9px 0;
-  overflow: hidden;
-`;
+const JSONTreeWrapper = glamorous("div")({
+  padding: "0 0 9px 0",
+  overflow: "hidden"
+});
+JSONTreeWrapper.displayName = "JSONTreeWrapper";
 
-const Section = styled.div`
-  min-width: 180px;
-  box-sizing: border-box;
+const Section = glamorous("div")({
+  minWidth: "180px",
+  boxSizing: "border-box",
 
-  & + & {
-    padding-top: 9px;
+  "& + &": {
+    paddingTop: "9px"
   }
-`;
+});
+Section.displayName = "Section";
 
-const Group = styled.div`
-  margin: 0.5em 0px 0.5em 1em;
-`;
+const Group = glamorous("div")({
+  margin: "0.5em 0px 0.5em 1em"
+});
+Group.displayName = "Group";
 
-const GroupRow = styled.div`
-  padding-top: 0.25em;
-`;
+const GroupRow = glamorous("div")({
+  paddingTop: "0.25em"
+});
+GroupRow.displayName = "GroupRow";
 
-const Key = styled.span`
-  display: inline-block;
-  color: ${props => props.theme.syntax.base0D};
-  margin: 0px 0.5em 0px 0px;
-`;
+const Key = glamorous("span")({
+  display: "inline-block",
+  color: theme.syntax.base0D,
+  margin: "0px 0.5em 0px 0px"
+});
+Key.displayName = "Key";
 
-const ValueNum = styled.span`
-  color: ${props => props.theme.syntax.base09};
-`;
+const ValueNum = glamorous("span")({
+  color: theme.syntax.base09
+});
+ValueNum.displayName = "ValueNum";
 
-const LogNodeButton = styled.button`
-  color: ${props => props.theme.white60};
-  background: none;
-  border: none;
-  transition: background 0.3s, color 0.3s;
-  border-radius: 3px;
+const LogNodeButton = glamorous("button")({
+  color: theme.white60,
+  background: "none",
+  border: "none",
+  transition: "background 0.3s, color 0.3s",
+  borderRadius: "3px",
 
-  &:hover {
-    cursor: pointer;
-    background: ${props => props.theme.main40};
-    color: ${props => props.theme.white};
+  "&:hover": {
+    cursor: "pointer",
+    background: theme.main40,
+    color: theme.white
+  },
+
+  "&:focus": {
+    outline: "none"
   }
-
-  &:focus {
-    outline: none;
-  }
-`;
+});
+LogNodeButton.displayName = "LogNodeButton";
 
 export function getItemString(doc, action) {
   return function getItemStringWithBindedDoc(
@@ -144,7 +152,7 @@ export default function StateTab() {
 
         return (
           <SplitView>
-            <SplitViewCol grow>
+            <SplitViewCol glam={{ grow: true }}>
               <HeadingWithButton>
                 <Heading>Current Doc</Heading>
                 <HeadingButton onClick={() => console.log(state)}>
@@ -160,7 +168,7 @@ export default function StateTab() {
                 }
               />
             </SplitViewCol>
-            <SplitViewCol sep minWidth={220}>
+            <SplitViewCol glam={{ sep: true, minWidth: 220 }}>
               <Section>
                 <HeadingWithButton>
                   <Heading>Selection</Heading>

@@ -1,29 +1,31 @@
 import React from "react";
-import styled from "styled-components";
+import glamorous from "glamorous/dist/glamorous.esm.tiny";
+import theme from "./theme";
 
-const FloattingButton = styled.div`
-  position: fixed;
-  bottom: 16px;
-  right: 16px;
-  background: ${props => props.theme.mainBg};
-  box-shadow: 0 0 30px ${props => props.theme.black30};
-  border-radius: 50%;
-  padding: 4px 6px;
-  transition: opacity 0.3s;
-  z-index: 99999;
+const FloattingButton = glamorous("div")({
+  position: "fixed",
+  bottom: "16px",
+  right: "16px",
+  background: theme.mainBg,
+  boxShadow: `0 0 30px ${theme.black30}`,
+  borderRadius: "50%",
+  padding: "4px 6px",
+  transition: "opacity 0.3s",
+  zIndex: 99999,
 
-  &:hover {
-    opacity: 0.7;
-    cursor: pointer;
+  "&:hover": {
+    opacity: 0.7,
+    cursor: "pointer"
+  },
+
+  "& img": {
+    width: "34px",
+    height: "34px",
+    position: "relative",
+    bottom: "-2px"
   }
-
-  img {
-    width: 34px;
-    height: 34px;
-    position: relative;
-    bottom: -2px;
-  }
-`;
+});
+FloattingButton.displayName = "FloattingButton";
 
 export default function DevToolsCollapsed(props) {
   return (

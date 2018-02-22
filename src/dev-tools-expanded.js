@@ -1,6 +1,6 @@
 import React from "react";
 import Dock from "react-dock";
-import styled from "styled-components";
+import glamorous from "glamorous/dist/glamorous.esm.tiny";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { Subscribe } from "unstated";
 import GlobalStateContainer from "./state/global";
@@ -14,82 +14,87 @@ import SnapshotsTab from "./tabs/snapshots";
 import CSSReset from "./components/css-reset";
 import { NodePicker, NodePickerTrigger } from "./components/node-picker";
 import SaveSnapshotButton from "./components/save-snapshot-button";
+import theme from "./theme";
 
-const DockContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background: ${props => props.theme.mainBg};
-  font-family: Helvetica Neue, Calibri Light, Roboto, sans-serif;
-  font-size: 13px;
+const DockContainer = glamorous("div")({
+  width: "100%",
+  height: "100%",
+  overflow: "hidden",
+  background: theme.mainBg,
+  fontFamily: "Helvetica Neue, Calibri Light, Roboto, sans-serif",
+  fontSize: "13px",
 
-  .tabs {
-    height: 100%;
-    width: 100%;
+  "& .tabs": {
+    height: "100%",
+    width: "100%",
 
-    ul {
-      margin: 0;
-      padding: 0;
+    "& ul": {
+      margin: 0,
+      padding: 0
+    },
+
+    "& .tabs__tablist": {
+      display: "flex",
+      listStyle: "none",
+      borderBottom: `1px solid ${theme.main20}`
+    },
+
+    "& .tabs_tab-panel--selected": {
+      height: "100%"
+    },
+
+    "& .tabs--selected": {
+      borderBottom: `2px solid ${theme.main}`
     }
-
-    .tabs__tablist {
-      display: flex;
-      list-style: none;
-      border-bottom: 1px solid ${props => props.theme.main20};
-    }
-
-    .tabs_tab-panel--selected {
-      height: 100%;
-    }
-
-    .tabs--selected {
-      border-bottom: 2px solid ${props => props.theme.main};
-    }
   }
-`;
+});
+DockContainer.displayName = "DockContainer";
 
-const TabLabel = styled.div`
-  color: ${props => props.theme.white};
-  text-transform: uppercase;
-  font-size: 13px;
-  padding: 16px 24px 14px;
-  box-sizing: border-box;
-  user-select: none;
+const TabLabel = glamorous("div")({
+  color: theme.white,
+  textTransform: "uppercase",
+  fontSize: "13px",
+  padding: "16px 24px 14px",
+  boxSizing: "border-box",
+  userSelect: "none",
 
-  &:hover {
-    cursor: pointer;
-    background: ${props => props.theme.white05};
+  "&:hover": {
+    cursor: "pointer",
+    background: theme.white05
+  },
+
+  "&:focus": {
+    outline: "none"
   }
+});
+TabLabel.displayName = "TabLabel";
 
-  &:focus {
-    outline: none;
+const TabPanelWrapper = glamorous("div")({
+  width: "100%",
+  height: "calc(100% - 48px)",
+  boxSizing: "border-box"
+});
+TabPanelWrapper.displayName = "TabPanelWrapper";
+
+const CloseButton = glamorous("button")({
+  background: "none",
+  border: "none",
+  position: "absolute",
+  right: 0,
+  color: theme.white60,
+  fontSize: "18px",
+
+  "&:hover": {
+    cursor: "pointer",
+    background: theme.white05,
+    color: theme.white
+  },
+
+  "&:focus": {
+    outline: "none"
   }
-`;
-
-const TabPanelWrapper = styled.div`
-  width: 100%;
-  height: calc(100% - 48px);
-  box-sizing: border-box;
-`;
-
-const CloseButton = styled.button`
-  background: none;
-  border: none;
-  position: absolute;
-  right: 0;
-  color: ${props => props.theme.white60};
-  font-size: 18px;
-
-  &:hover {
-    cursor: pointer;
-    background: ${props => props.theme.white05};
-    color: ${props => props.theme.white};
-  }
-
-  &:focus {
-    outline: none;
-  }
-`;
+});
+CloseButton.displayName = "CloseButton";
 
 export default function DevToolsExpanded() {
   return (
@@ -130,7 +135,7 @@ export default function DevToolsExpanded() {
                     onClick={
                       nodePicker.active ? deactivatePicker : activatePicker
                     }
-                    isActive={nodePicker.active}
+                    glam={{ isActive: nodePicker.active }}
                   />
                   <SaveSnapshotButton
                     onClick={() => saveSnapshot(state.doc.toJSON())}

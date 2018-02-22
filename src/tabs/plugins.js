@@ -35,7 +35,7 @@ export default function PluginsTab() {
 
         return (
           <SplitView>
-            <SplitViewCol noPaddings>
+            <SplitViewCol glam={{ noPaddings: true }}>
               <List
                 items={plugins}
                 getKey={plugin => plugin.key}
@@ -49,7 +49,7 @@ export default function PluginsTab() {
                 }
               />
             </SplitViewCol>
-            <SplitViewCol grow sep>
+            <SplitViewCol glam={{ grow: true, sep: true }}>
               {selectedPluginState ? (
                 <PluginState pluginState={selectedPluginState} />
               ) : (

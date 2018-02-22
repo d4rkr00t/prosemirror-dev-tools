@@ -1,51 +1,67 @@
 import React, { PureComponent } from "react";
-import styled from "styled-components";
+import glamorous from "glamorous/dist/glamorous.esm.tiny";
+import theme from "../theme";
 
 const noop = () => {};
 
-export const ListItem = styled.div`
-  min-width: 190px;
-  width: 100%;
-  display: flex;
-  padding: ${props => props.nested ? "6px 18px 6px 36px" : "6px 18px"};
-  box-sizing: border-box;
-  font-weight: 400;
-  letter-spacing: 1px;
-  font-size: 11px;
-  color: ${props => props.theme.white80};
-  text-transform: uppercase;
-  transition: background .3s, color .3s;
-  border: none;
-  background: ${props => props.background ? props.background(props) : props.isSelected ? props.theme.main40 : "transparent"};
-  text-align: left;
-  font-family: monospace;
-  transition: background .3s;
-  border-top: 1px solid ${props => props.theme.main20};
-  opacity: ${props => props.isDimmed ? 0.3 : 1};
-  margin: 0;
+export const ListItem = glamorous("div")(
+  {
+    minWidth: "190px",
+    width: "100%",
+    display: "flex",
+    boxSizing: "border-box",
+    fontWeight: 400,
+    letterSpacing: "1px",
+    fontSize: "11px",
+    color: theme.white80,
+    textTransform: "uppercase",
+    transition: "background .3s",
+    textAlign: "left",
+    fontFamily: "monospace",
+    border: "none",
+    borderTop: `1px solid ${theme.main20}`,
+    margin: 0,
 
-  &:first-child {
-    border-top: none;
+    "&:first-child": {
+      borderTop: "none"
+    },
+
+    "&:hover": {
+      background: theme.main40,
+      color: theme.white,
+      cursor: "pointer"
+    },
+
+    "&:focus": {
+      outline: "none"
+    },
+
+    "&:active": {
+      background: theme.main60
+    }
+  },
+  props => {
+    const { glam } = props;
+    return {
+      opacity: glam.isDimmed ? 0.3 : 1,
+      padding: glam.nested ? "6px 18px 6px 36px" : "6px 18px",
+      background: glam.background
+        ? glam.background(props)
+        : glam.isSelected ? theme.main40 : "transparent"
+    };
   }
+);
+ListItem.displayName = "ListItem";
 
-  &:hover {
-    background: ${props => props.theme.main40};
-    color: ${props => props.theme.white};
-    cursor: pointer;
-  }
-
-  &:focus {
-    outline: none;
-  }
-
-  &:active {
-    background: ${props => props.theme.main60};
-  }
-`;
-
-const ListItemGroupContent = styled.div`
-  display: ${props => props.collapsed ? "none" : "block"}
-`;
+const ListItemGroupContent = glamorous("div")(
+  {
+    display: "block"
+  },
+  ({ glam }) => ({
+    display: glam.collapsed ? "none" : "block"
+  })
+);
+ListItemGroupContent.displayName = "ListItemGroupContent";
 
 class ListItemGroup extends PureComponent {
   constructor(props) {
@@ -75,24 +91,29 @@ class ListItemGroup extends PureComponent {
         <ListItem
           key={getKey(items[0])}
           onClick={() => this.toggle()}
-          isSelected={items.some(isSelected) && this.state.collapsed}
-          isDimmed={items.every(isDimmed)}
-          isPrevious={isPrevious(items[0], 0) && this.state.collapsed}
-          background={customItemBackground}
+          glam={{
+            nested: true,
+            isSelected: items.some(isSelected) && this.state.collapsed,
+            isPrevious: isPrevious(items[0], 0) && this.state.collapsed,
+            isDimmed: items.every(isDimmed),
+            background: customItemBackground
+          }}
         >
           <div style={{ flexGrow: 1 }}>{groupTitle(items, 0)}</div>
           <div>{this.state.collapsed ? "▶" : "▼"}</div>
         </ListItem>
-        <ListItemGroupContent collapsed={this.state.collapsed}>
+        <ListItemGroupContent glam={{ collapsed: this.state.collapsed }}>
           {(items || []).map((item, index) => {
             return (
               <ListItem
                 key={getKey(item)}
-                nested
-                isSelected={isSelected(item, index)}
-                isPrevious={isPrevious(item, index)}
-                isDimmed={isDimmed(item, index)}
-                background={customItemBackground}
+                glam={{
+                  nested: true,
+                  isSelected: isSelected(item, index),
+                  isPrevious: isPrevious(item, index),
+                  isDimmed: isDimmed(item, index),
+                  background: customItemBackground
+                }}
                 onClick={() => onListItemClick(item, index)}
                 onDoubleClick={() => onListItemDoubleClick(item, index)}
               >
@@ -129,10 +150,13 @@ export function List(props) {
         return (
           <ListItem
             key={getKey(item)}
-            isSelected={isSelected(item, index)}
-            isPrevious={isPrevious(item, index)}
-            isDimmed={isDimmed(item, index)}
-            background={props.customItemBackground}
+            glam={{
+              nested: true,
+              isSelected: isSelected(item, index),
+              isPrevious: isPrevious(item, index),
+              isDimmed: isDimmed(item, index),
+              background: props.customItemBackground
+            }}
             onClick={() => onListItemClick(item, index)}
             onDoubleClick={() => onListItemDoubleClick(item, index)}
           >

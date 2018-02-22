@@ -285,7 +285,6 @@ export default class EditorStateContainer extends Container {
   };
 
   loadSnapshot = snapshot => {
-    console.log(snapshot);
     const EditorState = this.state.EditorState;
     const editorView = this.state.view;
     const editorState = editorView.state;

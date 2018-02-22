@@ -1,17 +1,24 @@
-import styled from "styled-components";
+import glamorous from "glamorous/dist/glamorous.esm.tiny";
+import theme from "../theme";
 
-export const SplitView = styled.div`
-  display: flex;
-  height: 100%;
-`;
+export const SplitView = glamorous("div")({
+  display: "flex",
+  height: "100%"
+});
+SplitView.displayName = "SplitView";
 
-export const SplitViewCol = styled.div`
-  flex-grow: ${props => props.grow ? 1 : 0};
-  box-sizing: border-box;
-  border-left: ${props => props.sep ? "1px solid " + props.theme.main20 : "none"};
-  padding: ${props => props.noPaddings ? "" : "16px 18px 18px"};
-  overflow: scroll;
-  height: 100%;
-  ${({ minWidth }) => minWidth ? `min-width: ${minWidth}px;` : ""}
-  ${({ maxWidth }) => maxWidth ? `max-width: ${maxWidth}px;` : ""}
-`;
+export const SplitViewCol = glamorous("div")(
+  {
+    boxSizing: "border-box",
+    height: "100%",
+    overflow: "scroll"
+  },
+  ({ glam: { grow, sep, noPaddings, minWidth, maxWidth } }) => ({
+    flexGrow: grow ? 1 : 0,
+    borderLeft: sep ? "1px solid " + theme.main20 : "none",
+    padding: noPaddings ? "" : "16px 18px 18px",
+    minWidth: minWidth ? `${minWidth}px;` : "none",
+    maxWidth: maxWidth ? `${maxWidth}px;` : "none"
+  })
+);
+SplitViewCol.displayName = "SplitViewCol";
