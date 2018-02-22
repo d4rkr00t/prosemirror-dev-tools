@@ -1,24 +1,26 @@
-import styled from "styled-components";
+import glamorous from "glamorous/dist/glamorous.esm.tiny";
+import theme from "../theme";
 
-const SaveSnapshotButton = styled.div`
-  position: absolute;
-  right: 32px;
-  top: -28px;
-  color: ${props => props.theme.white};
-  background: ${props => props.theme.main60};
-  font-size: 12px;
-  line-height: 25px;
-  padding: 0 6px;
-  height: 24px;
-  background-size: 20px 20px;
-  background-repeat: none;
-  background-position: 50% 50%;
-  border-radius: 3px;
+const SaveSnapshotButton = glamorous("div")({
+  position: "absolute",
+  right: "32px",
+  top: "-28px",
+  color: theme.white,
+  background: theme.main60,
+  fontSize: "12px",
+  lineHeight: "25px",
+  padding: "0 6px",
+  height: "24px",
+  backgroundSize: "20px 20px",
+  backgroundRepeat: "none",
+  backgroundPosition: "50% 50%",
+  borderRadius: "3px",
 
-  &:hover {
-    background-color: ${props => props.theme.main80};
-    cursor: pointer;
+  "&:hover": {
+    backgroundColor: theme.main80,
+    cursor: "pointer"
   }
-`;
+});
+SaveSnapshotButton.displayName = "SaveSnapshotButton";
 
 export default SaveSnapshotButton;

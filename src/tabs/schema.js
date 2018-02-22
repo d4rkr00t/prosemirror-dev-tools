@@ -25,14 +25,14 @@ export default function SchemaView() {
       {({ state: { state } }) => {
         return (
           <SplitView>
-            <SplitViewCol grow>
+            <SplitViewCol glam={{ grow: true }}>
               <Heading>Nodes</Heading>
               <JSONTree
                 data={state.schema.nodes}
                 postprocessValue={postprocessValue.bind(null, ignoreFields)}
               />
             </SplitViewCol>
-            <SplitViewCol grow sep>
+            <SplitViewCol glam={{ grow: true, sep: true }}>
               <Heading>Marks</Heading>
               <JSONTree
                 data={state.schema.marks}

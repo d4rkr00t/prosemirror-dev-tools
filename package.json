@@ -32,6 +32,8 @@
   "dependencies": {
     "date-fns": "^1.28.2",
     "es6-object-assign": "^1.1.0",
+    "glamor": "^2.20.40",
+    "glamorous": "^4.11.6",
     "html": "^1.0.0",
     "ie-array-find-polyfill": "^1.1.0",
     "javascript-stringify": "^1.6.0",
@@ -42,7 +44,6 @@
     "react-json-tree": "^0.11.0",
     "react-syntax-highlighter": "^6.0.4",
     "react-tabs": "^2.1.1",
-    "styled-components": "^2.1.0",
     "unstated": "^1.0.3"
   },
   "peerDependencies": {

@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import glamorous from "glamorous/dist/glamorous.esm.tiny";
 import format from "date-fns/format";
 import { Subscribe } from "unstated";
 import EditorStateContainer from "../state/editor";
@@ -9,15 +9,17 @@ import { List } from "../components/list";
 import JSONDiff from "../components/json-diff";
 import { SplitView, SplitViewCol } from "../components/split-view";
 import { Highlighter } from "../components/highlighter";
+import theme from "../theme";
 
-const Section = styled.div`
-  min-width: 180px;
-  box-sizing: border-box;
+const Section = glamorous("div")({
+  minWidth: "180px",
+  boxSizing: "border-box",
 
-  & + & {
-    padding-top: 9px;
+  "& + &": {
+    paddingTop: "9px"
   }
-`;
+});
+Section.displayName = "Section";
 
 const formatTimestamp = timestamp =>
   format(new Date(timestamp), "HH:mm:ss:SSS");
@@ -104,7 +106,7 @@ export default function HistoryView() {
 
         return (
           <SplitView>
-            <SplitViewCol noPaddings minWidth={190}>
+            <SplitViewCol glam={{ noPaddings: true, minWidth: 190 }}>
               <List
                 items={historyList}
                 getKey={item => item.timestamp}
@@ -118,15 +120,15 @@ export default function HistoryView() {
                 isPrevious={isPrevious}
                 isDimmed={isDimmed}
                 customItemBackground={props =>
-                  props.isSelected
-                    ? props.theme.main40
-                    : props.isPrevious ? props.theme.main20 : "transparent"
+                  props.glam.isSelected
+                    ? theme.main40
+                    : props.isPrevious ? theme.main20 : "transparent"
                 }
                 onListItemClick={item => selectHistoryItem(item.index)}
                 onListItemDoubleClick={item => rollbackHistory(item.index)}
               />
             </SplitViewCol>
-            <SplitViewCol grow sep>
+            <SplitViewCol glam={{ grow: true, sep: true }}>
               <DocDiffSection diff={selectedItem.diff} />
               <SelectionSection selection={selectedItem.selection} />
               <SelectionContentSection

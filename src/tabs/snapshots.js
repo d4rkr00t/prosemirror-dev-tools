@@ -1,52 +1,56 @@
 import React from "react";
-import styled from "styled-components";
+import glamorous from "glamorous/dist/glamorous.esm.tiny";
 import { Subscribe } from "unstated";
 import EditorStateContainer from "../state/editor";
 import { SplitView, SplitViewCol } from "../components/split-view";
 import { List } from "../components/list";
 import { InfoPanel } from "../components/info-panel";
+import theme from "../theme";
 
-const ActionButton = styled.button`
-  padding: 6px 10px;
-  font-weight: 400;
-  letter-spacing: 1px;
-  font-size: 11px;
-  color: ${props => props.theme.white80};
-  background: ${props => props.theme.white10};
-  text-transform: uppercase;
-  transition: background 0.3s, color 0.3s;
-  border-radius: 2px;
-  border: none;
+const ActionButton = glamorous("button")({
+  padding: "6px 10px",
+  fontWeight: 400,
+  letterSpacing: "1px",
+  fontSize: "11px",
+  color: theme.white80,
+  background: theme.white10,
+  textTransform: "uppercase",
+  transition: "background 0.3s, color 0.3s",
+  borderRadius: "2px",
+  border: "none",
 
-  & + & {
-    margin-left: 4px;
+  "& + &": {
+    marginLeft: "4px"
+  },
+
+  "&:hover": {
+    background: theme.main40,
+    color: theme.white,
+    cursor: "pointer"
+  },
+
+  "&:focus": {
+    outline: "none"
+  },
+
+  "&:active": {
+    background: theme.main60
   }
+});
+ActionButton.displayName = "ActionButton";
 
-  &:hover {
-    background: ${props => props.theme.main40};
-    color: ${props => props.theme.white};
-    cursor: pointer;
-  }
+const ListItem = glamorous("div")({
+  height: "24px",
+  lineHeight: "24px",
+  display: "flex",
+  width: "100%"
+});
+ListItem.displayName = "ListItem";
 
-  &:focus {
-    outline: none;
-  }
-
-  &:active {
-    background: ${props => props.theme.main60};
-  }
-`;
-
-const ListItem = styled.div`
-  height: 24px;
-  line-height: 24px;
-  display: flex;
-  width: 100%;
-`;
-
-const ListItemTitle = styled.div`
-  flex-grow: 1;
-`;
+const ListItemTitle = glamorous("div")({
+  flexGrow: 1
+});
+ListItemTitle.displayName = "ListItemTitle";
 
 export function SnapshotsList({ snapshots, deleteSnapshot, loadSnapshot }) {
   return (
@@ -76,7 +80,7 @@ export default function SnapshotsTab() {
       {({ state: { snapshots }, loadSnapshot, deleteSnapshot }) => {
         return (
           <SplitView>
-            <SplitViewCol noPaddings grow>
+            <SplitViewCol glam={{ noPaddings: true, grow: true }}>
               {snapshots && snapshots.length ? (
                 <SnapshotsList
                   snapshots={snapshots}

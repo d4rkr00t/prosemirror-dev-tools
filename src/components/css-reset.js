@@ -1,12 +1,13 @@
-import styled from "styled-components";
+import glamorous from "glamorous/dist/glamorous.esm.tiny";
 
-const CSSReset = styled.div`
-  font-size: 100%;
-  line-height: 1;
+const CSSReset = glamorous("div")({
+  fontSize: "100%",
+  lineHeight: 1,
 
-  li + li {
-    margin: 0;
+  "& li + li": {
+    margin: 0
   }
-`;
+});
+CSSReset.displayName = "CSSReset";
 
 export default CSSReset;

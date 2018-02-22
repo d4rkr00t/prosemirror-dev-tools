@@ -2,11 +2,8 @@ import "ie-array-find-polyfill";
 import objectAssign from "es6-object-assign";
 import React from "react";
 import ReactDOM from "react-dom";
-import { ThemeProvider } from "styled-components";
 import { Provider } from "unstated";
-
 import DevTools from "./dev-tools";
-import theme from "./theme";
 
 const DEVTOOLS_CLASS_NAME = "__prosemirror-dev-tools__";
 
@@ -31,11 +28,9 @@ function applyDevTools(editorView, props) {
   const place = createPlace();
 
   ReactDOM.render(
-    <ThemeProvider theme={theme}>
-      <Provider>
-        <DevTools editorView={editorView} props={props} />
-      </Provider>
-    </ThemeProvider>,
+    <Provider>
+      <DevTools editorView={editorView} props={props} />
+    </Provider>,
     place
   );
 }

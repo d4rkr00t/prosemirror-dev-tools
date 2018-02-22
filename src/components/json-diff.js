@@ -1,34 +1,39 @@
 import React from "react";
 import JSONTree from "./json-tree";
-import styled from "styled-components";
+import glamorous from "glamorous/dist/glamorous.esm.tiny";
+import theme from "../theme";
 import stringify from "javascript-stringify";
 
-const Updated = styled.span`
-  color: ${props => props.theme.main};
-`;
+const Updated = glamorous("span")({
+  color: theme.main
+});
+Updated.displayName = "Updated";
 
-const White = styled.span`
-  color: ${props => props.theme.white};
-`;
+const White = glamorous("span")({
+  color: theme.white
+});
+White.displayName = "White";
 
-const Deleted = styled.span`
-  display: inline-block;
-  background: ${props => props.theme.lightYellow};
-  color: ${props => props.theme.lightPink};
-  padding: 1px 3px 2px;
-  text-indent: 0;
-  text-decoration: line-through;
-  min-height: 1ex;
-`;
+const Deleted = glamorous("span")({
+  display: "inline-block",
+  background: theme.lightYellow,
+  color: theme.lightPink,
+  padding: "1px 3px 2px",
+  textIndent: 0,
+  textDecoration: "line-through",
+  minHeight: "1ex"
+});
+Deleted.displayName = "Deleted";
 
-const Added = styled.span`
-  display: inline-block;
-  background: ${props => props.theme.lightYellow};
-  color: ${props => props.theme.darkGreen};
-  padding: 1px 3px 2px;
-  text-indent: 0;
-  min-height: 1ex;
-`;
+const Added = glamorous("span")({
+  display: "inline-block",
+  background: theme.lightYellow,
+  color: theme.darkGreen,
+  padding: "1px 3px 2px",
+  textIndent: 0,
+  minHeight: "1ex"
+});
+Added.displayName = "Added";
 
 function postprocessValue(value) {
   if (value && value._t === "a") {
@@ -99,10 +104,7 @@ function valueRenderer(raw) {
     if (raw.length === 2) {
       return (
         <Updated>
-          <Deleted>{getValueString(raw[0])}</Deleted>
-          {" "}
-          =&gt;
-          {" "}
+          <Deleted>{getValueString(raw[0])}</Deleted> =&gt;{" "}
           <Added>{getValueString(raw[1])}</Added>
         </Updated>
       );
@@ -146,7 +148,11 @@ export function getItemString(type, value, defaultView, keysCount) {
     case "Object":
       return <span>{"{…}"}</span>;
     default:
-      return <span>{defaultView} {keysCount}</span>;
+      return (
+        <span>
+          {defaultView} {keysCount}
+        </span>
+      );
   }
 }
 
