@@ -171,10 +171,10 @@ export default class EditorStateContainer extends Container {
     nodePicker: NODE_PICKER_DEFAULT
   };
 
-  registerEditorView = (editorView, props) => {
-    if (this.state.view) return;
+  constructor(editorView, props) {
+    super();
 
-    this.setState({
+    this.state = Object.assign({}, this.state, {
       EditorState: getEditorStateClass(props),
       view: editorView,
       state: editorView.state,
@@ -203,7 +203,7 @@ export default class EditorStateContainer extends Container {
           : this.state.historyRolledBackTo
       });
     });
-  };
+  }
 
   activatePicker = () => {
     this.setState({
@@ -266,7 +266,7 @@ export default class EditorStateContainer extends Container {
     this.setState({ nodePicker: NODE_PICKER_DEFAULT });
   };
 
-  saveSnapshot = snapshot => {
+  saveSnapshot = () => {
     const snapshotName = prompt("Enter snapshot name", Date.now());
 
     if (!snapshotName) return;
@@ -275,7 +275,7 @@ export default class EditorStateContainer extends Container {
       {
         name: snapshotName,
         timestamp: Date.now(),
-        snapshot
+        snapshot: this.state.state.doc.toJSON()
       }
     ].concat(this.state.snapshots);
 

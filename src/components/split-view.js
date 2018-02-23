@@ -17,8 +17,8 @@ export const SplitViewCol = glamorous("div")(
     flexGrow: grow ? 1 : 0,
     borderLeft: sep ? "1px solid " + theme.main20 : "none",
     padding: noPaddings ? "" : "16px 18px 18px",
-    minWidth: minWidth ? `${minWidth}px;` : "none",
-    maxWidth: maxWidth ? `${maxWidth}px;` : "none"
+    minWidth: minWidth ? `${minWidth}px` : "none",
+    maxWidth: maxWidth ? `${maxWidth}px` : "none"
   })
 );
 SplitViewCol.displayName = "SplitViewCol";

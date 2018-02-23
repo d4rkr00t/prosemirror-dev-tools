@@ -74,27 +74,44 @@ export function SnapshotsList({ snapshots, deleteSnapshot, loadSnapshot }) {
   );
 }
 
-export default function SnapshotsTab() {
+class SnapshotTab extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    return this.props.snapshots !== nextProps.snapshots;
+  }
+
+  render() {
+    const { snapshots, loadSnapshot, deleteSnapshot } = this.props;
+
+    return (
+      <SplitView>
+        <SplitViewCol glam={{ noPaddings: true, grow: true }}>
+          {snapshots && snapshots.length ? (
+            <SnapshotsList
+              snapshots={snapshots}
+              loadSnapshot={loadSnapshot}
+              deleteSnapshot={deleteSnapshot}
+            />
+          ) : (
+            <InfoPanel>
+              No saved snapshots yet. Press "Save Snapshot" button to add one.
+            </InfoPanel>
+          )}
+        </SplitViewCol>
+      </SplitView>
+    );
+  }
+}
+
+export default function SnapshotsTabContainer() {
   return (
     <Subscribe to={[EditorStateContainer]}>
       {({ state: { snapshots }, loadSnapshot, deleteSnapshot }) => {
         return (
-          <SplitView>
-            <SplitViewCol glam={{ noPaddings: true, grow: true }}>
-              {snapshots && snapshots.length ? (
-                <SnapshotsList
-                  snapshots={snapshots}
-                  loadSnapshot={loadSnapshot}
-                  deleteSnapshot={deleteSnapshot}
-                />
-              ) : (
-                <InfoPanel>
-                  No saved snapshots yet. Press "Save Snapshot" button to add
-                  one.
-                </InfoPanel>
-              )}
-            </SplitViewCol>
-          </SplitView>
+          <SnapshotTab
+            snapshots={snapshots}
+            loadSnapshot={loadSnapshot}
+            deleteSnapshot={deleteSnapshot}
+          />
         );
       }}
     </Subscribe>

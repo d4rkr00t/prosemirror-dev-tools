@@ -18,10 +18,10 @@ const NodePickerStyled = glamorous("div")(
   ({ glam: { nodePicker } }) => ({
     transform: `translateX(${nodePicker.left}px) translateY(${
       nodePicker.top
-    }px);`,
+    }px)`,
     display: nodePicker.top && nodePicker.left ? "block" : "none",
-    width: `${nodePicker.width}px;`,
-    height: `${nodePicker.height}px;`
+    width: `${nodePicker.width}px`,
+    height: `${nodePicker.height}px`
   })
 );
 NodePickerStyled.displayName = "NodePickerStyled";

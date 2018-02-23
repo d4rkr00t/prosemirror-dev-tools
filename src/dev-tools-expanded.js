@@ -98,29 +98,30 @@ CloseButton.displayName = "CloseButton";
 
 export default function DevToolsExpanded() {
   return (
-    <Subscribe to={[GlobalStateContainer, EditorStateContainer]}>
-      {(globalState, editorState) => {
+    <Subscribe to={[GlobalStateContainer]}>
+      {globalState => {
         const { defaultSize, tabIndex } = globalState.state;
         const { toggleDevTools, updateBodyMargin, selectTab } = globalState;
-        const {
-          activatePicker,
-          deactivatePicker,
-          updateNodePickerPossition,
-          nodePickerSelect,
-          saveSnapshot
-        } = editorState;
-        const { nodePicker, state } = editorState.state;
         return (
           <CSSReset>
-            <NodePicker
-              nodePicker={nodePicker}
-              onClose={deactivatePicker}
-              onMouseMove={updateNodePickerPossition}
-              onSelect={target => {
-                nodePickerSelect(target);
-                selectTab(0); // Switch to the "State" tab.
-              }}
-            />
+            <Subscribe to={[EditorStateContainer]}>
+              {({
+                state: { nodePicker },
+                deactivatePicker,
+                updateNodePickerPossition,
+                nodePickerSelect
+              }) => (
+                <NodePicker
+                  nodePicker={nodePicker}
+                  onClose={deactivatePicker}
+                  onMouseMove={updateNodePickerPossition}
+                  onSelect={target => {
+                    nodePickerSelect(target);
+                    selectTab(0); // Switch to the "State" tab.
+                  }}
+                />
+              )}
+            </Subscribe>
             <Dock
               position="bottom"
               dimMode="none"
@@ -131,17 +132,27 @@ export default function DevToolsExpanded() {
               {() => (
                 <DockContainer>
                   <CloseButton onClick={toggleDevTools}>×</CloseButton>
-                  <NodePickerTrigger
-                    onClick={
-                      nodePicker.active ? deactivatePicker : activatePicker
-                    }
-                    glam={{ isActive: nodePicker.active }}
-                  />
-                  <SaveSnapshotButton
-                    onClick={() => saveSnapshot(state.doc.toJSON())}
-                  >
-                    Save Snapshot
-                  </SaveSnapshotButton>
+                  <Subscribe to={[EditorStateContainer]}>
+                    {({
+                      state: { nodePicker },
+                      deactivatePicker,
+                      activatePicker
+                    }) => (
+                      <NodePickerTrigger
+                        onClick={
+                          nodePicker.active ? deactivatePicker : activatePicker
+                        }
+                        glam={{ isActive: nodePicker.active }}
+                      />
+                    )}
+                  </Subscribe>
+                  <Subscribe to={[EditorStateContainer]}>
+                    {({ saveSnapshot }) => (
+                      <SaveSnapshotButton onClick={saveSnapshot}>
+                        Save Snapshot
+                      </SaveSnapshotButton>
+                    )}
+                  </Subscribe>
                   <Tabs
                     className="tabs"
                     selectedTabClassName="tabs--selected"

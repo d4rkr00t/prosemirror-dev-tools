@@ -8,8 +8,9 @@ import { Heading } from "./../components/heading";
 const ignoreFields = ["schema", "contentExpr", "schema", "parseDOM", "toDOM"];
 
 export function postprocessValue(ignore, data) {
-  if (!data || Object.prototype.toString.call(data) !== "[object Object]")
+  if (!data || Object.prototype.toString.call(data) !== "[object Object]") {
     return data;
+  }
 
   return Object.keys(data)
     .filter(key => ignore.indexOf(key) === -1)
@@ -19,29 +20,38 @@ export function postprocessValue(ignore, data) {
     }, {});
 }
 
-export default function SchemaView() {
+export class SchemaTab extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    return this.props.schema !== nextProps.schema;
+  }
+
+  render() {
+    const { schema } = this.props;
+    return (
+      <SplitView>
+        <SplitViewCol glam={{ grow: true }}>
+          <Heading>Nodes</Heading>
+          <JSONTree
+            data={schema.nodes}
+            postprocessValue={postprocessValue.bind(null, ignoreFields)}
+          />
+        </SplitViewCol>
+        <SplitViewCol glam={{ grow: true, sep: true }}>
+          <Heading>Marks</Heading>
+          <JSONTree
+            data={schema.marks}
+            postprocessValue={postprocessValue.bind(null, ignoreFields)}
+          />
+        </SplitViewCol>
+      </SplitView>
+    );
+  }
+}
+
+export default function SchemaTabContainer() {
   return (
     <Subscribe to={[EditorStateContainer]}>
-      {({ state: { state } }) => {
-        return (
-          <SplitView>
-            <SplitViewCol glam={{ grow: true }}>
-              <Heading>Nodes</Heading>
-              <JSONTree
-                data={state.schema.nodes}
-                postprocessValue={postprocessValue.bind(null, ignoreFields)}
-              />
-            </SplitViewCol>
-            <SplitViewCol glam={{ grow: true, sep: true }}>
-              <Heading>Marks</Heading>
-              <JSONTree
-                data={state.schema.marks}
-                postprocessValue={postprocessValue.bind(null, ignoreFields)}
-              />
-            </SplitViewCol>
-          </SplitView>
-        );
-      }}
+      {({ state: { state: { schema } } }) => <SchemaTab schema={schema} />}
     </Subscribe>
   );
 }
