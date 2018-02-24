@@ -1,4 +1,5 @@
 ![prosemirror-dev-tools](/docs/assets/logo.png)
+
 <p align="center">
   <a href="https://npmjs.org/package/prosemirror-dev-tools">
     <img src="https://img.shields.io/npm/v/prosemirror-dev-tools.svg" alt="NPM Version">
@@ -50,7 +51,7 @@ Wrap `EditorView` instance in applyDevTools method:
 ```js
 import applyDevTools from "prosemirror-dev-tools";
 
-const view = new EditorView(/*...*/);
+const view = new EditorView /*...*/();
 
 applyDevTools(view);
 ```
@@ -66,7 +67,7 @@ Add script tag to your html file:
 Wrap `EditorView` instance in applyDevTools method:
 
 ```js
-const view = new EditorView(/*...*/);
+const view = new EditorView /*...*/();
 
 // From version 1.3.1 it's required for UMD build to provide EditorState class (not instance).
 // Previously it was causing different artifacts when working with state e.g. rolling back to some history checkpoint
@@ -94,7 +95,6 @@ ProseMirrorDevTools.applyDevTools(view, { EditorState: EditorState });
 
 ![prosemirror-dev-tools history tab](/docs/assets/history-tab.png)
 
-
 ### Plugins
 
 Inspect state of each plugin inside prosemirror.
@@ -109,25 +109,27 @@ Inspect current document schema with nodes and marks.
 
 ### Structure
 
-Visual representation of current document tree with positions at the beginning and the end of every node.
+Visual representation of current document tree with positions at the beginning
+and the end of every node.
 
 ![prosemirror-dev-tools structure tab](/docs/assets/structure-tab.png)
 
 ### Snapshots
 
-Snapshots allow you to save current editor state and restore it later. State is stored in local storage.
+Snapshots allow you to save current editor state and restore it later. State is
+stored in local storage.
 
 ![prosemirror-dev-tools snapshots tab](/docs/assets/snapshots-tab.png)
 
 ## Demo
 
-* [Demo](https://codepen.io/iamsysoev/full/QvpELv/) of prosemirror-dev-tools on codepen.io.
-* [Example Setup](https://codesandbox.io/s/7jxmjjqz2x)
+* [Demo & Example Setup](https://codesandbox.io/s/l9n6667ooz)
 
 ## Contributing
 
-Contributions are highly welcome! This repo is commitizen friendly — please read about it [here](http://commitizen.github.io/cz-cli/).
+Contributions are highly welcome! This repo is commitizen friendly — please read
+about it [here](http://commitizen.github.io/cz-cli/).
 
 ## License
 
-- **MIT** : http://opensource.org/licenses/MIT
+* **MIT** : http://opensource.org/licenses/MIT
