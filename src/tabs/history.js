@@ -1,6 +1,5 @@
 import React from "react";
 import glamorous from "glamorous/dist/glamorous.esm.tiny";
-import format from "date-fns/format";
 import { Subscribe } from "unstated";
 import EditorStateContainer from "../state/editor";
 import { InfoPanel } from "../components/info-panel";
@@ -21,8 +20,23 @@ const Section = glamorous("div")({
 });
 Section.displayName = "Section";
 
-const formatTimestamp = timestamp =>
-  format(new Date(timestamp), "HH:mm:ss:SSS");
+function pad(num) {
+  return ("00" + num).slice(-2);
+}
+
+function pad3(num) {
+  return ("000" + num).slice(-3);
+}
+
+const formatTimestamp = timestamp => {
+  const date = new Date(timestamp);
+  return [
+    pad(date.getHours()),
+    pad(date.getMinutes()),
+    pad(date.getSeconds()),
+    pad3(date.getMilliseconds())
+  ].join(":");
+};
 
 export function SelectionContentSection(props) {
   if (!props.selectionContent) return null;

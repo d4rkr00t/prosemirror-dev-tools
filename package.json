@@ -30,19 +30,16 @@
     "url": "https://github.com/d4rkr00t/prosemirror-dev-tools"
   },
   "dependencies": {
-    "date-fns": "^1.28.2",
     "es6-object-assign": "^1.1.0",
     "glamor": "^2.20.40",
     "glamorous": "^4.11.6",
     "html": "^1.0.0",
     "ie-array-find-polyfill": "^1.1.0",
-    "javascript-stringify": "^1.6.0",
     "jsondiffpatch": "github:d4rkr00t/jsondiffpatch#d80390b4354befe55802e292122b8059462c1b7d",
     "prosemirror-model": ">=1.0.0",
     "prosemirror-state": ">=1.0.0",
     "react-dock": "^0.2.3",
     "react-json-tree": "^0.11.0",
-    "react-syntax-highlighter": "^6.0.4",
     "react-tabs": "^2.1.1",
     "unstated": "^1.0.3"
   },
@@ -74,7 +71,8 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "rimraf": "^2.6.1",
-    "webpack": "^3.9.1"
+    "webpack": "^3.9.1",
+    "webpack-bundle-analyzer": "^2.10.1"
   },
   "eslintConfig": {
     "extends": "./node_modules/aik/lib/eslint-config.js"

@@ -1,27 +1,36 @@
 import React from "react";
 import glamorous from "glamorous/dist/glamorous.esm.tiny";
-import SyntaxHighlighter, {
-  registerLanguage
-} from "react-syntax-highlighter/light";
-import htmlLang from "react-syntax-highlighter/languages/hljs/xml";
-import colorTheme from "react-syntax-highlighter/styles/hljs/tomorrow-night-blue";
-
-colorTheme.hljs.background = "transparent";
-
-registerLanguage("html", htmlLang);
+import theme from "../theme";
 
 const CustomPre = glamorous("pre")({
   padding: "9px 0 18px 0 !important",
-  margin: 0
+  margin: 0,
+  color: theme.white80,
+  "& .prosemirror-dev-tools-highlighter-tag": {
+    color: theme.main
+  }
 });
 CustomPre.displayName = "CustomPre";
 
-export function Highlighter(props) {
-  if (!props.children) return null;
+const regexp = /(&lt;\/?[\w\d\s="']+&gt;)/gim;
+const highlight = str =>
+  str
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(
+      regexp,
+      "<span class='prosemirror-dev-tools-highlighter-tag'>$&</span>"
+    );
 
-  return (
-    <SyntaxHighlighter PreTag={CustomPre} language="html" style={colorTheme}>
-      {props.children}
-    </SyntaxHighlighter>
-  );
+export class Highlighter extends React.Component {
+  render() {
+    if (!this.props.children) return null;
+    return (
+      <CustomPre
+        dangerouslySetInnerHTML={{
+          __html: highlight(this.props.children)
+        }}
+      />
+    );
+  }
 }

@@ -2,7 +2,6 @@ import React from "react";
 import JSONTree from "./json-tree";
 import glamorous from "glamorous/dist/glamorous.esm.tiny";
 import theme from "../theme";
-import stringify from "javascript-stringify";
 
 const Updated = glamorous("span")({
   color: theme.main
@@ -64,7 +63,7 @@ function stringifyAndShrink(val) {
     return "null";
   }
 
-  const str = stringify(val);
+  const str = JSON.stringify(val);
   if (typeof str === "undefined") {
     return "undefined";
   }
