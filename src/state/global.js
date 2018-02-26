@@ -3,7 +3,7 @@ import { Container } from "unstated";
 export default class GlobalStateContainer extends Container {
   state = {
     opened: false,
-    tabIndex: 0,
+    tabIndex: "state",
     defaultSize: 0.5
   };
 

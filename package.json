@@ -35,12 +35,12 @@
     "html": "^1.0.0",
     "ie-array-find-polyfill": "^1.1.0",
     "jsondiffpatch": "github:d4rkr00t/jsondiffpatch#d80390b4354befe55802e292122b8059462c1b7d",
+    "prop-types": "^15.6.0",
     "prosemirror-model": ">=1.0.0",
     "prosemirror-state": ">=1.0.0",
     "react-dock": "^0.2.3",
     "react-emotion": "^9.0.2",
     "react-json-tree": "^0.11.0",
-    "react-tabs": "^2.1.1",
     "unstated": "^1.0.3"
   },
   "peerDependencies": {
