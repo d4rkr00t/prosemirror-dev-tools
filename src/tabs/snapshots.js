@@ -1,5 +1,5 @@
 import React from "react";
-import glamorous from "glamorous/dist/glamorous.esm.tiny";
+import styled from "react-emotion";
 import { Subscribe } from "unstated";
 import EditorStateContainer from "../state/editor";
 import { SplitView, SplitViewCol } from "../components/split-view";
@@ -7,7 +7,7 @@ import { List } from "../components/list";
 import { InfoPanel } from "../components/info-panel";
 import theme from "../theme";
 
-const ActionButton = glamorous("button")({
+const ActionButton = styled("button")({
   padding: "6px 10px",
   fontWeight: 400,
   letterSpacing: "1px",
@@ -39,7 +39,7 @@ const ActionButton = glamorous("button")({
 });
 ActionButton.displayName = "ActionButton";
 
-const ListItem = glamorous("div")({
+const ListItem = styled("div")({
   height: "24px",
   lineHeight: "24px",
   display: "flex",
@@ -47,7 +47,7 @@ const ListItem = glamorous("div")({
 });
 ListItem.displayName = "ListItem";
 
-const ListItemTitle = glamorous("div")({
+const ListItemTitle = styled("div")({
   flexGrow: 1
 });
 ListItemTitle.displayName = "ListItemTitle";
@@ -84,7 +84,7 @@ class SnapshotTab extends React.Component {
 
     return (
       <SplitView>
-        <SplitViewCol glam={{ noPaddings: true, grow: true }}>
+        <SplitViewCol noPaddings grow>
           {snapshots && snapshots.length ? (
             <SnapshotsList
               snapshots={snapshots}

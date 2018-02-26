@@ -1,5 +1,5 @@
 import React from "react";
-import glamorous from "glamorous/dist/glamorous.esm.tiny";
+import styled from "react-emotion";
 import { Subscribe } from "unstated";
 import theme from "../theme";
 import EditorStateContainer from "../state/editor";
@@ -12,15 +12,15 @@ import {
   HeadingButton
 } from "./../components/heading";
 
-const GraphWrapper = glamorous("div")({
+const GraphWrapper = styled("div")({
   marginTop: "12px"
 });
 GraphWrapper.displayName = "GraphWrapper";
 
-const BlockNodeWrapper = glamorous("div")({});
+const BlockNodeWrapper = styled("div")({});
 BlockNodeWrapper.displayName = "BlockNodeWrapper";
 
-const BlockNodeContentView = glamorous("div")({
+const BlockNodeContentView = styled("div")({
   padding: "0 12px",
   boxSizing: "border-box",
   borderLeft: `1px solid ${theme.white20}`,
@@ -28,7 +28,7 @@ const BlockNodeContentView = glamorous("div")({
 });
 BlockNodeContentView.displayName = "BlockNodeContentView";
 
-const BlockNodeContentViewWithInline = glamorous("div")({
+const BlockNodeContentViewWithInline = styled("div")({
   padding: "0 12px",
   display: "flex",
   width: "100%",
@@ -39,7 +39,7 @@ const BlockNodeContentViewWithInline = glamorous("div")({
 });
 BlockNodeContentViewWithInline.displayName = "BlockNodeContentViewWithInline";
 
-const BlockNodeView = glamorous("div")(
+const BlockNodeView = styled("div")(
   {
     width: "100%",
     marginBottom: "3px",
@@ -50,26 +50,26 @@ const BlockNodeView = glamorous("div")(
       cursor: "pointer"
     }
   },
-  ({ glam: { bg } }) => ({
+  ({ bg }) => ({
     background: bg
   })
 );
 BlockNodeView.displayName = "BlockNodeView";
 
-const Side = glamorous("div")({
+const Side = styled("div")({
   padding: "3px 6px",
   background: "rgba(255, 255, 255, 0.3)"
 });
 Side.displayName = "Side";
 
-const Center = glamorous("div")({
+const Center = styled("div")({
   flexGrow: 1,
   padding: "3px 9px",
   whiteSpace: "pre"
 });
 Center.displayName = "Center";
 
-const InlineNodeView = glamorous("div")(
+const InlineNodeView = styled("div")(
   {
     flexGrow: 1,
     marginBottom: "3px",
@@ -80,7 +80,7 @@ const InlineNodeView = glamorous("div")(
       cursor: "pointer"
     }
   },
-  ({ glam: { bg } }) => ({
+  ({ bg }) => ({
     background: bg
   })
 );
@@ -139,10 +139,7 @@ export function BlockNode(props) {
   const color = colors[node.type.name];
   return (
     <BlockNodeWrapper>
-      <BlockNodeView
-        glam={{ bg: color }}
-        onClick={() => props.onNodeSelected({ node })}
-      >
+      <BlockNodeView bg={color} onClick={() => props.onNodeSelected({ node })}>
         <Side>{startPos}</Side>
         <Center>{node.type.name}</Center>
         <Side>{startPos + node.nodeSize - 1}</Side>
@@ -164,10 +161,7 @@ export function InlineNode(props) {
       ? ` - [${node.marks[0].type.name}]`
       : node.marks.length > 1 ? ` - [${node.marks.length} marks]` : "";
   return (
-    <InlineNodeView
-      onClick={() => props.onNodeSelected({ node })}
-      glam={{ bg }}
-    >
+    <InlineNodeView onClick={() => props.onNodeSelected({ node })} bg={bg}>
       {index === 0 ? <Side>{startPos}</Side> : null}
       <Center>
         {node.type.name} {marks}
@@ -187,7 +181,7 @@ export default function GraphTab() {
 
         return (
           <SplitView>
-            <SplitViewCol glam={{ grow: true }}>
+            <SplitViewCol grow>
               <Heading>Current Doc</Heading>
               <GraphWrapper>
                 <BlockNode
@@ -198,7 +192,7 @@ export default function GraphTab() {
                 />
               </GraphWrapper>
             </SplitViewCol>
-            <SplitViewCol glam={{ sep: true, minWidth: 200, maxWidth: 300 }}>
+            <SplitViewCol sep minWidth={200} maxWidth={300}>
               <HeadingWithButton>
                 <Heading>Node Info</Heading>
                 <HeadingButton onClick={() => console.log(selected)}>

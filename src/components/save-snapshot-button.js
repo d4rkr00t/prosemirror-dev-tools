@@ -1,7 +1,7 @@
-import glamorous from "glamorous/dist/glamorous.esm.tiny";
+import styled from "react-emotion";
 import theme from "../theme";
 
-const SaveSnapshotButton = glamorous("div")({
+const SaveSnapshotButton = styled("div")({
   position: "absolute",
   right: "32px",
   top: "-28px",

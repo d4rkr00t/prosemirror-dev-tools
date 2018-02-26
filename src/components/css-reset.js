@@ -1,6 +1,6 @@
-import glamorous from "glamorous/dist/glamorous.esm.tiny";
+import styled from "react-emotion";
 
-const CSSReset = glamorous("div")({
+const CSSReset = styled("div")({
   fontSize: "100%",
   lineHeight: 1,
 

@@ -1,10 +1,10 @@
 import React, { PureComponent } from "react";
-import glamorous from "glamorous/dist/glamorous.esm.tiny";
+import styled from "react-emotion";
 import theme from "../theme";
 
 const noop = () => {};
 
-export const ListItem = glamorous("div")(
+export const ListItem = styled("div")(
   {
     minWidth: "190px",
     width: "100%",
@@ -41,24 +41,23 @@ export const ListItem = glamorous("div")(
     }
   },
   props => {
-    const { glam } = props;
     return {
-      opacity: glam.isDimmed ? 0.3 : 1,
-      padding: glam.nested ? "6px 18px 6px 36px" : "6px 18px",
-      background: glam.background
-        ? glam.background(props)
-        : glam.isSelected ? theme.main40 : "transparent"
+      opacity: props.isDimmed ? 0.3 : 1,
+      padding: props.nested ? "6px 18px 6px 36px" : "6px 18px",
+      background: props.background
+        ? props.background(props)
+        : props.isSelected ? theme.main40 : "transparent"
     };
   }
 );
 ListItem.displayName = "ListItem";
 
-const ListItemGroupContent = glamorous("div")(
+const ListItemGroupContent = styled("div")(
   {
     display: "block"
   },
-  ({ glam }) => ({
-    display: glam.collapsed ? "none" : "block"
+  props => ({
+    display: props.collapsed ? "none" : "block"
   })
 );
 ListItemGroupContent.displayName = "ListItemGroupContent";
@@ -91,29 +90,24 @@ class ListItemGroup extends PureComponent {
         <ListItem
           key={getKey(items[0])}
           onClick={() => this.toggle()}
-          glam={{
-            nested: true,
-            isSelected: items.some(isSelected) && this.state.collapsed,
-            isPrevious: isPrevious(items[0], 0) && this.state.collapsed,
-            isDimmed: items.every(isDimmed),
-            background: customItemBackground
-          }}
+          isSelected={items.some(isSelected) && this.state.collapsed}
+          isPrevious={isPrevious(items[0], 0) && this.state.collapsed}
+          isDimmed={items.every(isDimmed)}
+          background={customItemBackground}
         >
           <div style={{ flexGrow: 1 }}>{groupTitle(items, 0)}</div>
           <div>{this.state.collapsed ? "▶" : "▼"}</div>
         </ListItem>
-        <ListItemGroupContent glam={{ collapsed: this.state.collapsed }}>
+        <ListItemGroupContent collapsed={this.state.collapsed}>
           {(items || []).map((item, index) => {
             return (
               <ListItem
                 key={getKey(item)}
-                glam={{
-                  nested: true,
-                  isSelected: isSelected(item, index),
-                  isPrevious: isPrevious(item, index),
-                  isDimmed: isDimmed(item, index),
-                  background: customItemBackground
-                }}
+                nested
+                isSelected={isSelected(item, index)}
+                isPrevious={isPrevious(item, index)}
+                isDimmed={isDimmed(item, index)}
+                background={customItemBackground}
                 onClick={() => onListItemClick(item, index)}
                 onDoubleClick={() => onListItemDoubleClick(item, index)}
               >
@@ -150,13 +144,10 @@ export function List(props) {
         return (
           <ListItem
             key={getKey(item)}
-            glam={{
-              nested: true,
-              isSelected: isSelected(item, index),
-              isPrevious: isPrevious(item, index),
-              isDimmed: isDimmed(item, index),
-              background: props.customItemBackground
-            }}
+            isSelected={isSelected(item, index)}
+            isPrevious={isPrevious(item, index)}
+            isDimmed={isDimmed(item, index)}
+            background={props.customItemBackground}
             onClick={() => onListItemClick(item, index)}
             onDoubleClick={() => onListItemDoubleClick(item, index)}
           >

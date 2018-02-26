@@ -1,6 +1,6 @@
 import React from "react";
 import Dock from "react-dock";
-import glamorous from "glamorous/dist/glamorous.esm.tiny";
+import styled from "react-emotion";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { Subscribe } from "unstated";
 import GlobalStateContainer from "./state/global";
@@ -16,7 +16,7 @@ import { NodePicker, NodePickerTrigger } from "./components/node-picker";
 import SaveSnapshotButton from "./components/save-snapshot-button";
 import theme from "./theme";
 
-const DockContainer = glamorous("div")({
+const DockContainer = styled("div")({
   width: "100%",
   height: "100%",
   overflow: "hidden",
@@ -50,7 +50,7 @@ const DockContainer = glamorous("div")({
 });
 DockContainer.displayName = "DockContainer";
 
-const TabLabel = glamorous("div")({
+const TabLabel = styled("div")({
   color: theme.white,
   textTransform: "uppercase",
   fontSize: "13px",
@@ -69,14 +69,14 @@ const TabLabel = glamorous("div")({
 });
 TabLabel.displayName = "TabLabel";
 
-const TabPanelWrapper = glamorous("div")({
+const TabPanelWrapper = styled("div")({
   width: "100%",
   height: "calc(100% - 48px)",
   boxSizing: "border-box"
 });
 TabPanelWrapper.displayName = "TabPanelWrapper";
 
-const CloseButton = glamorous("button")({
+const CloseButton = styled("button")({
   background: "none",
   border: "none",
   position: "absolute",
@@ -142,7 +142,7 @@ export default function DevToolsExpanded() {
                         onClick={
                           nodePicker.active ? deactivatePicker : activatePicker
                         }
-                        glam={{ isActive: nodePicker.active }}
+                        isActive={nodePicker.active}
                       />
                     )}
                   </Subscribe>

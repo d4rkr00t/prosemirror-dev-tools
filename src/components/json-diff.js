@@ -1,19 +1,19 @@
 import React from "react";
 import JSONTree from "./json-tree";
-import glamorous from "glamorous/dist/glamorous.esm.tiny";
+import styled from "react-emotion";
 import theme from "../theme";
 
-const Updated = glamorous("span")({
+const Updated = styled("span")({
   color: theme.main
 });
 Updated.displayName = "Updated";
 
-const White = glamorous("span")({
+const White = styled("span")({
   color: theme.white
 });
 White.displayName = "White";
 
-const Deleted = glamorous("span")({
+const Deleted = styled("span")({
   display: "inline-block",
   background: theme.lightYellow,
   color: theme.lightPink,
@@ -24,7 +24,7 @@ const Deleted = glamorous("span")({
 });
 Deleted.displayName = "Deleted";
 
-const Added = glamorous("span")({
+const Added = styled("span")({
   display: "inline-block",
   background: theme.lightYellow,
   color: theme.darkGreen,

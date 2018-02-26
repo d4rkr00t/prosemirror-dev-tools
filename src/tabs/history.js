@@ -1,5 +1,5 @@
 import React from "react";
-import glamorous from "glamorous/dist/glamorous.esm.tiny";
+import styled from "react-emotion";
 import { Subscribe } from "unstated";
 import EditorStateContainer from "../state/editor";
 import { InfoPanel } from "../components/info-panel";
@@ -10,7 +10,7 @@ import { SplitView, SplitViewCol } from "../components/split-view";
 import { Highlighter } from "../components/highlighter";
 import theme from "../theme";
 
-const Section = glamorous("div")({
+const Section = styled("div")({
   minWidth: "180px",
   boxSizing: "border-box",
 
@@ -120,7 +120,7 @@ export default function HistoryView() {
 
         return (
           <SplitView>
-            <SplitViewCol glam={{ noPaddings: true, minWidth: 190 }}>
+            <SplitViewCol noPaddings minWidth={190}>
               <List
                 items={historyList}
                 getKey={item => item.timestamp}
@@ -134,7 +134,7 @@ export default function HistoryView() {
                 isPrevious={isPrevious}
                 isDimmed={isDimmed}
                 customItemBackground={props =>
-                  props.glam.isSelected
+                  props.isSelected
                     ? theme.main40
                     : props.isPrevious ? theme.main20 : "transparent"
                 }
@@ -142,7 +142,7 @@ export default function HistoryView() {
                 onListItemDoubleClick={item => rollbackHistory(item.index)}
               />
             </SplitViewCol>
-            <SplitViewCol glam={{ grow: true, sep: true }}>
+            <SplitViewCol grow sep>
               <DocDiffSection diff={selectedItem.diff} />
               <SelectionSection selection={selectedItem.selection} />
               <SelectionContentSection

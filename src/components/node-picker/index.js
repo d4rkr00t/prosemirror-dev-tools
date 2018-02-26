@@ -1,11 +1,11 @@
 import React from "react";
-import glamorous from "glamorous/dist/glamorous.esm.tiny";
+import styled from "react-emotion";
 import theme from "../../theme";
 
 const icon =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAAmCAQAAAACNCElAAAAxklEQVRIx+2Vuw3DMAxEXWUD9VrKvTYJRzAygWpPkSVcBlDtJS6Fg8AQqQ+lAEECXU08iid+pmnoTwWDKzbU6IEbLnkYQaMlD9uA6iqAUArQwDBgX4T1Z+uF4Q4PB/sZmH/1e1BCRZiLhqgWKsJsYjJLUPkDEJKjvmPWwnwCtcKoW4O5VnpTFmaVb8o3LXONOiZAcI3aYe5UIFXiUmv77doOc7oUpDoozLU5iiPFqYtcW4W01LJP3FEiwzXBLG9SUBNq6Ef0BJ8IApq+rItIAAAAAElFTkSuQmCC";
 
-const NodePickerStyled = glamorous("div")(
+const NodePickerStyled = styled("div")(
   {
     position: "absolute",
     pointerEvents: "none",
@@ -15,7 +15,7 @@ const NodePickerStyled = glamorous("div")(
     zIndex: 99999,
     cursor: "pointer"
   },
-  ({ glam: { nodePicker } }) => ({
+  ({ nodePicker }) => ({
     transform: `translateX(${nodePicker.left}px) translateY(${
       nodePicker.top
     }px)`,
@@ -74,11 +74,11 @@ class NodePicker extends React.Component {
   };
 
   render() {
-    return <NodePickerStyled glam={{ nodePicker: this.props.nodePicker }} />;
+    return <NodePickerStyled nodePicker={this.props.nodePicker} />;
   }
 }
 
-const NodePickerTrigger = glamorous("div")(
+const NodePickerTrigger = styled("div")(
   {
     position: "absolute",
     right: "4px",
@@ -92,7 +92,7 @@ const NodePickerTrigger = glamorous("div")(
       cursor: "pointer"
     }
   },
-  ({ glam: { isActive } }) => ({
+  ({ isActive }) => ({
     background: `${isActive ? theme.main : theme.main60} url("${icon}")`,
     backgroundSize: "20px 20px",
     backgroundRepeat: "none",

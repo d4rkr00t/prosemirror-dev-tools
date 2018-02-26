@@ -29,14 +29,14 @@ export class SchemaTab extends React.Component {
     const { schema } = this.props;
     return (
       <SplitView>
-        <SplitViewCol glam={{ grow: true }}>
+        <SplitViewCol grow>
           <Heading>Nodes</Heading>
           <JSONTree
             data={schema.nodes}
             postprocessValue={postprocessValue.bind(null, ignoreFields)}
           />
         </SplitViewCol>
-        <SplitViewCol glam={{ grow: true, sep: true }}>
+        <SplitViewCol grow sep>
           <Heading>Marks</Heading>
           <JSONTree
             data={schema.marks}

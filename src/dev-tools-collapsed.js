@@ -1,8 +1,8 @@
 import React from "react";
-import glamorous from "glamorous/dist/glamorous.esm.tiny";
+import styled from "react-emotion";
 import theme from "./theme";
 
-const FloattingButton = glamorous("div")({
+const FloattingButton = styled("div")({
   position: "fixed",
   bottom: "16px",
   right: "16px",

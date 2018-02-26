@@ -1,5 +1,5 @@
 import React from "react";
-import glamorous from "glamorous/dist/glamorous.esm.tiny";
+import styled from "react-emotion";
 import { Subscribe } from "unstated";
 import EditorStateContainer from "../state/editor";
 import StateTabStateContainer from "../state/state-tab";
@@ -16,13 +16,13 @@ import {
 } from "./../components/heading";
 import theme from "../theme";
 
-const JSONTreeWrapper = glamorous("div")({
+const JSONTreeWrapper = styled("div")({
   padding: "0 0 9px 0",
   overflow: "hidden"
 });
 JSONTreeWrapper.displayName = "JSONTreeWrapper";
 
-const Section = glamorous("div")({
+const Section = styled("div")({
   minWidth: "180px",
   boxSizing: "border-box",
 
@@ -32,29 +32,29 @@ const Section = glamorous("div")({
 });
 Section.displayName = "Section";
 
-const Group = glamorous("div")({
+const Group = styled("div")({
   margin: "0.5em 0px 0.5em 1em"
 });
 Group.displayName = "Group";
 
-const GroupRow = glamorous("div")({
+const GroupRow = styled("div")({
   paddingTop: "0.25em"
 });
 GroupRow.displayName = "GroupRow";
 
-const Key = glamorous("span")({
+const Key = styled("span")({
   display: "inline-block",
   color: theme.syntax.base0D,
   margin: "0px 0.5em 0px 0px"
 });
 Key.displayName = "Key";
 
-const ValueNum = glamorous("span")({
+const ValueNum = styled("span")({
   color: theme.syntax.base09
 });
 ValueNum.displayName = "ValueNum";
 
-const LogNodeButton = glamorous("button")({
+const LogNodeButton = styled("button")({
   color: theme.white60,
   background: "none",
   border: "none",
@@ -152,7 +152,7 @@ export default function StateTab() {
 
         return (
           <SplitView>
-            <SplitViewCol glam={{ grow: true }}>
+            <SplitViewCol grow>
               <HeadingWithButton>
                 <Heading>Current Doc</Heading>
                 <HeadingButton onClick={() => console.log(state)}>
@@ -168,7 +168,7 @@ export default function StateTab() {
                 }
               />
             </SplitViewCol>
-            <SplitViewCol glam={{ sep: true, minWidth: 220 }}>
+            <SplitViewCol sep minWidth={220}>
               <Section>
                 <HeadingWithButton>
                   <Heading>Selection</Heading>

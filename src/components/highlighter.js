@@ -1,8 +1,8 @@
 import React from "react";
-import glamorous from "glamorous/dist/glamorous.esm.tiny";
+import styled from "react-emotion";
 import theme from "../theme";
 
-const CustomPre = glamorous("pre")({
+const CustomPre = styled("pre")({
   padding: "9px 0 18px 0 !important",
   margin: 0,
   color: theme.white80,

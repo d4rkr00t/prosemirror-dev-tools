@@ -1,7 +1,7 @@
-import glamorous from "glamorous/dist/glamorous.esm.tiny";
+import styled from "react-emotion";
 import theme from "../theme";
 
-const InfoPanel = glamorous("div")({
+const InfoPanel = styled("div")({
   position: "relative",
   top: "50%",
   transform: "translateY(-50%)",

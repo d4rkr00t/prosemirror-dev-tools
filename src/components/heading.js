@@ -1,7 +1,7 @@
-import glamorous from "glamorous/dist/glamorous.esm.tiny";
+import styled from "react-emotion";
 import theme from "../theme";
 
-const Heading = glamorous("h2")({
+const Heading = styled("h2")({
   color: theme.softerMain,
   padding: 0,
   margin: 0,
@@ -13,12 +13,12 @@ const Heading = glamorous("h2")({
 });
 Heading.displayName = "Heading";
 
-const HeadingWithButton = glamorous("div")({
+const HeadingWithButton = styled("div")({
   display: "flex"
 });
 HeadingWithButton.displayName = "HeadingWithButton";
 
-const HeadingButton = glamorous("button")({
+const HeadingButton = styled("button")({
   padding: "6px 10px",
   margin: "-6px -10px 0 8px",
   fontWeight: 400,
