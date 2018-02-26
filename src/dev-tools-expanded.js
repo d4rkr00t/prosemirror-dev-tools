@@ -1,7 +1,7 @@
 import React from "react";
 import Dock from "react-dock";
 import styled from "react-emotion";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import { Tab, Tabs, TabList, TabPanel } from "./components/tabs";
 import { Subscribe } from "unstated";
 import GlobalStateContainer from "./state/global";
 import EditorStateContainer from "./state/editor";
@@ -22,59 +22,9 @@ const DockContainer = styled("div")({
   overflow: "hidden",
   background: theme.mainBg,
   fontFamily: "Helvetica Neue, Calibri Light, Roboto, sans-serif",
-  fontSize: "13px",
-
-  "& .tabs": {
-    height: "100%",
-    width: "100%",
-
-    "& ul": {
-      margin: 0,
-      padding: 0
-    },
-
-    "& .tabs__tablist": {
-      display: "flex",
-      listStyle: "none",
-      borderBottom: `1px solid ${theme.main20}`
-    },
-
-    "& .tabs_tab-panel--selected": {
-      height: "100%"
-    },
-
-    "& .tabs--selected": {
-      borderBottom: `2px solid ${theme.main}`
-    }
-  }
+  fontSize: "13px"
 });
 DockContainer.displayName = "DockContainer";
-
-const TabLabel = styled("div")({
-  color: theme.white,
-  textTransform: "uppercase",
-  fontSize: "13px",
-  padding: "16px 24px 14px",
-  boxSizing: "border-box",
-  userSelect: "none",
-
-  "&:hover": {
-    cursor: "pointer",
-    background: theme.white05
-  },
-
-  "&:focus": {
-    outline: "none"
-  }
-});
-TabLabel.displayName = "TabLabel";
-
-const TabPanelWrapper = styled("div")({
-  width: "100%",
-  height: "calc(100% - 48px)",
-  boxSizing: "border-box"
-});
-TabPanelWrapper.displayName = "TabPanelWrapper";
 
 const CloseButton = styled("button")({
   background: "none",
@@ -153,62 +103,36 @@ export default function DevToolsExpanded() {
                       </SaveSnapshotButton>
                     )}
                   </Subscribe>
-                  <Tabs
-                    className="tabs"
-                    selectedTabClassName="tabs--selected"
-                    selectedTabPanelClassName="tabs_tab-panel--selected"
-                    selectedIndex={tabIndex}
-                    onSelect={selectTab}
-                  >
-                    <TabList className="tabs__tablist">
-                      <Tab>
-                        <TabLabel>State</TabLabel>
-                      </Tab>
-                      <Tab>
-                        <TabLabel>History</TabLabel>
-                      </Tab>
-                      <Tab>
-                        <TabLabel>Plugins</TabLabel>
-                      </Tab>
-                      <Tab>
-                        <TabLabel>Schema</TabLabel>
-                      </Tab>
-                      <Tab>
-                        <TabLabel>Structure</TabLabel>
-                      </Tab>
-                      <Tab>
-                        <TabLabel>Snapshots</TabLabel>
-                      </Tab>
+
+                  <Tabs onSelect={selectTab} selectedIndex={tabIndex}>
+                    <TabList>
+                      <Tab index="state">State</Tab>
+                      <Tab index="history">History</Tab>
+                      <Tab index="plugins">Plugins</Tab>
+                      <Tab index="schema">Schema</Tab>
+                      <Tab index="structure">Structure</Tab>
+                      <Tab index="snapshots">Snapshots</Tab>
                     </TabList>
+
                     <TabPanel>
-                      <TabPanelWrapper>
-                        <StateTab />
-                      </TabPanelWrapper>
-                    </TabPanel>
-                    <TabPanel>
-                      <TabPanelWrapper>
-                        <HistoryTab />
-                      </TabPanelWrapper>
-                    </TabPanel>
-                    <TabPanel>
-                      <TabPanelWrapper>
-                        <PluginsTab />
-                      </TabPanelWrapper>
-                    </TabPanel>
-                    <TabPanel>
-                      <TabPanelWrapper>
-                        <SchemaTab />
-                      </TabPanelWrapper>
-                    </TabPanel>
-                    <TabPanel>
-                      <TabPanelWrapper>
-                        <StructureTab />
-                      </TabPanelWrapper>
-                    </TabPanel>
-                    <TabPanel>
-                      <TabPanelWrapper>
-                        <SnapshotsTab />
-                      </TabPanelWrapper>
+                      {({ index }) => {
+                        switch (index) {
+                          case "state":
+                            return <StateTab />;
+                          case "history":
+                            return <HistoryTab />;
+                          case "plugins":
+                            return <PluginsTab />;
+                          case "schema":
+                            return <SchemaTab />;
+                          case "structure":
+                            return <StructureTab />;
+                          case "snapshots":
+                            return <SnapshotsTab />;
+                          default:
+                            return <StateTab />;
+                        }
+                      }}
                     </TabPanel>
                   </Tabs>
                 </DockContainer>
