@@ -33,7 +33,9 @@ module.exports = {
   },
   resolve: {
     alias: {
-      "./get-editor-state": "./get-editor-state.umd"
+      "./get-editor-state": "./get-editor-state.umd",
+      react: "preact-compat",
+      "react-dom": "preact-compat"
     }
   }
 };
