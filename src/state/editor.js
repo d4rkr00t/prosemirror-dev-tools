@@ -1,6 +1,6 @@
 import { DOMSerializer } from "prosemirror-model";
 import { Container } from "unstated";
-import diffPatcher from "jsondiffpatch";
+import { DiffPatcher } from "jsondiffpatch";
 import { prettyPrint } from "html";
 import subscribeOnUpdates from "../utils/subscribe-on-updates";
 import findNodeIn, { findNodeInJSON } from "../utils/find-node";
@@ -35,7 +35,7 @@ const nodesColors = [
   "#8D7BC0" // indigo
 ];
 
-const diff = diffPatcher.create({
+const diff = new DiffPatcher({
   arrays: { detectMove: false },
   textDiff: { minLength: 1 }
 });
