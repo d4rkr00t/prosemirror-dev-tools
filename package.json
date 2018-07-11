@@ -34,7 +34,7 @@
     "es6-object-assign": "^1.1.0",
     "html": "^1.0.0",
     "ie-array-find-polyfill": "^1.1.0",
-    "jsondiffpatch": "github:d4rkr00t/jsondiffpatch#d80390b4354befe55802e292122b8059462c1b7d",
+    "jsondiffpatch": "^0.3.11",
     "prop-types": "^15.6.0",
     "prosemirror-model": ">=1.0.0",
     "prosemirror-state": ">=1.0.0",
