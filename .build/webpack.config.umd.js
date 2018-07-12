@@ -5,7 +5,6 @@ const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
 
 module.exports = {
   entry: "./src",
-  mode: "production",
   output: {
     filename: "prosemirror-dev-tools.min.js",
     path: path.resolve(__dirname, "..", "dist", "umd"),
@@ -13,6 +12,9 @@ module.exports = {
     libraryTarget: "umd"
   },
   plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      compress: { warnings: false }
+    }),
     new webpack.DefinePlugin({ "process.env.NODE_ENV": '"production"' }),
     new BundleAnalyzerPlugin({
       analyzerMode: "static",
