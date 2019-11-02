@@ -75,7 +75,7 @@
     "react-dom": "^16.4.1",
     "rimraf": "^2.6.2",
     "webpack": "^3.9.1",
-    "webpack-bundle-analyzer": "^2.10.1"
+    "webpack-bundle-analyzer": "^3.6.0"
   },
   "eslintConfig": {
     "extends": "./node_modules/aik/lib/eslint-config.js"
