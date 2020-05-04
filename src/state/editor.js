@@ -323,7 +323,7 @@ export default class EditorStateContainer extends Container {
     });
 
     this.setState({
-      history: [createHistoryEntry(null, newState)],
+      history: [createHistoryEntry(newState)],
       state: newState
     });
 
