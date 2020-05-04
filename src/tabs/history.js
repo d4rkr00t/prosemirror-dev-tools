@@ -136,7 +136,9 @@ export default function HistoryView() {
                 customItemBackground={props =>
                   props.isSelected
                     ? theme.main40
-                    : props.isPrevious ? theme.main20 : "transparent"
+                    : props.isPrevious
+                    ? theme.main20
+                    : "transparent"
                 }
                 onListItemClick={item => selectHistoryItem(item.index)}
                 onListItemDoubleClick={item => rollbackHistory(item.index)}
@@ -149,8 +151,9 @@ export default function HistoryView() {
                 selectionContent={selectedItem.selectionContent}
               />
               {!selectedItem.diff &&
-                !selectedItem.selectionContent && (
-                  <InfoPanel>Doc are equal.</InfoPanel>
+                !selectedItem.selectionContent &&
+                !selectedItem.diffPending && (
+                  <InfoPanel>Docs are equal.</InfoPanel>
                 )}
             </SplitViewCol>
           </SplitView>
