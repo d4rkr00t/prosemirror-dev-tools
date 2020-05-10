@@ -12,7 +12,7 @@
     "start": "aik example/index.js",
     "prebuild": "rimraf ./dist",
     "build": "npm run build:umd && npm run build:cjs",
-    "build:umd": "webpack --optimize-minimize --config ./.build/webpack.config.umd.js",
+    "build:umd": "webpack --mode production --config ./.build/webpack.config.umd.js",
     "build:cjs": "cross-env BABEL_ENV=production babel src --out-dir dist/cjs",
     "lint:all": "eslint ./src",
     "lint:staged": "lint-staged",
