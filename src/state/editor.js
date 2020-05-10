@@ -1,7 +1,7 @@
 import { DOMSerializer } from "prosemirror-model";
 import { Container } from "unstated";
 import { prettyPrint } from "html";
-import { v4 as uuidv4 } from "uuid";
+import nanoid from "nanoid";
 import subscribeOnUpdates from "../utils/subscribe-on-updates";
 import findNodeIn, { findNodeInJSON } from "../utils/find-node";
 import getEditorStateClass from "./get-editor-state";
@@ -119,7 +119,7 @@ export function createHistoryEntry(editorState) {
   }
 
   return {
-    id: uuidv4(),
+    id: nanoid(),
     state: editorState,
     timestamp: Date.now(),
     diffPending: true,

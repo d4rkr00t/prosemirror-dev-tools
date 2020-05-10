@@ -1,13 +1,12 @@
 import { DiffPatcher } from "jsondiffpatch";
-import { v4 as uuidv4 } from "uuid";
+import nanoid from "nanoid";
 
 export class JsonDiffWorker {
   queue = new Map();
 
   constructor() {
     try {
-      const workerAdress = require("worker-plugin/loader!./json-diff.worker.js");
-      this.worker = new Worker(workerAdress);
+      this.worker = new Worker("./json-diff.worker.js");
     } catch (err) {
       console.warn(
         "Could not start json-diff worker, diffing on main thread",
@@ -41,7 +40,7 @@ export class JsonDiffWorker {
       });
     }
 
-    const id = uuidv4();
+    const id = nanoid();
     const deferred = createDeferrable();
     this.queue.set(id, deferred);
 
