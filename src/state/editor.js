@@ -1,7 +1,7 @@
 import { DOMSerializer } from "prosemirror-model";
 import { Container } from "unstated";
 import { prettyPrint } from "html";
-import nanoid from "nanoid";
+import { nanoid } from "nanoid";
 import subscribeOnUpdates from "../utils/subscribe-on-updates";
 import findNodeIn, { findNodeInJSON } from "../utils/find-node";
 import getEditorStateClass from "./get-editor-state";

@@ -1,5 +1,5 @@
 import { DiffPatcher } from "jsondiffpatch";
-import nanoid from "nanoid";
+import { nanoid } from "nanoid";
 
 export class JsonDiffWorker {
   queue = new Map();
