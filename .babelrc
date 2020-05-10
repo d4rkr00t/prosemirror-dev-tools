@@ -8,11 +8,19 @@
     ],
     "react"
   ],
-  "plugins": ["syntax-class-properties", "transform-class-properties"],
+  "plugins": [
+    "syntax-class-properties",
+    "transform-class-properties",
+    "syntax-dynamic-import"
+  ],
   "env": {
     "production": {
       "presets": ["env", "react"],
-      "plugins": ["syntax-class-properties", "transform-class-properties"]
+      "plugins": [
+        "syntax-class-properties",
+        "transform-class-properties",
+        "syntax-dynamic-import"
+      ]
     }
   }
 }

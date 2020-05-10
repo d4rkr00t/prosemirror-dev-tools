@@ -5,9 +5,6 @@ import { nanoid } from "nanoid";
 import subscribeOnUpdates from "../utils/subscribe-on-updates";
 import findNodeIn, { findNodeInJSON } from "../utils/find-node";
 import getEditorStateClass from "./get-editor-state";
-import { JsonDiffWorker } from "./json-diff-worker";
-
-const diffWorker = new JsonDiffWorker();
 
 const NODE_PICKER_DEFAULT = {
   top: 0,
@@ -171,6 +168,15 @@ export default class EditorStateContainer extends Container {
   constructor(editorView, props) {
     super();
 
+    this.diffWorker =
+      props && props.diffWorker
+        ? import("./json-diff-worker").then(
+            ({ JsonDiffWorker }) => new JsonDiffWorker(props.diffWorker)
+          )
+        : import("./json-diff-main").then(
+            ({ JsonDiffMain }) => new JsonDiffMain()
+          );
+
     this.state = Object.assign({}, this.state, {
       EditorState: getEditorStateClass(props),
       view: editorView,
@@ -191,7 +197,9 @@ export default class EditorStateContainer extends Container {
         const [{ id }] = updatedHistory;
         const self = this;
 
-        (async function computeDiffs() {
+        (async () => {
+          const diffWorker = await this.diffWorker;
+
           const [{ delta: diff }, { delta: selection }] = await Promise.all([
             diffWorker.diff({
               a: oldState.doc.toJSON(),
