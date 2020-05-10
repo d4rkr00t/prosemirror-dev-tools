@@ -35,18 +35,19 @@
     "html": "^1.0.0",
     "ie-array-find-polyfill": "^1.1.0",
     "jsondiffpatch": "^0.3.11",
+    "nanoid": "^3.1.6",
     "prop-types": "^15.6.2",
     "prosemirror-model": ">=1.0.0",
     "prosemirror-state": ">=1.0.0",
     "react-dock": "^0.2.4",
     "react-emotion": "^9.2.5",
     "react-json-tree": "^0.11.0",
-    "unstated": "^2.1.1",
-    "uuid": "^8.0.0"
+    "unstated": "^2.1.1"
   },
   "peerDependencies": {
     "react": ">=15.6.1",
-    "react-dom": ">=15.6.1"
+    "react-dom": ">=15.6.1",
+    "worker-plugin": "*"
   },
   "devDependencies": {
     "aik": "^0.18.0",
@@ -75,8 +76,9 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "rimraf": "^2.6.2",
-    "webpack": "^3.9.1",
-    "webpack-bundle-analyzer": "^2.10.1"
+    "webpack": "^4.43.0",
+    "webpack-bundle-analyzer": "^2.10.1",
+    "webpack-cli": "^3.3.11"
   },
   "eslintConfig": {
     "extends": "./node_modules/aik/lib/eslint-config.js"

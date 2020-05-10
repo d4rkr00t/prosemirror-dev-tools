@@ -11,11 +11,11 @@ module.exports = {
     library: "ProseMirrorDevTools",
     libraryTarget: "umd"
   },
+  optimization: {
+    minimize: true,
+    nodeEnv: "production"
+  },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      compress: { warnings: false }
-    }),
-    new webpack.DefinePlugin({ "process.env.NODE_ENV": '"production"' }),
     new BundleAnalyzerPlugin({
       analyzerMode: "static",
       defaultSizes: "gzip",
