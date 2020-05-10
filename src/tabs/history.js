@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "react-emotion";
+import styled from "@emotion/styled";
 import { Subscribe } from "unstated";
 import EditorStateContainer from "../state/editor";
 import { InfoPanel } from "../components/info-panel";
@@ -15,8 +15,8 @@ const Section = styled("div")({
   boxSizing: "border-box",
 
   "& + &": {
-    paddingTop: "9px"
-  }
+    paddingTop: "9px",
+  },
 });
 Section.displayName = "Section";
 
@@ -28,13 +28,13 @@ function pad3(num) {
   return ("000" + num).slice(-3);
 }
 
-const formatTimestamp = timestamp => {
+const formatTimestamp = (timestamp) => {
   const date = new Date(timestamp);
   return [
     pad(date.getHours()),
     pad(date.getMinutes()),
     pad(date.getSeconds()),
-    pad3(date.getMilliseconds())
+    pad3(date.getMilliseconds()),
   ].join(":");
 };
 
@@ -74,12 +74,12 @@ export function SelectionSection(props) {
 export default function HistoryView() {
   return (
     <Subscribe to={[EditorStateContainer]}>
-      {editorState => {
+      {(editorState) => {
         const { selectHistoryItem, rollbackHistory } = editorState;
         const {
           history,
           selectedHistoryItem,
-          historyRolledBackTo
+          historyRolledBackTo,
         } = editorState.state;
         const prevItem = history[selectedHistoryItem + 1];
         const selectedItem = history[selectedHistoryItem];
@@ -111,10 +111,10 @@ export default function HistoryView() {
             return h;
           }, []);
 
-        const isSelected = item => item.timestamp === selectedItem.timestamp;
-        const isPrevious = item =>
+        const isSelected = (item) => item.timestamp === selectedItem.timestamp;
+        const isPrevious = (item) =>
           prevItem && item.timestamp === prevItem.timestamp;
-        const isDimmed = item =>
+        const isDimmed = (item) =>
           historyRolledBackToItem &&
           item.timestamp > historyRolledBackToItem.timestamp;
 
@@ -123,9 +123,9 @@ export default function HistoryView() {
             <SplitViewCol noPaddings minWidth={190}>
               <List
                 items={historyList}
-                getKey={item => item.timestamp}
-                title={item => formatTimestamp(item.timestamp)}
-                groupTitle={item => {
+                getKey={(item) => item.timestamp}
+                title={(item) => formatTimestamp(item.timestamp)}
+                groupTitle={(item) => {
                   return (
                     formatTimestamp(item[0].timestamp) + ` [${item.length}]`
                   );
@@ -133,15 +133,15 @@ export default function HistoryView() {
                 isSelected={isSelected}
                 isPrevious={isPrevious}
                 isDimmed={isDimmed}
-                customItemBackground={props =>
+                customItemBackground={(props) =>
                   props.isSelected
                     ? theme.main40
                     : props.isPrevious
                     ? theme.main20
                     : "transparent"
                 }
-                onListItemClick={item => selectHistoryItem(item.index)}
-                onListItemDoubleClick={item => rollbackHistory(item.index)}
+                onListItemClick={(item) => selectHistoryItem(item.index)}
+                onListItemDoubleClick={(item) => rollbackHistory(item.index)}
               />
             </SplitViewCol>
             <SplitViewCol grow sep>

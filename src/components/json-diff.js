@@ -1,15 +1,15 @@
 import React from "react";
 import JSONTree from "./json-tree";
-import styled from "react-emotion";
+import styled from "@emotion/styled";
 import theme from "../theme";
 
 const Updated = styled("span")({
-  color: theme.main
+  color: theme.main,
 });
 Updated.displayName = "Updated";
 
 const White = styled("span")({
-  color: theme.white
+  color: theme.white,
 });
 White.displayName = "White";
 
@@ -20,7 +20,7 @@ const Deleted = styled("span")({
   padding: "1px 3px 2px",
   textIndent: 0,
   textDecoration: "line-through",
-  minHeight: "1ex"
+  minHeight: "1ex",
 });
 Deleted.displayName = "Deleted";
 
@@ -30,7 +30,7 @@ const Added = styled("span")({
   color: theme.darkGreen,
   padding: "1px 3px 2px",
   textIndent: 0,
-  minHeight: "1ex"
+  minHeight: "1ex",
 });
 Added.displayName = "Added";
 
@@ -85,10 +85,12 @@ function replaceSpacesWithNonBreakingSpace(value) {
 function parseTextDiff(textDiff) {
   const diffByLines = textDiff.split(/\n/gm).slice(1);
 
-  return diffByLines.map(line => {
+  return diffByLines.map((line) => {
     const type = line.startsWith("-")
       ? "delete"
-      : line.startsWith("+") ? "add" : "raw";
+      : line.startsWith("+")
+      ? "add"
+      : "raw";
 
     return { [type]: replaceSpacesWithNonBreakingSpace(line.substr(1)) };
   });
@@ -116,7 +118,8 @@ function valueRenderer(raw) {
     if (raw.length === 3 && raw[2] === 2) {
       return (
         <Updated>
-          "{parseTextDiff(raw[0]).map(item => {
+          "
+          {parseTextDiff(raw[0]).map((item) => {
             if (item.delete) {
               return (
                 <Deleted key={item.delete + "delete"}>{item.delete}</Deleted>

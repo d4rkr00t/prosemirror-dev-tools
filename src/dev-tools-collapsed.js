@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "react-emotion";
+import styled from "@emotion/styled";
 import theme from "./theme";
 
 const FloattingButton = styled("div")({
@@ -15,15 +15,15 @@ const FloattingButton = styled("div")({
 
   "&:hover": {
     opacity: 0.7,
-    cursor: "pointer"
+    cursor: "pointer",
   },
 
   "& svg": {
     width: "34px",
     height: "34px",
     position: "relative",
-    bottom: "-2px"
-  }
+    bottom: "-2px",
+  },
 });
 FloattingButton.displayName = "FloattingButton";
 

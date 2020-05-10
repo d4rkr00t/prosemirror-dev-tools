@@ -1,4 +1,4 @@
-import styled from "react-emotion";
+import styled from "@emotion/styled";
 import theme from "../theme";
 
 const Heading = styled("h2")({
@@ -9,12 +9,12 @@ const Heading = styled("h2")({
   letterSpacing: "1px",
   fontSize: "13px",
   textTransform: "uppercase",
-  flexGrow: 1
+  flexGrow: 1,
 });
 Heading.displayName = "Heading";
 
 const HeadingWithButton = styled("div")({
-  display: "flex"
+  display: "flex",
 });
 HeadingWithButton.displayName = "HeadingWithButton";
 
@@ -34,16 +34,16 @@ const HeadingButton = styled("button")({
   "&:hover": {
     background: theme.main40,
     color: theme.white,
-    cursor: "pointer"
+    cursor: "pointer",
   },
 
   "&:focus": {
-    outline: "none"
+    outline: "none",
   },
 
   "&:active": {
-    background: theme.main60
-  }
+    background: theme.main60,
+  },
 });
 HeadingButton.displayName = "HeadingButton";
 

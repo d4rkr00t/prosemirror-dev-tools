@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "react-emotion";
+import styled from "@emotion/styled";
 import { Subscribe } from "unstated";
 import theme from "../theme";
 import EditorStateContainer from "../state/editor";
@@ -9,11 +9,11 @@ import JSONTree from "../components/json-tree";
 import {
   Heading,
   HeadingWithButton,
-  HeadingButton
+  HeadingButton,
 } from "./../components/heading";
 
 const GraphWrapper = styled("div")({
-  marginTop: "12px"
+  marginTop: "12px",
 });
 GraphWrapper.displayName = "GraphWrapper";
 
@@ -24,7 +24,7 @@ const BlockNodeContentView = styled("div")({
   padding: "0 12px",
   boxSizing: "border-box",
   borderLeft: `1px solid ${theme.white20}`,
-  borderRight: `1px solid ${theme.white20}`
+  borderRight: `1px solid ${theme.white20}`,
 });
 BlockNodeContentView.displayName = "BlockNodeContentView";
 
@@ -35,7 +35,7 @@ const BlockNodeContentViewWithInline = styled("div")({
   boxSizing: "border-box",
   borderLeft: `1px solid ${theme.white20}`,
   borderRight: `1px solid ${theme.white20}`,
-  flexWrap: "wrap"
+  flexWrap: "wrap",
 });
 BlockNodeContentViewWithInline.displayName = "BlockNodeContentViewWithInline";
 
@@ -47,25 +47,25 @@ const BlockNodeView = styled("div")(
     display: "flex",
 
     "&:hover": {
-      cursor: "pointer"
-    }
+      cursor: "pointer",
+    },
   },
   ({ bg }) => ({
-    background: bg
+    background: bg,
   })
 );
 BlockNodeView.displayName = "BlockNodeView";
 
 const Side = styled("div")({
   padding: "3px 6px",
-  background: "rgba(255, 255, 255, 0.3)"
+  background: "rgba(255, 255, 255, 0.3)",
 });
 Side.displayName = "Side";
 
 const Center = styled("div")({
   flexGrow: 1,
   padding: "3px 9px",
-  whiteSpace: "pre"
+  whiteSpace: "pre",
 });
 Center.displayName = "Center";
 
@@ -77,11 +77,11 @@ const InlineNodeView = styled("div")(
     boxSizing: "border-box",
 
     "&:hover": {
-      cursor: "pointer"
-    }
+      cursor: "pointer",
+    },
   },
   ({ bg }) => ({
-    background: bg
+    background: bg,
   })
 );
 InlineNodeView.displayName = "InlineNodeView";
@@ -159,7 +159,9 @@ export function InlineNode(props) {
   const marks =
     node.marks.length === 1
       ? ` - [${node.marks[0].type.name}]`
-      : node.marks.length > 1 ? ` - [${node.marks.length} marks]` : "";
+      : node.marks.length > 1
+      ? ` - [${node.marks.length} marks]`
+      : "";
   return (
     <InlineNodeView onClick={() => props.onNodeSelected({ node })} bg={bg}>
       {index === 0 ? <Side>{startPos}</Side> : null}

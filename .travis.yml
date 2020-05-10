@@ -5,14 +5,13 @@ cache:
 notifications:
   email: false
 node_js:
-  - '8'
-  - '6'
+  - "10"
+  - "12"
 before_script:
   - npm prune
 install:
   - npm install
 script:
-  - npm run lint:all
   - npm run build
   - npm run test
 after_success:

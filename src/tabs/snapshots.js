@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "react-emotion";
+import styled from "@emotion/styled";
 import { Subscribe } from "unstated";
 import EditorStateContainer from "../state/editor";
 import { SplitView, SplitViewCol } from "../components/split-view";
@@ -20,22 +20,22 @@ const ActionButton = styled("button")({
   border: "none",
 
   "& + &": {
-    marginLeft: "4px"
+    marginLeft: "4px",
   },
 
   "&:hover": {
     background: theme.main40,
     color: theme.white,
-    cursor: "pointer"
+    cursor: "pointer",
   },
 
   "&:focus": {
-    outline: "none"
+    outline: "none",
   },
 
   "&:active": {
-    background: theme.main60
-  }
+    background: theme.main60,
+  },
 });
 ActionButton.displayName = "ActionButton";
 
@@ -43,21 +43,21 @@ const ListItem = styled("div")({
   height: "24px",
   lineHeight: "24px",
   display: "flex",
-  width: "100%"
+  width: "100%",
 });
 ListItem.displayName = "ListItem";
 
 const ListItemTitle = styled("div")({
-  flexGrow: 1
+  flexGrow: 1,
 });
 ListItemTitle.displayName = "ListItemTitle";
 
 export function SnapshotsList({ snapshots, deleteSnapshot, loadSnapshot }) {
   return (
     <List
-      getKey={item => item.name + item.timestamp}
+      getKey={(item) => item.name + item.timestamp}
       items={snapshots}
-      title={item => (
+      title={(item) => (
         <ListItem>
           <ListItemTitle>{item.name}</ListItemTitle>
           <div>

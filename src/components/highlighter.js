@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "react-emotion";
+import styled from "@emotion/styled";
 import theme from "../theme";
 
 const CustomPre = styled("pre")({
@@ -7,13 +7,13 @@ const CustomPre = styled("pre")({
   margin: 0,
   color: theme.white80,
   "& .prosemirror-dev-tools-highlighter-tag": {
-    color: theme.main
-  }
+    color: theme.main,
+  },
 });
 CustomPre.displayName = "CustomPre";
 
 const regexp = /(&lt;\/?[\w\d\s="']+&gt;)/gim;
-const highlight = str =>
+const highlight = (str) =>
   str
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
@@ -28,7 +28,7 @@ export class Highlighter extends React.Component {
     return (
       <CustomPre
         dangerouslySetInnerHTML={{
-          __html: highlight(this.props.children)
+          __html: highlight(this.props.children),
         }}
       />
     );

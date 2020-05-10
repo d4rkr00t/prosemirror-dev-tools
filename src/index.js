@@ -1,5 +1,3 @@
-import "ie-array-find-polyfill";
-import objectAssign from "es6-object-assign";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "unstated";
@@ -7,8 +5,6 @@ import DevTools from "./dev-tools";
 import EditorStateContainer from "./state/editor";
 
 const DEVTOOLS_CLASS_NAME = "__prosemirror-dev-tools__";
-
-objectAssign.polyfill();
 
 function createPlace() {
   let place = document.querySelector(`.${DEVTOOLS_CLASS_NAME}`);

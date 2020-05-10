@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "react-emotion";
+import styled from "@emotion/styled";
 import theme from "../../theme";
 
 const icon =
@@ -13,15 +13,13 @@ const NodePickerStyled = styled("div")(
     left: 0,
     background: "rgba(0, 0, 255, 0.3)",
     zIndex: 99999,
-    cursor: "pointer"
+    cursor: "pointer",
   },
   ({ nodePicker }) => ({
-    transform: `translateX(${nodePicker.left}px) translateY(${
-      nodePicker.top
-    }px)`,
+    transform: `translateX(${nodePicker.left}px) translateY(${nodePicker.top}px)`,
     display: nodePicker.top && nodePicker.left ? "block" : "none",
     width: `${nodePicker.width}px`,
-    height: `${nodePicker.height}px`
+    height: `${nodePicker.height}px`,
   })
 );
 NodePickerStyled.displayName = "NodePickerStyled";
@@ -57,12 +55,12 @@ class NodePicker extends React.Component {
     document.removeEventListener("keydown", this.closePicker);
   }
 
-  handleMouseMove = e => {
+  handleMouseMove = (e) => {
     if (!this.props.nodePicker.active) return;
     this.props.onMouseMove(e.target);
   };
 
-  handleNodeClick = e => {
+  handleNodeClick = (e) => {
     if (!this.props.nodePicker.active) return;
     e.preventDefault();
     this.props.onSelect(e.target);
@@ -89,14 +87,14 @@ const NodePickerTrigger = styled("div")(
 
     "&:hover": {
       backgroundColor: theme.main80,
-      cursor: "pointer"
-    }
+      cursor: "pointer",
+    },
   },
   ({ isActive }) => ({
     background: `${isActive ? theme.main : theme.main60} url("${icon}")`,
     backgroundSize: "20px 20px",
     backgroundRepeat: "none",
-    backgroundPosition: "50% 50%"
+    backgroundPosition: "50% 50%",
   })
 );
 NodePickerTrigger.displayName = "NodePickerTrigger";
