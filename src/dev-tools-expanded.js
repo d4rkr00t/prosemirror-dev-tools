@@ -1,6 +1,6 @@
 import React from "react";
 import Dock from "react-dock";
-import styled from "react-emotion";
+import styled from "@emotion/styled";
 import { Tab, Tabs, TabList, TabPanel } from "./components/tabs";
 import { Subscribe } from "unstated";
 import GlobalStateContainer from "./state/global";
@@ -22,7 +22,7 @@ const DockContainer = styled("div")({
   overflow: "hidden",
   background: theme.mainBg,
   fontFamily: "Helvetica Neue, Calibri Light, Roboto, sans-serif",
-  fontSize: "13px"
+  fontSize: "13px",
 });
 DockContainer.displayName = "DockContainer";
 
@@ -37,19 +37,19 @@ const CloseButton = styled("button")({
   "&:hover": {
     cursor: "pointer",
     background: theme.white05,
-    color: theme.white
+    color: theme.white,
   },
 
   "&:focus": {
-    outline: "none"
-  }
+    outline: "none",
+  },
 });
 CloseButton.displayName = "CloseButton";
 
 export default function DevToolsExpanded() {
   return (
     <Subscribe to={[GlobalStateContainer]}>
-      {globalState => {
+      {(globalState) => {
         const { defaultSize, tabIndex } = globalState.state;
         const { toggleDevTools, updateBodyMargin, selectTab } = globalState;
         return (
@@ -59,13 +59,13 @@ export default function DevToolsExpanded() {
                 state: { nodePicker },
                 deactivatePicker,
                 updateNodePickerPossition,
-                nodePickerSelect
+                nodePickerSelect,
               }) => (
                 <NodePicker
                   nodePicker={nodePicker}
                   onClose={deactivatePicker}
                   onMouseMove={updateNodePickerPossition}
-                  onSelect={target => {
+                  onSelect={(target) => {
                     nodePickerSelect(target);
                     selectTab(0); // Switch to the "State" tab.
                   }}
@@ -86,7 +86,7 @@ export default function DevToolsExpanded() {
                     {({
                       state: { nodePicker },
                       deactivatePicker,
-                      activatePicker
+                      activatePicker,
                     }) => (
                       <NodePickerTrigger
                         onClick={

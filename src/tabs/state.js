@@ -1,24 +1,24 @@
 import React from "react";
-import styled from "react-emotion";
+import styled from "@emotion/styled";
 import { Subscribe } from "unstated";
 import EditorStateContainer from "../state/editor";
 import StateTabStateContainer from "../state/state-tab";
 import {
   expandedStateFormatSelection,
-  collapsedStateFormatSelection
+  collapsedStateFormatSelection,
 } from "./../utils/format-selection-object";
 import { SplitView, SplitViewCol } from "../components/split-view";
 import JSONTree from "../components/json-tree";
 import {
   Heading,
   HeadingWithButton,
-  HeadingButton
+  HeadingButton,
 } from "./../components/heading";
 import theme from "../theme";
 
 const JSONTreeWrapper = styled("div")({
   padding: "0 0 9px 0",
-  overflow: "hidden"
+  overflow: "hidden",
 });
 JSONTreeWrapper.displayName = "JSONTreeWrapper";
 
@@ -27,30 +27,30 @@ const Section = styled("div")({
   boxSizing: "border-box",
 
   "& + &": {
-    paddingTop: "9px"
-  }
+    paddingTop: "9px",
+  },
 });
 Section.displayName = "Section";
 
 const Group = styled("div")({
-  margin: "0.5em 0px 0.5em 1em"
+  margin: "0.5em 0px 0.5em 1em",
 });
 Group.displayName = "Group";
 
 const GroupRow = styled("div")({
-  paddingTop: "0.25em"
+  paddingTop: "0.25em",
 });
 GroupRow.displayName = "GroupRow";
 
 const Key = styled("span")({
   display: "inline-block",
   color: theme.syntax.base0D,
-  margin: "0px 0.5em 0px 0px"
+  margin: "0px 0.5em 0px 0px",
 });
 Key.displayName = "Key";
 
 const ValueNum = styled("span")({
-  color: theme.syntax.base09
+  color: theme.syntax.base09,
 });
 ValueNum.displayName = "ValueNum";
 
@@ -64,12 +64,12 @@ const LogNodeButton = styled("button")({
   "&:hover": {
     cursor: "pointer",
     background: theme.main40,
-    color: theme.white
+    color: theme.white,
   },
 
   "&:focus": {
-    outline: "none"
-  }
+    outline: "none",
+  },
 });
 LogNodeButton.displayName = "LogNodeButton";
 
@@ -82,7 +82,7 @@ export function getItemString(doc, action) {
   ) {
     const logButton = (
       <LogNodeButton
-        onClick={e => {
+        onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
           action({ doc, node: value });
@@ -163,7 +163,7 @@ export default function StateTab() {
                 data={doc}
                 hideRoot
                 getItemString={getItemString(doc, logNodeFromJSON)}
-                shouldExpandNode={nodePath =>
+                shouldExpandNode={(nodePath) =>
                   shouldExpandNode(expandPath, nodePath)
                 }
               />

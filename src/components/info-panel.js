@@ -1,4 +1,4 @@
-import styled from "react-emotion";
+import styled from "@emotion/styled";
 import theme from "../theme";
 
 const InfoPanel = styled("div")({
@@ -7,7 +7,7 @@ const InfoPanel = styled("div")({
   transform: "translateY(-50%)",
   textAlign: "center",
   color: theme.main,
-  fontSize: "14px"
+  fontSize: "14px",
 });
 InfoPanel.displayName = "InfoPanel";
 

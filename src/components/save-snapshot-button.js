@@ -1,4 +1,4 @@
-import styled from "react-emotion";
+import styled from "@emotion/styled";
 import theme from "../theme";
 
 const SaveSnapshotButton = styled("div")({
@@ -18,8 +18,8 @@ const SaveSnapshotButton = styled("div")({
 
   "&:hover": {
     backgroundColor: theme.main80,
-    cursor: "pointer"
-  }
+    cursor: "pointer",
+  },
 });
 SaveSnapshotButton.displayName = "SaveSnapshotButton";
 

@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import styled from "react-emotion";
+import styled from "@emotion/styled";
 import theme from "../theme";
 
 const noop = () => {};
@@ -23,30 +23,32 @@ export const ListItem = styled("div")(
     margin: 0,
 
     "&:first-child": {
-      borderTop: "none"
+      borderTop: "none",
     },
 
     "&:hover": {
       background: theme.main40,
       color: theme.white,
-      cursor: "pointer"
+      cursor: "pointer",
     },
 
     "&:focus": {
-      outline: "none"
+      outline: "none",
     },
 
     "&:active": {
-      background: theme.main60
-    }
+      background: theme.main60,
+    },
   },
-  props => {
+  (props) => {
     return {
       opacity: props.isDimmed ? 0.3 : 1,
       padding: props.nested ? "6px 18px 6px 36px" : "6px 18px",
       background: props.background
         ? props.background(props)
-        : props.isSelected ? theme.main40 : "transparent"
+        : props.isSelected
+        ? theme.main40
+        : "transparent",
     };
   }
 );
@@ -54,10 +56,10 @@ ListItem.displayName = "ListItem";
 
 const ListItemGroupContent = styled("div")(
   {
-    display: "block"
+    display: "block",
   },
-  props => ({
-    display: props.collapsed ? "none" : "block"
+  (props) => ({
+    display: props.collapsed ? "none" : "block",
   })
 );
 ListItemGroupContent.displayName = "ListItemGroupContent";
@@ -83,7 +85,7 @@ class ListItemGroup extends PureComponent {
       getKey = noop,
       onListItemClick = noop,
       onListItemDoubleClick = noop,
-      customItemBackground
+      customItemBackground,
     } = this.props;
     return (
       <div>
@@ -128,7 +130,7 @@ export function List(props) {
     isDimmed = noop,
     getKey = noop,
     onListItemClick = noop,
-    onListItemDoubleClick = noop
+    onListItemDoubleClick = noop,
   } = props;
   return (
     <div>

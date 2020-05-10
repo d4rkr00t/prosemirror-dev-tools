@@ -1,18 +1,18 @@
 import React from "react";
-import styled from "react-emotion";
+import styled from "@emotion/styled";
 import PropTypes from "prop-types";
 import theme from "../theme";
 
 export const TabList = styled("div")({
   display: "flex",
   listStyle: "none",
-  borderBottom: `1px solid ${theme.main20}`
+  borderBottom: `1px solid ${theme.main20}`,
 });
 TabList.displayName = "TabList";
 
 export const TabsStled = styled("div")({
   height: "100%",
-  width: "100%"
+  width: "100%",
 });
 TabsStled.displayName = "TabsStyled";
 
@@ -27,15 +27,15 @@ export const TabStyled = styled("div")(
 
     "&:hover": {
       cursor: "pointer",
-      background: theme.white05
+      background: theme.white05,
     },
 
     "&:focus": {
-      outline: "none"
-    }
+      outline: "none",
+    },
   },
-  props => ({
-    borderBottom: props.isSelected ? `2px solid ${theme.main}` : "none"
+  (props) => ({
+    borderBottom: props.isSelected ? `2px solid ${theme.main}` : "none",
   })
 );
 TabStyled.displayName = "TabStyled";
@@ -55,13 +55,13 @@ export class Tab extends React.Component {
   }
 }
 Tab.contextTypes = {
-  tabs: PropTypes.object.isRequired
+  tabs: PropTypes.object.isRequired,
 };
 
 export const TabPanelStyled = styled("div")({
   width: "100%",
   height: "calc(100% - 48px)",
-  boxSizing: "border-box"
+  boxSizing: "border-box",
 });
 TabPanelStyled.displayName = "TabPanelStyled";
 
@@ -75,7 +75,7 @@ export class TabPanel extends React.Component {
   }
 }
 TabPanel.contextTypes = {
-  tabs: PropTypes.object.isRequired
+  tabs: PropTypes.object.isRequired,
 };
 
 export class Tabs extends React.Component {
@@ -83,8 +83,8 @@ export class Tabs extends React.Component {
     return {
       tabs: {
         onSelect: this.props.onSelect,
-        selectedIndex: this.props.selectedIndex
-      }
+        selectedIndex: this.props.selectedIndex,
+      },
     };
   }
 
@@ -94,5 +94,5 @@ export class Tabs extends React.Component {
 }
 
 Tabs.childContextTypes = {
-  tabs: PropTypes.object
+  tabs: PropTypes.object,
 };
