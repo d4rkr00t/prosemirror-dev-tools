@@ -12,7 +12,7 @@
     "start": "aik example/index.js",
     "prebuild": "rimraf ./dist",
     "build": "npm run build:umd && npm run build:cjs",
-    "build:umd": "webpack --optimize-minimize --config ./.build/webpack.config.umd.js",
+    "build:umd": "webpack --mode production --config ./.build/webpack.config.umd.js",
     "build:cjs": "cross-env BABEL_ENV=production babel src --out-dir dist/cjs",
     "lint:all": "eslint ./src",
     "lint:staged": "lint-staged",
@@ -35,6 +35,7 @@
     "html": "^1.0.0",
     "ie-array-find-polyfill": "^1.1.0",
     "jsondiffpatch": "^0.3.11",
+    "nanoid": "^3.1.6",
     "prop-types": "^15.6.2",
     "prosemirror-model": ">=1.0.0",
     "prosemirror-state": ">=1.0.0",
@@ -53,6 +54,7 @@
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-plugin-syntax-class-properties": "^6.13.0",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
@@ -74,8 +76,9 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "rimraf": "^2.6.2",
-    "webpack": "^3.9.1",
-    "webpack-bundle-analyzer": "^2.10.1"
+    "webpack": "^4.43.0",
+    "webpack-bundle-analyzer": "^2.10.1",
+    "webpack-cli": "^3.3.11"
   },
   "eslintConfig": {
     "extends": "./node_modules/aik/lib/eslint-config.js"

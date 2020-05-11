@@ -1,7 +1,7 @@
 import { DOMSerializer } from "prosemirror-model";
 import { Container } from "unstated";
-import { DiffPatcher } from "jsondiffpatch";
 import { prettyPrint } from "html";
+import { nanoid } from "nanoid";
 import subscribeOnUpdates from "../utils/subscribe-on-updates";
 import findNodeIn, { findNodeInJSON } from "../utils/find-node";
 import getEditorStateClass from "./get-editor-state";
@@ -34,11 +34,6 @@ const nodesColors = [
   "#4CBCD4", // cyan
   "#8D7BC0" // indigo
 ];
-
-const diff = new DiffPatcher({
-  arrays: { detectMove: false },
-  textDiff: { minLength: 1 }
-});
 
 export function calculateSafeIndex(index, total) {
   const quotient = index / total;
@@ -106,7 +101,7 @@ export function buildSelection(selection) {
   };
 }
 
-export function createHistoryEntry(prevState, editorState) {
+export function createHistoryEntry(editorState) {
   const serializer = DOMSerializer.fromSchema(editorState.schema);
   const selection = editorState.selection;
   const domFragment = serializer.serializeFragment(selection.content().content);
@@ -121,13 +116,12 @@ export function createHistoryEntry(prevState, editorState) {
   }
 
   return {
+    id: nanoid(),
     state: editorState,
     timestamp: Date.now(),
-    diff:
-      prevState && diff.diff(prevState.doc.toJSON(), editorState.doc.toJSON()),
-    selection:
-      prevState &&
-      diff.diff(buildSelection(prevState.selection), buildSelection(selection)),
+    diffPending: true,
+    diff: undefined,
+    selection: undefined,
     selectionContent: prettyPrint(selectionContent.join("\n"), {
       max_char: 60,
       indent_size: 2
@@ -151,7 +145,7 @@ export function updateEditorHistory(
   if (skipHistory) return;
 
   const newHistory = shrinkEditorHistory(history, historyRolledBackTo);
-  newHistory.unshift(createHistoryEntry(history[0].state, newState));
+  newHistory.unshift(createHistoryEntry(newState));
   return newHistory;
 }
 
@@ -174,6 +168,15 @@ export default class EditorStateContainer extends Container {
   constructor(editorView, props) {
     super();
 
+    this.diffWorker =
+      props && props.diffWorker
+        ? import("./json-diff-worker").then(
+            ({ JsonDiffWorker }) => new JsonDiffWorker(props.diffWorker)
+          )
+        : import("./json-diff-main").then(
+            ({ JsonDiffMain }) => new JsonDiffMain()
+          );
+
     this.state = Object.assign({}, this.state, {
       EditorState: getEditorStateClass(props),
       view: editorView,
@@ -189,6 +192,38 @@ export default class EditorStateContainer extends Container {
         tr,
         newState
       );
+
+      if (oldState && updatedHistory) {
+        const [{ id }] = updatedHistory;
+        const self = this;
+
+        (async () => {
+          const diffWorker = await this.diffWorker;
+
+          const [{ delta: diff }, { delta: selection }] = await Promise.all([
+            diffWorker.diff({
+              a: oldState.doc.toJSON(),
+              b: newState.doc.toJSON(),
+              id
+            }),
+            diffWorker.diff({
+              a: buildSelection(oldState.selection),
+              b: buildSelection(newState.selection),
+              id
+            })
+          ]);
+
+          const history = updatedHistory.map(item => {
+            return item.id === id
+              ? Object.assign({}, item, { diff, diffPending: false, selection })
+              : item;
+          });
+
+          self.setState({
+            history
+          });
+        })();
+      }
 
       this.setState({
         state: newState,
@@ -296,7 +331,7 @@ export default class EditorStateContainer extends Container {
     });
 
     this.setState({
-      history: [createHistoryEntry(null, newState)],
+      history: [createHistoryEntry(newState)],
       state: newState
     });
 
