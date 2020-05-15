@@ -24,17 +24,19 @@
 
 ## Table of Content
 
-* [Quick Start](#quick-start)
-* [Features](#features)
-  * [State](#state)
-  * [History](#history)
-  * [Plugins](#plugins)
-  * [Schema](#schema)
-  * [Structure](#structure)
-  * [Snapshots](#snapshots)
-* [Demo](#demo)
-* [Contributing](#contributing)
-* [License](#license)
+- [Table of Content](#table-of-content)
+- [Quick Start](#quick-start)
+  - [NPM Way](#npm-way)
+- [Features](#features)
+  - [State](#state)
+  - [History](#history)
+  - [Plugins](#plugins)
+  - [Schema](#schema)
+  - [Structure](#structure)
+  - [Snapshots](#snapshots)
+- [Demo](#demo)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Quick Start
 
@@ -56,42 +58,23 @@ const view = new EditorView /*...*/();
 applyDevTools(view);
 ```
 
-### CDN way
-
-Add script tag to your html file:
-
-```html
-<script src="https://unpkg.com/prosemirror-dev-tools@1.4.0/dist/umd/prosemirror-dev-tools.min.js"></script>
-```
-
-Wrap `EditorView` instance in applyDevTools method:
-
-```js
-const view = new EditorView /*...*/();
-
-// From version 1.3.1 it's required for UMD build to provide EditorState class (not instance).
-// Previously it was causing different artifacts when working with state e.g. rolling back to some history checkpoint
-// or when restoring from snapshot due to EditorState classes were different in UMD bundle and in actual client code.
-ProseMirrorDevTools.applyDevTools(view, { EditorState: EditorState });
-```
-
 ## Features
 
 ### State
 
-* Inspect document – all nodes and marks
-* Inspect selection – position, head, anchor and etc.
-* Inspect active marks
-* See document stats – size, child count
+- Inspect document – all nodes and marks
+- Inspect selection – position, head, anchor and etc.
+- Inspect active marks
+- See document stats – size, child count
 
 ![prosemirror-dev-tools state tab](/docs/assets/state-tab.png)
 
 ### History
 
-* Inspect document changes over time
-* Time travel between states
-* See selection content for particular state in time
-* See selection diff
+- Inspect document changes over time
+- Time travel between states
+- See selection content for particular state in time
+- See selection diff
 
 ![prosemirror-dev-tools history tab](/docs/assets/history-tab.png)
 
@@ -123,7 +106,7 @@ stored in local storage.
 
 ## Demo
 
-* [Demo & Example Setup](https://codesandbox.io/s/l9n6667ooz)
+- [Demo & Example Setup](https://codesandbox.io/s/l9n6667ooz)
 
 ## Contributing
 
@@ -132,4 +115,4 @@ about it [here](http://commitizen.github.io/cz-cli/).
 
 ## License
 
-* **MIT** : http://opensource.org/licenses/MIT
+- **MIT** : http://opensource.org/licenses/MIT
