@@ -16,7 +16,7 @@
     "build:cjs": "cross-env BABEL_ENV=cjs babel src --out-dir dist/cjs",
     "build:esm": "cross-env BABEL_ENV=esm babel src --out-dir dist/esm",
     "lint:staged": "lint-staged",
-    "pmm:prepare": "npm run lint:all && npm run build",
+    "pmm:prepare": "npm run build",
     "release:major": "pmm major",
     "release:minor": "pmm minor",
     "release:patch": "pmm patch",
