@@ -1,12 +1,14 @@
 import { nanoid } from "nanoid";
+import { IdleScheduler } from "./idle-scheduler";
 
 export class JsonDiffWorker {
   queue = new Map();
+  scheduler = new IdleScheduler();
 
   constructor(worker) {
     this.worker = worker;
 
-    this.worker.addEventListener("message", e => {
+    this.worker.addEventListener("message", (e) => {
       const deferred = this.queue.get(e.data.id);
       if (deferred) {
         this.queue.delete(e.data.id);
@@ -15,7 +17,9 @@ export class JsonDiffWorker {
     });
   }
 
-  diff(input) {
+  async diff(input) {
+    await this.scheduler.request();
+
     const id = nanoid();
     const deferred = createDeferrable();
     this.queue.set(id, deferred);
@@ -23,7 +27,7 @@ export class JsonDiffWorker {
     this.worker.postMessage({
       method: "diff",
       id,
-      args: [input]
+      args: [input],
     });
 
     return deferred;
@@ -33,7 +37,7 @@ export class JsonDiffWorker {
 function createDeferrable() {
   let r;
 
-  const p = new Promise(resolve => {
+  const p = new Promise((resolve) => {
     r = resolve;
   });
 
