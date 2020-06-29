@@ -1,7 +1,7 @@
 import { DOMSerializer } from "prosemirror-model";
 import { Container } from "unstated";
 import { prettyPrint } from "html";
-import { nanoid } from "nanoid";
+import nanoid from "nanoid";
 import subscribeOnUpdates from "../utils/subscribe-on-updates";
 import findNodeIn, { findNodeInJSON } from "../utils/find-node";
 import getEditorStateClass from "./get-editor-state";
@@ -11,7 +11,7 @@ const NODE_PICKER_DEFAULT = {
   left: 0,
   width: 0,
   height: 0,
-  active: false
+  active: false,
 };
 const HISTORY_SIZE = 200;
 const SNAPSHOTS_KEY = "prosemirror-dev-tools-snapshots";
@@ -32,7 +32,7 @@ const nodesColors = [
   "#FFC129", // amber
   "#D3929C", // can can
   "#4CBCD4", // cyan
-  "#8D7BC0" // indigo
+  "#8D7BC0", // indigo
 ];
 
 export function calculateSafeIndex(index, total) {
@@ -73,7 +73,7 @@ export function getActiveMarks(editorState) {
   if (selection.empty) {
     marks = selection.storedMarks || selection.$from.marks();
   } else {
-    editorState.doc.nodesBetween(selection.from, selection.to, node => {
+    editorState.doc.nodesBetween(selection.from, selection.to, (node) => {
       marks = marks.concat(node.marks);
     });
   }
@@ -85,7 +85,7 @@ export function getActiveMarks(editorState) {
       }
       return acc;
     }, [])
-    .map(m => m.toJSON());
+    .map((m) => m.toJSON());
 
   return marks;
 }
@@ -97,7 +97,7 @@ export function buildSelection(selection) {
     anchor: selection.anchor,
     head: selection.head,
     from: selection.from,
-    to: selection.to
+    to: selection.to,
   };
 }
 
@@ -124,8 +124,8 @@ export function createHistoryEntry(editorState) {
     selection: undefined,
     selectionContent: prettyPrint(selectionContent.join("\n"), {
       max_char: 60,
-      indent_size: 2
-    })
+      indent_size: 2,
+    }),
   };
 }
 
@@ -151,7 +151,7 @@ export function updateEditorHistory(
 
 export default class EditorStateContainer extends Container {
   state = {
-    EditorState: function() {},
+    EditorState: function () {},
     view: null,
     state: {},
     schema: {},
@@ -162,7 +162,7 @@ export default class EditorStateContainer extends Container {
     historyRolledBackTo: false,
     selectedHistoryItem: 0,
     snapshots: JSON.parse(window.localStorage.getItem(SNAPSHOTS_KEY)) || [],
-    nodePicker: NODE_PICKER_DEFAULT
+    nodePicker: NODE_PICKER_DEFAULT,
   };
 
   constructor(editorView, props) {
@@ -182,7 +182,7 @@ export default class EditorStateContainer extends Container {
       view: editorView,
       state: editorView.state,
       nodeColors: buildColors(editorView.state.schema),
-      history: [{ state: editorView.state, timestamp: Date.now() }]
+      history: [{ state: editorView.state, timestamp: Date.now() }],
     });
 
     subscribeOnUpdates(editorView, (tr, oldState, newState) => {
@@ -204,23 +204,23 @@ export default class EditorStateContainer extends Container {
             diffWorker.diff({
               a: oldState.doc.toJSON(),
               b: newState.doc.toJSON(),
-              id
+              id,
             }),
             diffWorker.diff({
               a: buildSelection(oldState.selection),
               b: buildSelection(newState.selection),
-              id
-            })
+              id,
+            }),
           ]);
 
-          const history = updatedHistory.map(item => {
+          const history = updatedHistory.map((item) => {
             return item.id === id
               ? Object.assign({}, item, { diff, diffPending: false, selection })
               : item;
           });
 
           self.setState({
-            history
+            history,
           });
         })();
       }
@@ -235,14 +235,14 @@ export default class EditorStateContainer extends Container {
           : this.state.selectedHistoryItem,
         historyRolledBackTo: updatedHistory
           ? false
-          : this.state.historyRolledBackTo
+          : this.state.historyRolledBackTo,
       });
     });
   }
 
   activatePicker = () => {
     this.setState({
-      nodePicker: Object.assign({}, NODE_PICKER_DEFAULT, { active: true })
+      nodePicker: Object.assign({}, NODE_PICKER_DEFAULT, { active: true }),
     });
   };
 
@@ -260,7 +260,7 @@ export default class EditorStateContainer extends Container {
     this.setState({ nodePicker: NODE_PICKER_DEFAULT });
   };
 
-  updateNodePickerPossition = target => {
+  updateNodePickerPossition = (target) => {
     const node = findPMNode(target);
 
     if (
@@ -275,17 +275,17 @@ export default class EditorStateContainer extends Container {
           left,
           width,
           height,
-          active: true
-        }
+          active: true,
+        },
       });
     } else {
       this.setState({
-        nodePicker: Object.assign({}, NODE_PICKER_DEFAULT, { active: true })
+        nodePicker: Object.assign({}, NODE_PICKER_DEFAULT, { active: true }),
       });
     }
   };
 
-  nodePickerSelect = target => {
+  nodePickerSelect = (target) => {
     const node = findPMNode(target);
 
     if (node) {
@@ -310,8 +310,8 @@ export default class EditorStateContainer extends Container {
       {
         name: snapshotName,
         timestamp: Date.now(),
-        snapshot: this.state.state.doc.toJSON()
-      }
+        snapshot: this.state.state.doc.toJSON(),
+      },
     ].concat(this.state.snapshots);
 
     this.setState({ snapshots });
@@ -319,7 +319,7 @@ export default class EditorStateContainer extends Container {
     window.localStorage.setItem(SNAPSHOTS_KEY, JSON.stringify(snapshots));
   };
 
-  loadSnapshot = snapshot => {
+  loadSnapshot = (snapshot) => {
     const EditorState = this.state.EditorState;
     const editorView = this.state.view;
     const editorState = editorView.state;
@@ -327,18 +327,18 @@ export default class EditorStateContainer extends Container {
     const newState = EditorState.create({
       schema: editorState.schema,
       plugins: editorState.plugins,
-      doc: editorState.schema.nodeFromJSON(snapshot.snapshot)
+      doc: editorState.schema.nodeFromJSON(snapshot.snapshot),
     });
 
     this.setState({
       history: [createHistoryEntry(newState)],
-      state: newState
+      state: newState,
     });
 
     editorView.updateState(newState);
   };
 
-  deleteSnapshot = snapshot => {
+  deleteSnapshot = (snapshot) => {
     const snapshots = this.state.snapshots;
     const snapshotIndex = snapshots.indexOf(snapshot);
     snapshots.splice(snapshotIndex, 1);
@@ -356,9 +356,9 @@ export default class EditorStateContainer extends Container {
     }
   };
 
-  selectHistoryItem = index => this.setState({ selectedHistoryItem: index });
+  selectHistoryItem = (index) => this.setState({ selectedHistoryItem: index });
 
-  rollbackHistory = index => {
+  rollbackHistory = (index) => {
     const EditorState = this.state.EditorState;
     const { state: editorState } = this.state.history[index];
     const editorView = this.state.view;
@@ -366,7 +366,7 @@ export default class EditorStateContainer extends Container {
     const newState = EditorState.create({
       schema: editorState.schema,
       plugins: editorState.plugins,
-      doc: editorState.schema.nodeFromJSON(editorState.doc.toJSON())
+      doc: editorState.schema.nodeFromJSON(editorState.doc.toJSON()),
     });
 
     editorView.updateState(newState);
@@ -380,7 +380,7 @@ export default class EditorStateContainer extends Container {
 
     this.setState({
       state: newState,
-      historyRolledBackTo: index
+      historyRolledBackTo: index,
     });
   };
 }

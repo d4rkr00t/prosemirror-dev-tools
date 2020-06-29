@@ -1,4 +1,4 @@
-import { nanoid } from "nanoid";
+import nanoid from "nanoid";
 import { IdleScheduler } from "./idle-scheduler";
 
 export class JsonDiffWorker {
