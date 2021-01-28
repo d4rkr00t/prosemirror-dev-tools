@@ -31,7 +31,7 @@ class NodePicker extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.destroyEventHandlers();
 
     if (nextProps.nodePicker.active) {
