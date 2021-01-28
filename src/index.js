@@ -5,25 +5,24 @@ import DevTools from "./dev-tools";
 import EditorStateContainer from "./state/editor";
 
 const DEVTOOLS_CLASS_NAME = "__prosemirror-dev-tools__";
+let containerElement = null;
 
-function createPlace() {
+function createOrFindPlace() {
   let place = document.querySelector(`.${DEVTOOLS_CLASS_NAME}`);
 
   if (!place) {
     place = document.createElement("div");
     place.className = DEVTOOLS_CLASS_NAME;
     document.body.appendChild(place);
-  } else {
-    ReactDOM.unmountComponentAtNode(place);
-    place.innerHTML = "";
   }
 
   return place;
 }
 
 function applyDevTools(editorView, props) {
-  const place = createPlace();
+  const place = createOrFindPlace();
   const editorState = new EditorStateContainer(editorView, props);
+  containerElement = place;
 
   ReactDOM.render(
     <Provider inject={[editorState]}>
@@ -31,7 +30,17 @@ function applyDevTools(editorView, props) {
     </Provider>,
     place
   );
+
+  return () => {
+    ReactDOM.unmountComponentAtNode(place);
+  };
+}
+
+function removeDevTools() {
+  if (containerElement) {
+    ReactDOM.unmountComponentAtNode(containerElement);
+  }
 }
 
 export default applyDevTools;
-export { applyDevTools };
+export { applyDevTools, removeDevTools };
