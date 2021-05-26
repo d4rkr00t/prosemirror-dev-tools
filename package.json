@@ -63,7 +63,7 @@
     "parcel": "^1.12.4",
     "pmm": "^2.0.0",
     "pre-commit": "^1.2.2",
-    "preact": "^10.2.2",
+    "preact": "^8.0.0",
     "preact-compat": "^3.19.0",
     "prettier": "^2.0.5",
     "prosemirror-example-setup": "*",
