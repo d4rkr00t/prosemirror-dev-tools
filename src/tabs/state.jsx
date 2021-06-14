@@ -6,14 +6,14 @@ import StateTabStateContainer from "../state/state-tab";
 import {
   expandedStateFormatSelection,
   collapsedStateFormatSelection,
-} from "./../utils/format-selection-object";
+} from "../utils/format-selection-object";
 import { SplitView, SplitViewCol } from "../components/split-view";
 import JSONTree from "../components/json-tree";
 import {
   Heading,
   HeadingWithButton,
   HeadingButton,
-} from "./../components/heading";
+} from "../components/heading";
 import theme from "../theme";
 
 const JSONTreeWrapper = styled("div")({

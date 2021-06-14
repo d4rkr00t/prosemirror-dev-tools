@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import { Subscribe } from "unstated";
 import EditorStateContainer from "../state/editor";
 import { InfoPanel } from "../components/info-panel";
-import { Heading } from "./../components/heading";
+import { Heading } from "../components/heading";
 import { List } from "../components/list";
 import JSONDiff from "../components/json-diff";
 import { SplitView, SplitViewCol } from "../components/split-view";

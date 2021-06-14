@@ -10,7 +10,7 @@ import {
   Heading,
   HeadingWithButton,
   HeadingButton,
-} from "./../components/heading";
+} from "../components/heading";
 
 const GraphWrapper = styled("div")({
   marginTop: "12px",
