@@ -3,7 +3,7 @@ import { Subscribe } from "unstated";
 import EditorStateContainer from "../state/editor";
 import { SplitView, SplitViewCol } from "../components/split-view";
 import JSONTree from "../components/json-tree";
-import { Heading } from "./../components/heading";
+import { Heading } from "../components/heading";
 
 const ignoreFields = ["schema", "contentExpr", "schema", "parseDOM", "toDOM"];
 

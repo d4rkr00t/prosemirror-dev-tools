@@ -3,7 +3,7 @@ import { Subscribe } from "unstated";
 import EditorStateContainer from "../state/editor";
 import PluginsTabStateContainer from "../state/plugins-tab";
 import { InfoPanel } from "../components/info-panel";
-import { Heading } from "./../components/heading";
+import { Heading } from "../components/heading";
 import JSONTree from "../components/json-tree";
 import { List } from "../components/list";
 import { SplitView, SplitViewCol } from "../components/split-view";

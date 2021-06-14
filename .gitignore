@@ -3,3 +3,5 @@
 package-lock.json
 out
 .cache
+.parcel-cache
+pnpm-lock.yaml
