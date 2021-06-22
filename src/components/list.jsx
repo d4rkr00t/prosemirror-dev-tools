@@ -22,7 +22,7 @@ export const ListItem = styled("div")(
     borderTop: `1px solid ${theme.main20}`,
     margin: 0,
 
-    "&:first-child": {
+    "&:first-of-type": {
       borderTop: "none",
     },
 
