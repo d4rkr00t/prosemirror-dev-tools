@@ -1,11 +1,15 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { Subscribe } from "unstated";
-import EditorStateContainer from "../state/editor";
 import { SplitView, SplitViewCol } from "../components/split-view";
 import { List } from "../components/list";
 import { InfoPanel } from "../components/info-panel";
 import theme from "../theme";
+import { useSnapshots } from "../state/snapshots";
+import getEditorStateClass from "../state/get-editor-state";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { editorViewAtom } from "../state/editor-view";
+import { editorStateAtom } from "../state/editor-state";
+import { historyWriteAtom } from "../state/history";
 
 const ActionButton = styled("button")({
   padding: "6px 10px",
@@ -74,46 +78,52 @@ export function SnapshotsList({ snapshots, deleteSnapshot, loadSnapshot }) {
   );
 }
 
-class SnapshotTab extends React.Component {
-  shouldComponentUpdate(nextProps) {
-    return this.props.snapshots !== nextProps.snapshots;
-  }
+export default function SnapshotTab() {
+  const [snapshots, snapshotsDispatch] = useSnapshots();
+  const editorView = useAtomValue(editorViewAtom);
+  const [editorState, setEditorState] = useAtom(editorStateAtom);
+  const historyDispatcher = useSetAtom(historyWriteAtom);
+  const loadSnapshot = React.useCallback(
+    (snapshot) => {
+      const EditorState = getEditorStateClass();
 
-  render() {
-    const { snapshots, loadSnapshot, deleteSnapshot } = this.props;
+      const newState = EditorState.create({
+        schema: editorState.schema,
+        plugins: editorState.plugins,
+        doc: editorState.schema.nodeFromJSON(snapshot.snapshot),
+      });
 
-    return (
-      <SplitView>
-        <SplitViewCol noPaddings grow>
-          {snapshots && snapshots.length ? (
-            <SnapshotsList
-              snapshots={snapshots}
-              loadSnapshot={loadSnapshot}
-              deleteSnapshot={deleteSnapshot}
-            />
-          ) : (
-            <InfoPanel>
-              No saved snapshots yet. Press "Save Snapshot" button to add one.
-            </InfoPanel>
-          )}
-        </SplitViewCol>
-      </SplitView>
-    );
-  }
-}
+      editorView.updateState(newState);
+      setEditorState(newState);
+      historyDispatcher({
+        type: "reset",
+        payload: { state: editorView.state },
+      });
+    },
+    [editorView, editorState]
+  );
+  const deleteSnapshot = React.useCallback(
+    (snapshot) => {
+      snapshotsDispatch({ type: "delete", payload: { snapshot } });
+    },
+    [snapshotsDispatch]
+  );
 
-export default function SnapshotsTabContainer() {
   return (
-    <Subscribe to={[EditorStateContainer]}>
-      {({ state: { snapshots }, loadSnapshot, deleteSnapshot }) => {
-        return (
-          <SnapshotTab
+    <SplitView>
+      <SplitViewCol noPaddings grow>
+        {snapshots.length ? (
+          <SnapshotsList
             snapshots={snapshots}
             loadSnapshot={loadSnapshot}
             deleteSnapshot={deleteSnapshot}
           />
-        );
-      }}
-    </Subscribe>
+        ) : (
+          <InfoPanel>
+            No saved snapshots yet. Press "Save Snapshot" button to add one.
+          </InfoPanel>
+        )}
+      </SplitViewCol>
+    </SplitView>
   );
 }
