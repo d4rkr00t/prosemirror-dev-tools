@@ -108,6 +108,17 @@ stored in local storage.
 
 - [Demo & Example Setup](https://codesandbox.io/s/l9n6667ooz)
 
+## TODO
+
+- [ ] TypeScript
+- [ ] Github actions build with changesets for releases
+- [ ] New theme
+- [ ] Playwright tests
+- [ ] Debug unnecessary renders
+- [ ] Update to react 18
+- [ ] Node picker to functional component
+- [ ] No runtime css-in-js
+
 ## Contributing
 
 Contributions are highly welcome! This repo is commitizen friendly — please read

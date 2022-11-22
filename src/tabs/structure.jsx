@@ -1,9 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { Subscribe } from "unstated";
+import { atom, useAtom, useAtomValue } from "jotai";
 import theme from "../theme";
-import EditorStateContainer from "../state/editor";
-import StructureTabStateContainer from "../state/structure-tab";
 import { SplitView, SplitViewCol } from "../components/split-view";
 import JSONTree from "../components/json-tree";
 import {
@@ -11,6 +9,8 @@ import {
   HeadingWithButton,
   HeadingButton,
 } from "../components/heading";
+import { nodeColorsAtom } from "../state/node-colors";
+import { editorStateAtom } from "../state/editor-state";
 
 const GraphWrapper = styled("div")({
   marginTop: "12px",
@@ -173,45 +173,44 @@ export function InlineNode(props) {
   );
 }
 
-export default function GraphTab() {
-  return (
-    <Subscribe to={[EditorStateContainer, StructureTabStateContainer]}>
-      {(editorState, structureTabState) => {
-        const { state, nodeColors } = editorState.state;
-        const { selectedNode } = structureTabState.state;
-        const selected = selectedNode ? selectedNode : state.doc;
+const structureTabSelectedNode = atom(null);
 
-        return (
-          <SplitView>
-            <SplitViewCol grow>
-              <Heading>Current Doc</Heading>
-              <GraphWrapper>
-                <BlockNode
-                  colors={nodeColors}
-                  node={state.doc}
-                  startPos={0}
-                  onNodeSelected={structureTabState.selectNode}
-                />
-              </GraphWrapper>
-            </SplitViewCol>
-            <SplitViewCol sep minWidth={200} maxWidth={300}>
-              <HeadingWithButton>
-                <Heading>Node Info</Heading>
-                <HeadingButton onClick={() => console.log(selected)}>
-                  Log Node
-                </HeadingButton>
-              </HeadingWithButton>
-              <JSONTree
-                data={selected.toJSON()}
-                hideRoot
-                shouldExpandNode={() =>
-                  selected.type.name !== "doc" ? true : false
-                }
-              />
-            </SplitViewCol>
-          </SplitView>
-        );
-      }}
-    </Subscribe>
+export default function GraphTab() {
+  const [selectedNode, setSelectedNode] = useAtom(structureTabSelectedNode);
+  const handleNodeSelect = React.useCallback(
+    ({ node }) => setSelectedNode(node),
+    []
+  );
+  const nodeColors = useAtomValue(nodeColorsAtom);
+  const state = useAtomValue(editorStateAtom);
+  const selected = selectedNode ? selectedNode : state.doc;
+
+  return (
+    <SplitView>
+      <SplitViewCol grow>
+        <Heading>Current Doc</Heading>
+        <GraphWrapper>
+          <BlockNode
+            colors={nodeColors}
+            node={state.doc}
+            startPos={0}
+            onNodeSelected={handleNodeSelect}
+          />
+        </GraphWrapper>
+      </SplitViewCol>
+      <SplitViewCol sep minWidth={200} maxWidth={300}>
+        <HeadingWithButton>
+          <Heading>Node Info</Heading>
+          <HeadingButton onClick={() => console.log(selected)}>
+            Log Node
+          </HeadingButton>
+        </HeadingWithButton>
+        <JSONTree
+          data={selected.toJSON()}
+          hideRoot
+          shouldExpandNode={() => (selected.type.name !== "doc" ? true : false)}
+        />
+      </SplitViewCol>
+    </SplitView>
   );
 }

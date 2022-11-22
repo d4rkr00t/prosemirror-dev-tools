@@ -1,8 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { Subscribe } from "unstated";
-import EditorStateContainer from "../state/editor";
-import StateTabStateContainer from "../state/state-tab";
+import { atom, useAtom, useAtomValue } from "jotai";
 import {
   expandedStateFormatSelection,
   collapsedStateFormatSelection,
@@ -15,6 +13,10 @@ import {
   HeadingButton,
 } from "../components/heading";
 import theme from "../theme";
+import { activeMarksAtom } from "../state/active-marks";
+import { expandPathAtom } from "../state/expand-path";
+import { editorStateAtom } from "../state/editor-state";
+import { logNodeFromJSON } from "../utils/log-node-from-json";
 
 const JSONTreeWrapper = styled("div")({
   padding: "0 0 9px 0",
@@ -140,88 +142,85 @@ export function shouldExpandNode(expandPath, nodePath) {
   return false;
 }
 
-export default function StateTab() {
-  return (
-    <Subscribe to={[EditorStateContainer, StateTabStateContainer]}>
-      {(editorState, stateTab) => {
-        const { logNodeFromJSON } = editorState;
-        const { state, activeMarks, expandPath } = editorState.state;
-        const { toggleSelection } = stateTab;
-        const { selectionExpanded } = stateTab.state;
-        const doc = state.doc.toJSON();
+const selectionAtom = atom(false);
 
-        return (
-          <SplitView>
-            <SplitViewCol grow>
-              <HeadingWithButton>
-                <Heading>Current Doc</Heading>
-                <HeadingButton onClick={() => console.log(state)}>
-                  Log State
-                </HeadingButton>
-              </HeadingWithButton>
+export default function StateTab() {
+  const [selectionExpanded, setExpanded] = useAtom(selectionAtom);
+  const activeMarks = useAtomValue(activeMarksAtom);
+  const expandPath = useAtomValue(expandPathAtom);
+  const state = useAtomValue(editorStateAtom);
+  const doc = state.doc.toJSON();
+  const logNode = logNodeFromJSON(state);
+
+  return (
+    <SplitView>
+      <SplitViewCol grow>
+        <HeadingWithButton>
+          <Heading>Current Doc</Heading>
+          <HeadingButton onClick={() => console.log(state)}>
+            Log State
+          </HeadingButton>
+        </HeadingWithButton>
+        <JSONTree
+          data={doc}
+          hideRoot
+          getItemString={getItemString(doc, logNode)}
+          shouldExpandNode={(nodePath) =>
+            shouldExpandNode(expandPath, nodePath)
+          }
+        />
+      </SplitViewCol>
+      <SplitViewCol sep minWidth={220}>
+        <Section>
+          <HeadingWithButton>
+            <Heading>Selection</Heading>
+            <HeadingButton onClick={() => setExpanded(!selectionExpanded)}>
+              {selectionExpanded ? "▼" : "▶"}
+            </HeadingButton>
+          </HeadingWithButton>
+          <JSONTreeWrapper>
+            <JSONTree
+              data={
+                selectionExpanded
+                  ? expandedStateFormatSelection(state.selection)
+                  : collapsedStateFormatSelection(state.selection)
+              }
+              hideRoot
+            />
+          </JSONTreeWrapper>
+        </Section>
+        <Section>
+          <Heading>Active Marks</Heading>
+          <JSONTreeWrapper>
+            {activeMarks.length ? (
               <JSONTree
-                data={doc}
+                data={activeMarks}
                 hideRoot
-                getItemString={getItemString(doc, logNodeFromJSON)}
-                shouldExpandNode={(nodePath) =>
-                  shouldExpandNode(expandPath, nodePath)
-                }
+                getItemString={getItemStringForMark}
               />
-            </SplitViewCol>
-            <SplitViewCol sep minWidth={220}>
-              <Section>
-                <HeadingWithButton>
-                  <Heading>Selection</Heading>
-                  <HeadingButton onClick={() => toggleSelection()}>
-                    {selectionExpanded ? "▼" : "▶"}
-                  </HeadingButton>
-                </HeadingWithButton>
-                <JSONTreeWrapper>
-                  <JSONTree
-                    data={
-                      selectionExpanded
-                        ? expandedStateFormatSelection(state.selection)
-                        : collapsedStateFormatSelection(state.selection)
-                    }
-                    hideRoot
-                  />
-                </JSONTreeWrapper>
-              </Section>
-              <Section>
-                <Heading>Active Marks</Heading>
-                <JSONTreeWrapper>
-                  {activeMarks.length ? (
-                    <JSONTree
-                      data={activeMarks}
-                      hideRoot
-                      getItemString={getItemStringForMark}
-                    />
-                  ) : (
-                    <Group>
-                      <GroupRow>
-                        <Key>no active marks</Key>
-                      </GroupRow>
-                    </Group>
-                  )}
-                </JSONTreeWrapper>
-              </Section>
-              <Section>
-                <Heading>Document Stats</Heading>
-                <Group>
-                  <GroupRow>
-                    <Key>nodeSize:</Key>
-                    <ValueNum>{state.doc.nodeSize}</ValueNum>
-                  </GroupRow>
-                  <GroupRow>
-                    <Key>childCount:</Key>
-                    <ValueNum>{state.doc.childCount}</ValueNum>
-                  </GroupRow>
-                </Group>
-              </Section>
-            </SplitViewCol>
-          </SplitView>
-        );
-      }}
-    </Subscribe>
+            ) : (
+              <Group>
+                <GroupRow>
+                  <Key>no active marks</Key>
+                </GroupRow>
+              </Group>
+            )}
+          </JSONTreeWrapper>
+        </Section>
+        <Section>
+          <Heading>Document Stats</Heading>
+          <Group>
+            <GroupRow>
+              <Key>nodeSize:</Key>
+              <ValueNum>{state.doc.nodeSize}</ValueNum>
+            </GroupRow>
+            <GroupRow>
+              <Key>childCount:</Key>
+              <ValueNum>{state.doc.childCount}</ValueNum>
+            </GroupRow>
+          </Group>
+        </Section>
+      </SplitViewCol>
+    </SplitView>
   );
 }

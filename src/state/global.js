@@ -1,31 +1,5 @@
-import { Container } from "unstated";
+import { atom } from "jotai";
 
-export default class GlobalStateContainer extends Container {
-  state = {
-    opened: false,
-    tabIndex: "state",
-    defaultSize: 0.5
-  };
-
-  toggleDevTools = () => {
-    const { opened, defaultSize } = this.state;
-
-    if (opened) {
-      document.querySelector("html").style.marginBottom = "";
-    } else {
-      const size = defaultSize * window.innerHeight;
-      document.querySelector("html").style.marginBottom = `${size}px`;
-    }
-
-    this.setState({ opened: !opened });
-  };
-
-  selectTab = (tabIndex = 0) => {
-    this.setState({ tabIndex });
-  };
-
-  updateBodyMargin = devToolsSize => {
-    const size = devToolsSize * window.innerHeight;
-    document.querySelector("html").style.marginBottom = `${size}px`;
-  };
-}
+export const devToolsOpenedAtom = atom(false);
+export const devToolsSizeAtom = atom(0.5);
+export const devToolTabIndexAtom = atom("state");
