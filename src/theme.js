@@ -15,7 +15,7 @@ const jsonTreeTheme = {
   base0C: "#B4EFE4",
   base0D: "#85D9EF",
   base0E: "#BE87FF",
-  base0F: "#D6724C"
+  base0F: "#D6724C",
 };
 
 const mainTheme = {
@@ -42,7 +42,7 @@ const mainTheme = {
   lightPink: "#FB4B85",
   darkGreen: "#81AF6D",
 
-  syntax: jsonTreeTheme
+  syntax: jsonTreeTheme,
 };
 
 export default mainTheme;
