@@ -1,14 +1,9 @@
 import React from "react";
-import JSONTreeVendor from "react-json-tree";
+import { JSONTree } from "react-json-tree";
 import { jsonTreeTheme } from "../theme";
 
-export default function JSONTree(props) {
+export default function JSONTreeWrapper(props) {
   return (
-    <JSONTreeVendor
-      invertTheme={false}
-      theme={jsonTreeTheme}
-      hideRoot
-      {...props}
-    />
+    <JSONTree invertTheme={false} theme={jsonTreeTheme} hideRoot {...props} />
   );
 }
