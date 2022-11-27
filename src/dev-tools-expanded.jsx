@@ -1,5 +1,5 @@
 import React from "react";
-import Dock from "react-dock";
+import { Dock } from "react-dock";
 import styled from "@emotion/styled";
 import { Tab, Tabs, TabList, TabPanel } from "./components/tabs";
 import {
