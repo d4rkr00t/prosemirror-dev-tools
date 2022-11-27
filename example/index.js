@@ -1,4 +1,3 @@
-// aik-mode:react
 import applyDevTools from "../src";
 import "./editor.css";
 
@@ -13,7 +12,7 @@ const plugins = exampleSetup({ schema });
 plugins.push(plugin);
 
 const view = new EditorView(document.querySelector("#app"), {
-  state: EditorState.create({ schema, plugins })
+  state: EditorState.create({ schema, plugins }),
 });
 
 applyDevTools(view);
