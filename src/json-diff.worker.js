@@ -2,10 +2,10 @@ import { DiffPatcher } from "jsondiffpatch";
 
 const diffPatcher = new DiffPatcher({
   arrays: { detectMove: false },
-  textDiff: { minLength: 1 }
+  textDiff: { minLength: 1 },
 });
 
-self.addEventListener("message", e => {
+self.addEventListener("message", (e) => {
   if (!e.data.id || !e.data.method || !e.data.args) {
     return;
   }
@@ -18,8 +18,8 @@ self.addEventListener("message", e => {
         id: e.data.id,
         returns: {
           id,
-          delta: diffPatcher.diff(a, b)
-        }
+          delta: diffPatcher.diff(a, b),
+        },
       });
       break;
     }

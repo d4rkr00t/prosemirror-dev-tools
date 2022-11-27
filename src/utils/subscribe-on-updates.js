@@ -3,7 +3,7 @@ export default function subscribeOnUpdates(editorView, callback) {
     editorView._props.dispatchTransaction || editorView.dispatch
   ).bind(editorView);
 
-  const handler = function(tr) {
+  const handler = function (tr) {
     const oldState = editorView.state;
     dispatch(tr);
     callback(tr, oldState, editorView.state);
