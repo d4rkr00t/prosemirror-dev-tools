@@ -36,7 +36,7 @@
     "html": "^1.0.0",
     "jotai": "^1.10.0",
     "jsondiffpatch": "^0.4.1",
-    "nanoid": "^2.1.11",
+    "nanoid": "^4.0.0",
     "prop-types": "^15.7.2",
     "prosemirror-model": ">=1.0.0",
     "prosemirror-state": ">=1.0.0",

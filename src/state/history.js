@@ -1,7 +1,7 @@
 import { atom } from "jotai";
 import { DOMSerializer } from "prosemirror-model";
 import { prettyPrint } from "html";
-import nanoid from "nanoid";
+import { nanoid } from "nanoid";
 
 const HISTORY_SIZE = 200;
 
