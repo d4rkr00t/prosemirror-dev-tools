@@ -2,7 +2,7 @@ import { Plugin, PluginKey } from "prosemirror-state";
 
 function createPluginState() {
   return {
-    doSomething() {}
+    doSomething() {},
   };
 }
 
@@ -15,8 +15,8 @@ const plugin = new Plugin({
     },
     apply(tr, pluginState) {
       return pluginState;
-    }
-  }
+    },
+  },
 });
 
 export default plugin;
