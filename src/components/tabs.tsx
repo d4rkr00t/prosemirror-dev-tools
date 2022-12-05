@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "@emotion/styled";
-import PropTypes from "prop-types";
 import theme from "../theme";
+
+const TabsContextProvider = React.createContext({
+  selectedIndex: "state",
+  // eslint-disable-next-line
+  onSelect: (_index: string) => {},
+});
 
 export const TabList = styled("div")({
   display: "flex",
@@ -41,25 +46,23 @@ export const TabStyled = styled("div")<TabStyledProps>(
 );
 TabStyled.displayName = "TabStyled";
 
-export class Tab extends React.Component<{ index: string }> {
-  render() {
-    return (
-      <TabStyled
-        isSelected={this.props.index === this.context.tabs.selectedIndex}
-        onClick={() => {
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
-          (this.context.tabs.onSelect || (() => {}))(this.props.index);
-        }}
-      >
-        {this.props.children}
-      </TabStyled>
-    );
-  }
+export function Tab({
+  index,
+  children,
+}: {
+  index: string;
+  children: React.ReactNode;
+}) {
+  const tabs = useContext(TabsContextProvider);
+  return (
+    <TabStyled
+      isSelected={index === tabs.selectedIndex}
+      onClick={() => tabs.onSelect(index)}
+    >
+      {children}
+    </TabStyled>
+  );
 }
-// @ts-expect-error skipping for now until switch to new context
-Tab.contextTypes = {
-  tabs: PropTypes.object.isRequired,
-};
 
 export const TabPanelStyled = styled("div")({
   width: "100%",
@@ -68,42 +71,30 @@ export const TabPanelStyled = styled("div")({
 });
 TabPanelStyled.displayName = "TabPanelStyled";
 
-export class TabPanel extends React.Component<{
-  children: (prop: { index: number }) => React.ReactNode;
-}> {
-  render() {
-    return (
-      <TabPanelStyled>
-        {this.props.children({ index: this.context.tabs.selectedIndex })}
-      </TabPanelStyled>
-    );
-  }
+export function TabPanel(props: {
+  children: (prop: { index: string }) => React.ReactNode;
+}) {
+  const tabs = useContext(TabsContextProvider);
+  return (
+    <TabPanelStyled>
+      {props.children({ index: tabs.selectedIndex })}
+    </TabPanelStyled>
+  );
 }
 
-// @ts-expect-error skipping for now until switch to new context
-TabPanel.contextTypes = {
-  tabs: PropTypes.object.isRequired,
-};
-
-export class Tabs extends React.Component<{
+export function Tabs(props: {
   onSelect: (index: string) => void;
   selectedIndex: string;
-}> {
-  getChildContext() {
-    return {
-      tabs: {
-        onSelect: this.props.onSelect,
-        selectedIndex: this.props.selectedIndex,
-      },
-    };
-  }
-
-  render() {
-    return <TabsStled>{this.props.children}</TabsStled>;
-  }
+  children: React.ReactNode;
+}) {
+  return (
+    <TabsContextProvider.Provider
+      value={{
+        onSelect: props.onSelect,
+        selectedIndex: props.selectedIndex,
+      }}
+    >
+      <TabsStled>{props.children}</TabsStled>
+    </TabsContextProvider.Provider>
+  );
 }
-
-// @ts-expect-error skipping for now until switch to new context
-Tabs.childContextTypes = {
-  tabs: PropTypes.object,
-};

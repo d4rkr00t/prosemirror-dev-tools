@@ -92,6 +92,7 @@ type ListProps<Item> = {
     isPrevious?: boolean;
   }) => string | undefined;
 };
+
 class ListItemGroup<Item> extends PureComponent<
   ListProps<Item>,
   { collapsed: boolean }
