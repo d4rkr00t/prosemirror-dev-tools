@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import styled from "@emotion/styled";
 import theme from "../theme";
 
@@ -93,66 +93,55 @@ type ListProps<Item> = {
   }) => string | undefined;
 };
 
-class ListItemGroup<Item> extends PureComponent<
-  ListProps<Item>,
-  { collapsed: boolean }
-> {
-  constructor(props: ListProps<Item>) {
-    super(props);
-    this.state = { collapsed: true };
-  }
-
-  toggle() {
-    this.setState({ collapsed: !this.state.collapsed });
-  }
-
-  render() {
-    const {
-      items,
-      groupTitle = noop,
-      title,
-      isSelected = noop,
-      isPrevious = noop,
-      isDimmed = noop,
-      getKey = noop,
-      onListItemClick = noop,
-      onListItemDoubleClick = noop,
-      customItemBackground,
-    } = this.props;
-    return (
-      <div>
-        <ListItem
-          key={getKey(items[0])}
-          onClick={() => this.toggle()}
-          isSelected={items.some(isSelected) && this.state.collapsed}
-          isPrevious={isPrevious(items[0], 0) && this.state.collapsed}
-          isDimmed={items.every(isDimmed)}
-          background={customItemBackground}
-        >
-          <div style={{ flexGrow: 1 }}>{groupTitle(items as any, 0)}</div>
-          <div>{this.state.collapsed ? "▶" : "▼"}</div>
-        </ListItem>
-        <ListItemGroupContent collapsed={this.state.collapsed}>
-          {(items || []).map((item, index) => {
-            return (
-              <ListItem
-                key={getKey(item)}
-                nested
-                isSelected={isSelected(item, index)}
-                isPrevious={isPrevious(item, index)}
-                isDimmed={isDimmed(item, index)}
-                background={customItemBackground}
-                onClick={() => onListItemClick(item, index)}
-                onDoubleClick={() => onListItemDoubleClick(item, index)}
-              >
-                {title(item, index)}
-              </ListItem>
-            );
-          })}
-        </ListItemGroupContent>
-      </div>
-    );
-  }
+function ListItemGroup<Item>(
+  props: ListProps<Item> & { children: React.ReactNode }
+) {
+  const [collapsed, setCollapsed] = React.useState(false);
+  const {
+    items,
+    groupTitle = noop,
+    title,
+    isSelected = noop,
+    isPrevious = noop,
+    isDimmed = noop,
+    getKey = noop,
+    onListItemClick = noop,
+    onListItemDoubleClick = noop,
+    customItemBackground,
+  } = props;
+  return (
+    <div>
+      <ListItem
+        key={getKey(items[0])}
+        onClick={() => setCollapsed(!collapsed)}
+        isSelected={items.some(isSelected) && collapsed}
+        isPrevious={isPrevious(items[0], 0) && collapsed}
+        isDimmed={items.every(isDimmed)}
+        background={customItemBackground}
+      >
+        <div style={{ flexGrow: 1 }}>{groupTitle(items as any, 0)}</div>
+        <div>{collapsed ? "▶" : "▼"}</div>
+      </ListItem>
+      <ListItemGroupContent collapsed={collapsed}>
+        {(items || []).map((item, index) => {
+          return (
+            <ListItem
+              key={getKey(item)}
+              nested
+              isSelected={isSelected(item, index)}
+              isPrevious={isPrevious(item, index)}
+              isDimmed={isDimmed(item, index)}
+              background={customItemBackground}
+              onClick={() => onListItemClick(item, index)}
+              onDoubleClick={() => onListItemDoubleClick(item, index)}
+            >
+              {title(item, index)}
+            </ListItem>
+          );
+        })}
+      </ListItemGroupContent>
+    </div>
+  );
 }
 
 export function List<Item>(props: ListProps<Item>) {

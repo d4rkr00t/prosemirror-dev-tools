@@ -126,6 +126,9 @@ export default function DevToolsExpanded({
         isVisible
         defaultSize={defaultSize}
         onSizeChange={updateBodyMargin}
+        zIndex={1}
+        fluid={true}
+        duration={0}
       >
         {renderDockContent}
       </Dock>
