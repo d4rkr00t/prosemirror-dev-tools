@@ -65,8 +65,18 @@ const Side = styled("div")({
 });
 Side.displayName = "Side";
 
-const Center = styled("div")({
+const StartSide = styled("div")({
+  padding: "3px 6px",
+  background: "rgba(255, 255, 255, 0.3)",
+});
+StartSide.displayName = "Side";
+
+const Bar = styled("div")({
   flexGrow: 1,
+})
+Bar.displayName = "Bar"
+
+const Center = styled("div")({
   padding: "3px 9px",
   whiteSpace: "pre",
 });
@@ -156,9 +166,11 @@ export function BlockNode(props: {
   return (
     <BlockNodeWrapper>
       <BlockNodeView bg={color} onClick={() => props.onNodeSelected({ node })}>
-        <Side>{startPos}</Side>
+    {startPos > 0 && <Side title={`Pos: ${startPos - 1} (before ${node.type.name} opening tag)`}>{startPos -1}</Side>}
         <Center>{node.type.name}</Center>
-        <Side>{startPos + node.nodeSize - 1}</Side>
+        <Side title={`Pos: ${startPos} (after ${node.type.name} opening tag)`}>{startPos}</Side>
+        <Bar />
+        <Side title={`Pos: ${startPos + node.nodeSize - 1} (after ${node.type.name} closing tag)`}>{startPos + node.nodeSize - 1}</Side>
       </BlockNodeView>
       <BlockNodeContent
         content={node.content}
@@ -186,11 +198,12 @@ export function InlineNode(props: {
       : "";
   return (
     <InlineNodeView onClick={() => props.onNodeSelected({ node })} bg={bg}>
-      {index === 0 ? <Side>{startPos}</Side> : null}
+      {index === 0 ? <Side title={`Pos: ${startPos} (before ${node.type.name} opening tag)`}>{startPos}</Side> : null}
       <Center>
         {node.type.name} {marks}
       </Center>
-      <Side>{startPos + node.nodeSize}</Side>
+      <Bar />
+      <Side title={`Pos: ${startPos + node.nodeSize} (before ${node.type.name} closing tag)`}>{startPos + node.nodeSize}</Side>
     </InlineNodeView>
   );
 }
