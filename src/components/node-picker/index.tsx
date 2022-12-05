@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "@emotion/styled";
 import theme from "../../theme";
-import type { NodePickerState } from "../../state/node-picker";
+import { NodePickerState, useNodePicker } from "../../state/node-picker";
+import { useSetAtom } from "jotai";
+import { devToolTabIndexAtom } from "../../state/global";
 
 const icon =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAAmCAQAAAACNCElAAAAxklEQVRIx+2Vuw3DMAxEXWUD9VrKvTYJRzAygWpPkSVcBlDtJS6Fg8AQqQ+lAEECXU08iid+pmnoTwWDKzbU6IEbLnkYQaMlD9uA6iqAUArQwDBgX4T1Z+uF4Q4PB/sZmH/1e1BCRZiLhqgWKsJsYjJLUPkDEJKjvmPWwnwCtcKoW4O5VnpTFmaVb8o3LXONOiZAcI3aYe5UIFXiUmv77doOc7oUpDoozLU5iiPFqYtcW4W01LJP3FEiwzXBLG9SUBNq6Ef0BJ8IApq+rItIAAAAAElFTkSuQmCC";
@@ -26,62 +28,40 @@ const NodePickerStyled = styled("div")<NodePickerStyledProps>(
 );
 NodePickerStyled.displayName = "NodePickerStyled";
 
-type NodePickerProps = {
-  nodePicker: NodePickerState;
-  onMouseMove: (target: HTMLElement) => void;
-  onSelect: (target: HTMLElement) => void;
-  onClose: () => void;
-};
-class NodePicker extends React.Component<NodePickerProps> {
-  componentDidMount() {
-    if (this.props.nodePicker.active) {
-      this.initEventHandlers();
-    }
-  }
+function NodePicker() {
+  const setTabIndex = useSetAtom(devToolTabIndexAtom);
+  const [nodePicker, nodePickerApi] = useNodePicker();
+  const handleMouseMove = React.useCallback(
+    (e: MouseEvent) => {
+      nodePickerApi.updatePosition(e.target as HTMLElement);
+    },
+    [nodePickerApi]
+  );
+  const handleNodeClick = React.useCallback(
+    (e: MouseEvent) => {
+      e.preventDefault();
+      nodePickerApi.select(e.target as HTMLElement);
+      setTabIndex("state");
+    },
+    [nodePickerApi]
+  );
 
-  UNSAFE_componentWillReceiveProps(nextProps: NodePickerProps) {
-    this.destroyEventHandlers();
+  React.useEffect(() => {
+    const active = nodePicker.active;
+    if (!active) return;
 
-    if (nextProps.nodePicker.active) {
-      this.initEventHandlers();
-    }
-  }
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("click", handleNodeClick);
+    document.addEventListener("keydown", nodePickerApi.deactivate);
 
-  componentWillUnmount() {
-    this.destroyEventHandlers();
-  }
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("click", handleNodeClick);
+      document.removeEventListener("keydown", nodePickerApi.deactivate);
+    };
+  }, [handleMouseMove, handleNodeClick, nodePickerApi, nodePicker.active]);
 
-  initEventHandlers() {
-    document.addEventListener("mousemove", this.handleMouseMove);
-    document.addEventListener("click", this.handleNodeClick);
-    document.addEventListener("keydown", this.closePicker);
-  }
-
-  destroyEventHandlers() {
-    document.removeEventListener("mousemove", this.handleMouseMove);
-    document.removeEventListener("click", this.handleNodeClick);
-    document.removeEventListener("keydown", this.closePicker);
-  }
-
-  handleMouseMove = (e: MouseEvent) => {
-    if (!this.props.nodePicker.active) return;
-    this.props.onMouseMove(e.target as HTMLElement);
-  };
-
-  handleNodeClick = (e: MouseEvent) => {
-    if (!this.props.nodePicker.active) return;
-    e.preventDefault();
-    this.props.onSelect(e.target as HTMLElement);
-  };
-
-  closePicker = () => {
-    if (!this.props.nodePicker.active) return;
-    this.props.onClose();
-  };
-
-  render() {
-    return <NodePickerStyled nodePicker={this.props.nodePicker} />;
-  }
+  return <NodePickerStyled nodePicker={nodePicker} />;
 }
 
 type NodePickerTriggerProps = { isActive: boolean };

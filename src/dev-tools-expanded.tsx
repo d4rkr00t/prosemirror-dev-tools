@@ -119,15 +119,7 @@ export default function DevToolsExpanded({
 
   return (
     <CSSReset>
-      <NodePicker
-        nodePicker={nodePicker}
-        onClose={nodePickerAPI.deactivate}
-        onMouseMove={nodePickerAPI.updatePosition}
-        onSelect={(target) => {
-          nodePickerAPI.select(target);
-          setTabIndex("state");
-        }}
-      />
+      <NodePicker />
       <Dock
         position="bottom"
         dimMode="none"
