@@ -1,32 +1,36 @@
-import React from "react";
-import styled from "@emotion/styled";
-import theme from "../../theme";
-import { NodePickerState, useNodePicker } from "../../state/node-picker";
+import React, { MouseEventHandler } from "react";
+import "@compiled/react";
 import { useSetAtom } from "jotai";
+import theme from "../../theme";
+import { useNodePicker } from "../../state/node-picker";
 import { devToolTabIndexAtom } from "../../state/global";
 
 const icon =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAAmCAQAAAACNCElAAAAxklEQVRIx+2Vuw3DMAxEXWUD9VrKvTYJRzAygWpPkSVcBlDtJS6Fg8AQqQ+lAEECXU08iid+pmnoTwWDKzbU6IEbLnkYQaMlD9uA6iqAUArQwDBgX4T1Z+uF4Q4PB/sZmH/1e1BCRZiLhqgWKsJsYjJLUPkDEJKjvmPWwnwCtcKoW4O5VnpTFmaVb8o3LXONOiZAcI3aYe5UIFXiUmv77doOc7oUpDoozLU5iiPFqYtcW4W01LJP3FEiwzXBLG9SUBNq6Ef0BJ8IApq+rItIAAAAAElFTkSuQmCC";
 
-type NodePickerStyledProps = { nodePicker: NodePickerState };
-const NodePickerStyled = styled("div")<NodePickerStyledProps>(
-  {
-    position: "absolute",
-    pointerEvents: "none",
-    top: 0,
-    left: 0,
-    background: "rgba(0, 0, 255, 0.3)",
-    zIndex: 99999,
-    cursor: "pointer",
-  },
-  ({ nodePicker }: NodePickerStyledProps) => ({
-    transform: `translateX(${nodePicker.left}px) translateY(${nodePicker.top}px)`,
-    display: nodePicker.top && nodePicker.left ? "block" : "none",
-    width: `${nodePicker.width}px`,
-    height: `${nodePicker.height}px`,
-  })
+const NodePickerHighlight: React.FC<{
+  visible: boolean;
+  width: number;
+  height: number;
+  left: number;
+  top: number;
+}> = ({ visible, width, height, left, top }) => (
+  <div
+    css={{
+      position: "absolute",
+      pointerEvents: "none",
+      top: 0,
+      left: 0,
+      background: "rgba(0, 0, 255, 0.3)",
+      zIndex: 99999,
+      cursor: "pointer",
+      transform: `translateX(${left}px) translateY(${top}px)`,
+      display: visible ? "block" : "none",
+      width: `${width}px`,
+      height: `${height}px`,
+    }}
+  />
 );
-NodePickerStyled.displayName = "NodePickerStyled";
 
 function NodePicker() {
   const setTabIndex = useSetAtom(devToolTabIndexAtom);
@@ -61,31 +65,45 @@ function NodePicker() {
     };
   }, [handleMouseMove, handleNodeClick, nodePickerApi, nodePicker.active]);
 
-  return <NodePickerStyled nodePicker={nodePicker} />;
+  return (
+    <NodePickerHighlight
+      top={nodePicker.top}
+      left={nodePicker.left}
+      visible={Boolean(nodePicker.top && nodePicker.left)}
+      width={nodePicker.width}
+      height={nodePicker.height}
+    />
+  );
 }
 
-type NodePickerTriggerProps = { isActive: boolean };
-const NodePickerTrigger = styled("div")<NodePickerTriggerProps>(
-  {
-    position: "absolute",
-    right: "4px",
-    top: "-28px",
-    width: "24px",
-    height: "24px",
-    borderRadius: "3px",
+const NodePickerTrigger: React.FC<{
+  onClick: MouseEventHandler<HTMLButtonElement>;
+  isActive: boolean;
+}> = ({ children, isActive, onClick }) => (
+  <button
+    onClick={onClick}
+    css={{
+      appearance: "none",
+      position: "absolute",
+      right: "4px",
+      top: "-28px",
+      width: "24px",
+      height: "24px",
+      border: "none",
+      borderRadius: "3px",
+      background: `${isActive ? theme.main : theme.main60} url("${icon}")`,
+      backgroundSize: "20px 20px",
+      backgroundRepeat: "none",
+      backgroundPosition: "50% 50%",
 
-    "&:hover": {
-      backgroundColor: theme.main80,
-      cursor: "pointer",
-    },
-  },
-  ({ isActive }: NodePickerTriggerProps) => ({
-    background: `${isActive ? theme.main : theme.main60} url("${icon}")`,
-    backgroundSize: "20px 20px",
-    backgroundRepeat: "none",
-    backgroundPosition: "50% 50%",
-  })
+      "&:hover": {
+        backgroundColor: theme.main80,
+        cursor: "pointer",
+      },
+    }}
+  >
+    {children}
+  </button>
 );
-NodePickerTrigger.displayName = "NodePickerTrigger";
 
 export { NodePicker, NodePickerTrigger };

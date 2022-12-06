@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import styled from "@emotion/styled";
+import React, { MouseEventHandler, useContext } from "react";
+import "@compiled/react";
 import theme from "../theme";
 
 const TabsContextProvider = React.createContext({
@@ -8,43 +8,62 @@ const TabsContextProvider = React.createContext({
   onSelect: (_index: string) => {},
 });
 
-export const TabList = styled("div")({
-  display: "flex",
-  listStyle: "none",
-  borderBottom: `1px solid ${theme.main20}`,
-});
-TabList.displayName = "TabList";
-
-export const TabsStled = styled("div")({
-  height: "100%",
-  width: "100%",
-});
-TabsStled.displayName = "TabsStyled";
-
-type TabStyledProps = { isSelected: boolean };
-export const TabStyled = styled("div")<TabStyledProps>(
-  {
-    color: theme.white,
-    textTransform: "uppercase",
-    fontSize: "13px",
-    padding: "16px 24px 14px",
-    boxSizing: "border-box",
-    userSelect: "none",
-
-    "&:hover": {
-      cursor: "pointer",
-      background: theme.white05,
-    },
-
-    "&:focus": {
-      outline: "none",
-    },
-  },
-  (props: TabStyledProps) => ({
-    borderBottom: props.isSelected ? `2px solid ${theme.main}` : "none",
-  })
+export const TabList: React.FC = ({ children }) => (
+  <div
+    css={{
+      display: "flex",
+      listStyle: "none",
+      borderBottom: `1px solid ${theme.main20}`,
+    }}
+  >
+    {children}
+  </div>
 );
-TabStyled.displayName = "TabStyled";
+
+const TabsStyled: React.FC = ({ children }) => (
+  <div
+    css={{
+      height: "100%",
+      width: "100%",
+    }}
+  >
+    {children}
+  </div>
+);
+
+type TabStyledProps = {
+  isSelected: boolean;
+  onClick: MouseEventHandler<HTMLDivElement>;
+};
+const TabStyled: React.FC<TabStyledProps> = ({
+  children,
+  isSelected,
+  onClick,
+}) => (
+  <div
+    css={{
+      color: theme.white,
+      textTransform: "uppercase",
+      fontSize: "13px",
+      padding: "16px 24px 14px",
+      boxSizing: "border-box",
+      userSelect: "none",
+      borderBottom: isSelected ? `2px solid ${theme.main}` : "none",
+
+      "&:hover": {
+        cursor: "pointer",
+        background: theme.white05,
+      },
+
+      "&:focus": {
+        outline: "none",
+      },
+    }}
+    onClick={onClick}
+  >
+    {children}
+  </div>
+);
 
 export function Tab({
   index,
@@ -64,21 +83,20 @@ export function Tab({
   );
 }
 
-export const TabPanelStyled = styled("div")({
-  width: "100%",
-  height: "calc(100% - 48px)",
-  boxSizing: "border-box",
-});
-TabPanelStyled.displayName = "TabPanelStyled";
-
 export function TabPanel(props: {
   children: (prop: { index: string }) => React.ReactNode;
 }) {
   const tabs = useContext(TabsContextProvider);
   return (
-    <TabPanelStyled>
+    <div
+      css={{
+        width: "100%",
+        height: "calc(100% - 48px)",
+        boxSizing: "border-box",
+      }}
+    >
       {props.children({ index: tabs.selectedIndex })}
-    </TabPanelStyled>
+    </div>
   );
 }
 
@@ -94,7 +112,7 @@ export function Tabs(props: {
         selectedIndex: props.selectedIndex,
       }}
     >
-      <TabsStled>{props.children}</TabsStled>
+      <TabsStyled>{props.children}</TabsStyled>
     </TabsContextProvider.Provider>
   );
 }

@@ -1,7 +1,8 @@
-import styled from "@emotion/styled";
+import React from "react";
+import { css } from "@compiled/react";
 import theme from "../theme";
 
-const InfoPanel = styled("div")({
+const infoPanelStyles = css({
   position: "relative",
   top: "50%",
   transform: "translateY(-50%)",
@@ -9,6 +10,8 @@ const InfoPanel = styled("div")({
   color: theme.main,
   fontSize: "14px",
 });
-InfoPanel.displayName = "InfoPanel";
+const InfoPanel: React.FC = ({ children }) => (
+  <div css={infoPanelStyles}>{children}</div>
+);
 
 export { InfoPanel };

@@ -15,4 +15,4 @@ const view = new EditorView(document.querySelector("#app"), {
   state: EditorState.create({ schema, plugins }),
 });
 
-applyDevTools(view);
+applyDevTools(view, {});

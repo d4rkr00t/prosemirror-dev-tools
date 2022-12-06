@@ -1,19 +1,23 @@
 import React from "react";
+import { css } from "@compiled/react";
 import JSONTree from "./json-tree";
-import styled from "@emotion/styled";
 import theme from "../theme";
 
-const Updated = styled("span")({
+const updatedStyles = css({
   color: theme.main,
 });
-Updated.displayName = "Updated";
+const Updated: React.FC = ({ children }) => (
+  <span css={updatedStyles}>{children}</span>
+);
 
-const White = styled("span")({
+const whiteStyles = css({
   color: theme.white,
 });
-White.displayName = "White";
+const White: React.FC = ({ children }) => (
+  <span css={whiteStyles}>{children}</span>
+);
 
-const Deleted = styled("span")({
+const deletedStyles = css({
   display: "inline-block",
   background: theme.lightYellow,
   color: theme.lightPink,
@@ -22,9 +26,11 @@ const Deleted = styled("span")({
   textDecoration: "line-through",
   minHeight: "1ex",
 });
-Deleted.displayName = "Deleted";
+const Deleted: React.FC = ({ children }) => (
+  <span css={deletedStyles}>{children}</span>
+);
 
-const Added = styled("span")({
+const addedStyles = css({
   display: "inline-block",
   background: theme.lightYellow,
   color: theme.darkGreen,
@@ -32,15 +38,17 @@ const Added = styled("span")({
   textIndent: 0,
   minHeight: "1ex",
 });
-Added.displayName = "Added";
+const Added: React.FC = ({ children }) => (
+  <span css={addedStyles}>{children}</span>
+);
 
 function postprocessValue(value: Record<string, any>) {
   if (value && value._t === "a") {
     const res: Record<string, any> = {};
     for (const key in value) {
       if (key !== "_t") {
-        if (key[0] === "_" && !value[key.substr(1)]) {
-          res[key.substr(1)] = value[key];
+        if (key[0] === "_" && !value[key.substring(1)]) {
+          res[key.substring(1)] = value[key];
         } else if (value["_" + key]) {
           res[key] = [value["_" + key][0], value[key][0]];
         } else if (!value["_" + key] && key[0] !== "_") {
