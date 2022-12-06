@@ -8,6 +8,7 @@
     "node": ">=10"
   },
   "scripts": {
+    "preinstall": "only-allow pnpm",
     "commit": "git-cz",
     "test": "echo \"No tests yet\"",
     "start": "vite ./example",
@@ -69,6 +70,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-react": "^7.31.11",
     "lint-staged": "^13.0.4",
+    "only-allow": "^1.1.1",
     "pmm": "^2.0.0",
     "pre-commit": "^1.2.2",
     "prettier": "^2.8.0",
