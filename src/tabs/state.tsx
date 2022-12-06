@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "@emotion/styled";
+import React, { MouseEventHandler } from "react";
+import "@compiled/react";
 import { atom, useAtom, useAtomValue } from "jotai";
 import {
   expandedStateFormatSelection,
@@ -19,62 +19,94 @@ import { editorStateAtom } from "../state/editor-state";
 import { logNodeFromJSON } from "../utils/log-node-from-json";
 import type { JSONMark, JSONNode } from "../types/prosemirror";
 
-const JSONTreeWrapper = styled("div")({
-  padding: "0 0 9px 0",
-  overflow: "hidden",
-});
-JSONTreeWrapper.displayName = "JSONTreeWrapper";
+const JSONTreeWrapper: React.FC = ({ children }) => (
+  <div
+    css={{
+      padding: "0 0 9px 0",
+      overflow: "hidden",
+    }}
+  >
+    {children}
+  </div>
+);
 
-const Section = styled("div")({
-  minWidth: "180px",
-  boxSizing: "border-box",
+const Section: React.FC = ({ children }) => (
+  <div
+    css={{
+      minWidth: "180px",
+      boxSizing: "border-box",
 
-  "& + &": {
-    paddingTop: "9px",
-  },
-});
-Section.displayName = "Section";
+      "& + &": {
+        paddingTop: "9px",
+      },
+    }}
+  >
+    {children}
+  </div>
+);
 
-const Group = styled("div")({
-  margin: "0.5em 0px 0.5em 1em",
-});
-Group.displayName = "Group";
+const Group: React.FC = ({ children }) => (
+  <div css={{ margin: "0.5em 0px 0.5em 1em" }}>{children}</div>
+);
 
-const GroupRow = styled("div")({
-  paddingTop: "0.25em",
-});
-GroupRow.displayName = "GroupRow";
+const GroupRow: React.FC = ({ children }) => (
+  <div
+    css={{
+      paddingTop: "0.25em",
+    }}
+  >
+    {children}
+  </div>
+);
 
-const Key = styled("span")({
-  display: "inline-block",
-  color: theme.syntax.base0D,
-  margin: "0px 0.5em 0px 0px",
-});
-Key.displayName = "Key";
+const Key: React.FC = ({ children }) => (
+  <div
+    css={{
+      display: "inline-block",
+      color: theme.syntax.base0D,
+      margin: "0px 0.5em 0px 0px",
+    }}
+  >
+    {children}
+  </div>
+);
 
-const ValueNum = styled("span")({
-  color: theme.syntax.base09,
-});
-ValueNum.displayName = "ValueNum";
+const ValueNum: React.FC = ({ children }) => (
+  <div
+    css={{
+      color: theme.syntax.base09,
+    }}
+  >
+    {children}
+  </div>
+);
 
-const LogNodeButton = styled("button")({
-  color: theme.white60,
-  background: "none",
-  border: "none",
-  transition: "background 0.3s, color 0.3s",
-  borderRadius: "3px",
+const LogNodeButton: React.FC<{
+  onClick: MouseEventHandler<HTMLButtonElement>;
+}> = ({ children, onClick }) => (
+  <button
+    onClick={onClick}
+    css={{
+      color: theme.white60,
+      background: "none",
+      border: "none",
+      transition: "background 0.3s, color 0.3s",
+      borderRadius: "3px",
 
-  "&:hover": {
-    cursor: "pointer",
-    background: theme.main40,
-    color: theme.white,
-  },
+      "&:hover": {
+        cursor: "pointer",
+        background: theme.main40,
+        color: theme.white,
+      },
 
-  "&:focus": {
-    outline: "none",
-  },
-});
-LogNodeButton.displayName = "LogNodeButton";
+      "&:focus": {
+        outline: "none",
+      },
+    }}
+  >
+    {children}
+  </button>
+);
 
 export function getItemString(
   doc: JSONNode,

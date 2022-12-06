@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "@emotion/styled";
+import React, { MouseEventHandler } from "react";
+import "@compiled/react";
 import { atom, useAtom, useAtomValue } from "jotai";
 import type { Node } from "prosemirror-model";
 import theme from "../theme";
@@ -14,81 +14,111 @@ import { nodeColorsAtom } from "../state/node-colors";
 import { editorStateAtom } from "../state/editor-state";
 import { ExtendedFragment } from "../types/prosemirror";
 
-const GraphWrapper = styled("div")({
-  marginTop: "12px",
-});
-GraphWrapper.displayName = "GraphWrapper";
-
-const BlockNodeWrapper = styled("div")({});
-BlockNodeWrapper.displayName = "BlockNodeWrapper";
-
-const BlockNodeContentView = styled("div")({
-  padding: "0 12px",
-  boxSizing: "border-box",
-  borderLeft: `1px solid ${theme.white20}`,
-  borderRight: `1px solid ${theme.white20}`,
-});
-BlockNodeContentView.displayName = "BlockNodeContentView";
-
-const BlockNodeContentViewWithInline = styled("div")({
-  padding: "0 12px",
-  display: "flex",
-  width: "100%",
-  boxSizing: "border-box",
-  borderLeft: `1px solid ${theme.white20}`,
-  borderRight: `1px solid ${theme.white20}`,
-  flexWrap: "wrap",
-});
-BlockNodeContentViewWithInline.displayName = "BlockNodeContentViewWithInline";
-
-type BlockNodeViewProps = { bg: string };
-const BlockNodeView = styled("div")<BlockNodeViewProps>(
-  {
-    width: "100%",
-    marginBottom: "3px",
-    boxSizing: "border-box",
-    display: "flex",
-
-    "&:hover": {
-      cursor: "pointer",
-    },
-  },
-  ({ bg }: BlockNodeViewProps) => ({
-    background: bg,
-  })
+const GraphWrapper: React.FC = ({ children }) => (
+  <div
+    css={{
+      marginTop: "12px",
+    }}
+  >
+    {children}
+  </div>
 );
-BlockNodeView.displayName = "BlockNodeView";
 
-const Side = styled("div")({
-  padding: "3px 6px",
-  background: "rgba(255, 255, 255, 0.3)",
-});
-Side.displayName = "Side";
-
-const Center = styled("div")({
-  flexGrow: 1,
-  padding: "3px 9px",
-  whiteSpace: "pre",
-});
-Center.displayName = "Center";
-
-type InlineNodeViewProps = { bg: string };
-const InlineNodeView = styled("div")<InlineNodeViewProps>(
-  {
-    flexGrow: 1,
-    marginBottom: "3px",
-    display: "flex",
-    boxSizing: "border-box",
-
-    "&:hover": {
-      cursor: "pointer",
-    },
-  },
-  ({ bg }: InlineNodeViewProps) => ({
-    background: bg,
-  })
+const BlockNodeContentView: React.FC = ({ children }) => (
+  <div
+    css={{
+      padding: "0 12px",
+      boxSizing: "border-box",
+      borderLeft: `1px solid ${theme.white20}`,
+      borderRight: `1px solid ${theme.white20}`,
+    }}
+  >
+    {children}
+  </div>
 );
-InlineNodeView.displayName = "InlineNodeView";
+
+const BlockNodeContentViewWithInline: React.FC = ({ children }) => (
+  <div
+    css={{
+      padding: "0 12px",
+      display: "flex",
+      width: "100%",
+      boxSizing: "border-box",
+      borderLeft: `1px solid ${theme.white20}`,
+      borderRight: `1px solid ${theme.white20}`,
+      flexWrap: "wrap",
+    }}
+  >
+    {children}
+  </div>
+);
+
+const BlockNodeView: React.FC<{
+  bg: string;
+  onClick?: MouseEventHandler<HTMLDivElement>;
+}> = ({ children, bg, onClick }) => (
+  <div
+    onClick={onClick}
+    css={{
+      width: "100%",
+      marginBottom: "3px",
+      boxSizing: "border-box",
+      display: "flex",
+      background: bg,
+
+      "&:hover": {
+        cursor: "pointer",
+      },
+    }}
+  >
+    {children}
+  </div>
+);
+
+const Side: React.FC = ({ children }) => (
+  <div
+    css={{
+      padding: "3px 6px",
+      background: "rgba(255, 255, 255, 0.3)",
+    }}
+  >
+    {children}
+  </div>
+);
+
+const Center: React.FC = ({ children }) => (
+  <div
+    css={{
+      flexGrow: 1,
+      padding: "3px 9px",
+      whiteSpace: "pre",
+    }}
+  >
+    {children}
+  </div>
+);
+
+const InlineNodeView: React.FC<{
+  bg: string;
+  onClick?: MouseEventHandler<HTMLDivElement>;
+}> = ({ children, bg, onClick }) => (
+  <div
+    onClick={onClick}
+    css={{
+      flexGrow: 1,
+      marginBottom: "3px",
+      display: "flex",
+      boxSizing: "border-box",
+      background: bg,
+
+      "&:hover": {
+        cursor: "pointer",
+      },
+    }}
+  >
+    {children}
+  </div>
+);
 
 export function BlockNodeContent(props: {
   content: Node["content"];
@@ -154,7 +184,7 @@ export function BlockNode(props: {
   const { colors, node, startPos } = props;
   const color = colors[node.type.name];
   return (
-    <BlockNodeWrapper>
+    <div>
       <BlockNodeView bg={color} onClick={() => props.onNodeSelected({ node })}>
         <Side>{startPos}</Side>
         <Center>{node.type.name}</Center>
@@ -166,7 +196,7 @@ export function BlockNode(props: {
         onNodeSelected={props.onNodeSelected}
         startPos={startPos}
       />
-    </BlockNodeWrapper>
+    </div>
   );
 }
 

@@ -1,7 +1,8 @@
-import styled from "@emotion/styled";
+import React, { MouseEventHandler } from "react";
+import { css } from "@compiled/react";
 import theme from "../theme";
 
-const Heading = styled("h2")({
+const headingStyles = css({
   color: theme.softerMain,
   padding: 0,
   margin: 0,
@@ -11,14 +12,16 @@ const Heading = styled("h2")({
   textTransform: "uppercase",
   flexGrow: 1,
 });
-Heading.displayName = "Heading";
+const Heading: React.FC = ({ children }) => (
+  <h2 css={headingStyles}>{children}</h2>
+);
 
-const HeadingWithButton = styled("div")({
-  display: "flex",
-});
-HeadingWithButton.displayName = "HeadingWithButton";
+const headingWithButtonStyles = css({ display: "flex" });
+const HeadingWithButton: React.FC = ({ children }) => (
+  <div css={headingWithButtonStyles}>{children}</div>
+);
 
-const HeadingButton = styled("button")({
+const headingButtonStyles = css({
   padding: "6px 10px",
   margin: "-6px -10px 0 8px",
   fontWeight: 400,
@@ -45,6 +48,12 @@ const HeadingButton = styled("button")({
     background: theme.main60,
   },
 });
-HeadingButton.displayName = "HeadingButton";
+const HeadingButton: React.FC<{
+  onClick: MouseEventHandler<HTMLButtonElement>;
+}> = ({ children, onClick }) => (
+  <button onClick={onClick} css={headingButtonStyles}>
+    {children}
+  </button>
+);
 
 export { Heading, HeadingWithButton, HeadingButton };

@@ -1,11 +1,12 @@
-import React from "react";
-import styled from "@emotion/styled";
-import { useSnapshots } from "../state/snapshots";
-import theme from "../theme";
+import React, { MouseEventHandler } from "react";
 import { useAtomValue } from "jotai";
+import theme from "../theme";
+import { useSnapshots } from "../state/snapshots";
 import { editorStateAtom } from "../state/editor-state";
+import { css } from "@compiled/react";
 
-const SaveSnapshotButton = styled("div")({
+const saveSnapshotButtonStyles = css({
+  appearance: "none",
   position: "absolute",
   right: "32px",
   top: "-28px",
@@ -19,13 +20,20 @@ const SaveSnapshotButton = styled("div")({
   backgroundRepeat: "none",
   backgroundPosition: "50% 50%",
   borderRadius: "3px",
+  border: "none",
 
   "&:hover": {
     backgroundColor: theme.main80,
     cursor: "pointer",
   },
 });
-SaveSnapshotButton.displayName = "SaveSnapshotButton";
+const SaveSnapshotButton: React.FC<{
+  onClick: MouseEventHandler<HTMLButtonElement>;
+}> = ({ children, onClick }) => (
+  <button css={saveSnapshotButtonStyles} onClick={onClick}>
+    {children}
+  </button>
+);
 
 export default function SaveSnapshot() {
   const [, snapshotsDispatch] = useSnapshots();

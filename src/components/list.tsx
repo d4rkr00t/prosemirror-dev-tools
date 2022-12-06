@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "@emotion/styled";
+import React, { MouseEventHandler } from "react";
+import "@compiled/react";
 import theme from "../theme";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -14,68 +14,63 @@ type ListItemProps = {
   }) => string | undefined;
   isSelected?: boolean;
   isPrevious?: boolean;
+  onClick?: MouseEventHandler<HTMLDivElement>;
+  onDoubleClick?: MouseEventHandler<HTMLDivElement>;
 };
+const ListItem: React.FC<ListItemProps> = (props) => {
+  const background = props.background
+    ? props.background(props)
+    : props.isSelected
+    ? theme.main40
+    : "transparent";
+  return (
+    <div
+      onClick={props.onClick}
+      onDoubleClick={props.onDoubleClick}
+      css={{
+        background: background,
+        border: "none",
+        borderTop: `1px solid ${theme.main20}`,
+        boxSizing: "border-box",
+        color: theme.white80,
+        display: "flex",
+        fontFamily: "monospace",
+        fontSize: "11px",
+        fontWeight: 400,
+        letterSpacing: "1px",
+        margin: 0,
+        minWidth: "190px",
+        opacity: props.isDimmed ? 0.3 : 1,
+        padding: "6px 18px",
+        paddingLeft: props.nested ? "36px" : "18px",
+        textAlign: "left",
+        textTransform: "uppercase",
+        transition: "background .3s",
+        width: "100%",
 
-export const ListItem = styled("div")<ListItemProps>(
-  {
-    minWidth: "190px",
-    width: "100%",
-    display: "flex",
-    boxSizing: "border-box",
-    fontWeight: 400,
-    letterSpacing: "1px",
-    fontSize: "11px",
-    color: theme.white80,
-    textTransform: "uppercase",
-    transition: "background .3s",
-    textAlign: "left",
-    fontFamily: "monospace",
-    border: "none",
-    borderTop: `1px solid ${theme.main20}`,
-    margin: 0,
+        "&:first-of-type": {
+          borderTop: "none",
+        },
 
-    "&:first-of-type": {
-      borderTop: "none",
-    },
+        "&:hover": {
+          background: theme.main40,
+          color: theme.white,
+          cursor: "pointer",
+        },
 
-    "&:hover": {
-      background: theme.main40,
-      color: theme.white,
-      cursor: "pointer",
-    },
+        "&:focus": {
+          outline: "none",
+        },
 
-    "&:focus": {
-      outline: "none",
-    },
-
-    "&:active": {
-      background: theme.main60,
-    },
-  },
-  (props: ListItemProps) => {
-    return {
-      opacity: props.isDimmed ? 0.3 : 1,
-      padding: props.nested ? "6px 18px 6px 36px" : "6px 18px",
-      background: props.background
-        ? props.background(props)
-        : props.isSelected
-        ? theme.main40
-        : "transparent",
-    };
-  }
-);
-ListItem.displayName = "ListItem";
-
-type ListItemGroupContentProps = { collapsed: boolean };
-const ListItemGroupContent = styled("div")<ListItemGroupContentProps>(
-  {
-    display: "block",
-  },
-  (props: ListItemGroupContentProps) => ({
-    display: props.collapsed ? "none" : "block",
-  })
-);
-ListItemGroupContent.displayName = "ListItemGroupContent";
+        "&:active": {
+          background: theme.main60,
+        },
+      }}
+    >
+      {props.children}
+    </div>
+  );
+};
 
 type ListProps<Item> = {
   items: Array<Item>;
@@ -122,7 +117,11 @@ function ListItemGroup<Item>(
         <div style={{ flexGrow: 1 }}>{groupTitle(items as any, 0)}</div>
         <div>{collapsed ? "▶" : "▼"}</div>
       </ListItem>
-      <ListItemGroupContent collapsed={collapsed}>
+      <div
+        css={{
+          display: collapsed ? "none" : "block",
+        }}
+      >
         {(items || []).map((item, index) => {
           return (
             <ListItem
@@ -139,7 +138,7 @@ function ListItemGroup<Item>(
             </ListItem>
           );
         })}
-      </ListItemGroupContent>
+      </div>
     </div>
   );
 }

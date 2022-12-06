@@ -1,5 +1,4 @@
 import type { Fragment, Node } from "prosemirror-model";
-import type { Selection } from "prosemirror-state";
 
 export type JSONNode = {
   type: string;
