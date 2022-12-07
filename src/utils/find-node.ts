@@ -40,7 +40,7 @@ export default function findNodeIn(doc: Node, node: Node) {
   }
 }
 
-function findNodeJSON(
+export function findNodeJSON(
   fullPath: Array<string | number>,
   currentNode: JSONNode,
   nodeToFind: JSONNode | Array<JSONNode>
@@ -62,23 +62,6 @@ function findNodeJSON(
     .filter((res) => Array.isArray(res) && res.length)[0];
 
   return res;
-}
-
-export function findNodeInJSON(doc: JSONNode, node: JSONNode) {
-  const path = findNodeJSON([], doc, node);
-
-  if (path) {
-    return path.reduce<Array<string | number>>((newPath, item) => {
-      newPath.push(item);
-
-      if (item === "content") {
-        newPath.push("content");
-      }
-
-      return newPath;
-    }, []);
-  }
-  return;
 }
 
 export function findPMNode(domNode: HTMLElement) {

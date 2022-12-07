@@ -1,12 +1,12 @@
 import type { EditorState } from "prosemirror-state";
-import { findNodeInJSON } from "./find-node";
+import { findNodeJSON } from "./find-node";
 import { JSONNode } from "../types/prosemirror";
 
 export const logNodeFromJSON =
   (state: EditorState) =>
   ({ doc, node }: { doc: JSONNode; node: JSONNode }) => {
     const fullDoc = state.doc;
-    const path = findNodeInJSON(doc, node);
+    const path = findNodeJSON([], doc, node);
     if (path) {
       console.log(
         path.reduce(
