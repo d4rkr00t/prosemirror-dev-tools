@@ -85,6 +85,7 @@ const LogNodeButton: React.FC<{
   onClick: MouseEventHandler<HTMLButtonElement>;
 }> = ({ children, onClick }) => (
   <button
+    data-test-id="__prosemirror_devtools_log_node_button__"
     onClick={onClick}
     css={{
       color: theme.white60,
@@ -200,7 +201,7 @@ export default function StateTab() {
   const logNode = logNodeFromJSON(state);
 
   return (
-    <SplitView>
+    <SplitView testId="__prosemirror_devtools_tabs_state__">
       <SplitViewCol grow>
         <HeadingWithButton>
           <Heading>Current Doc</Heading>

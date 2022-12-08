@@ -25,6 +25,9 @@ const ListItem: React.FC<ListItemProps> = (props) => {
     : "transparent";
   return (
     <div
+      data-test-id={`__prosemirror_devtools_list_item${
+        props.isDimmed ? "_inactive" : ""
+      }__`}
       onClick={props.onClick}
       onDoubleClick={props.onDoubleClick}
       css={{

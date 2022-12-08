@@ -240,7 +240,7 @@ export default function GraphTab() {
   const selected = selectedNode ? selectedNode : state.doc;
 
   return (
-    <SplitView>
+    <SplitView testId="__prosemirror_devtools_tabs_structure__">
       <SplitViewCol grow>
         <Heading>Current Doc</Heading>
         <GraphWrapper>

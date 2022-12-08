@@ -33,7 +33,11 @@ type DevToolsCollapsedProps = {
 };
 export default function DevToolsCollapsed(props: DevToolsCollapsedProps) {
   return (
-    <button css={floatingButtonStyles} onClick={props.onClick}>
+    <button
+      data-test-id="__prosemirror_devtools_collapsed_button__"
+      css={floatingButtonStyles}
+      onClick={props.onClick}
+    >
       <svg
         width="530"
         height="530"

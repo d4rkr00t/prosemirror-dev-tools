@@ -140,7 +140,7 @@ export default function SnapshotTab() {
   );
 
   return (
-    <SplitView>
+    <SplitView testId="__prosemirror_devtools_tabs_snapshots__">
       <SplitViewCol noPaddings grow>
         {snapshots.length ? (
           <SnapshotsList
