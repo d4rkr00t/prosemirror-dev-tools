@@ -148,7 +148,7 @@ export default function HistoryView({
   };
 
   return (
-    <SplitView>
+    <SplitView testId="__prosemirror_devtools_tabs_history__">
       <SplitViewCol noPaddings minWidth={190}>
         <List<HistoryItem | Array<HistoryItem>>
           items={historyList}

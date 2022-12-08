@@ -2,8 +2,12 @@ import React from "react";
 import { css } from "@compiled/react";
 import theme from "../theme";
 
-export const SplitView: React.FC = ({ children }) => (
+export const SplitView: React.FC<{ testId?: string }> = ({
+  children,
+  testId,
+}) => (
   <div
+    data-test-id={testId}
     css={{
       display: "flex",
       height: "100%",

@@ -10,6 +10,7 @@ const TabsContextProvider = React.createContext({
 
 export const TabList: React.FC = ({ children }) => (
   <div
+    data-test-id="__prosemirror_devtools_tabs_buttons_container__"
     css={{
       display: "flex",
       listStyle: "none",
@@ -22,6 +23,7 @@ export const TabList: React.FC = ({ children }) => (
 
 const TabsStyled: React.FC = ({ children }) => (
   <div
+    data-test-id="__prosemirror_devtools_tabs_container__"
     css={{
       height: "100%",
       width: "100%",

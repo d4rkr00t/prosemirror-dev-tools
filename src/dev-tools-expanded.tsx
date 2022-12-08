@@ -25,6 +25,7 @@ const CloseButton: React.FC<{
   onClick: MouseEventHandler<HTMLButtonElement>;
 }> = ({ children, onClick }) => (
   <button
+    data-test-id="__prosemirror_devtools_close_button__"
     onClick={onClick}
     css={{
       background: "none",
@@ -92,6 +93,7 @@ export default function DevToolsExpanded({
   const renderDockContent = React.useCallback(() => {
     return (
       <div
+        data-test-id="__prosemirror_devtools_container__"
         css={{
           width: "100%",
           height: "100%",
