@@ -46,7 +46,7 @@ export default function PluginsTab() {
   const selectedPluginState = selectedPlugin.getState(state);
 
   return (
-    <SplitView>
+    <SplitView testId="__prosemirror_devtools_tabs_plugins__">
       <SplitViewCol noPaddings>
         <List
           items={plugins}

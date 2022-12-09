@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "@emotion/styled";
+import "@compiled/react";
 import { InfoPanel } from "../components/info-panel";
 import { Heading } from "../components/heading";
 import { List } from "../components/list";
@@ -16,15 +16,20 @@ import {
 } from "../state/history";
 import type { Selection } from "prosemirror-state";
 
-const Section = styled("div")({
-  minWidth: "180px",
-  boxSizing: "border-box",
+const Section: React.FC = ({ children }) => (
+  <div
+    css={{
+      minWidth: "180px",
+      boxSizing: "border-box",
 
-  "& + &": {
-    paddingTop: "9px",
-  },
-});
-Section.displayName = "Section";
+      "& + &": {
+        paddingTop: "9px",
+      },
+    }}
+  >
+    {children}
+  </div>
+);
 
 function pad(num: number) {
   return ("00" + num).slice(-2);
@@ -143,7 +148,7 @@ export default function HistoryView({
   };
 
   return (
-    <SplitView>
+    <SplitView testId="__prosemirror_devtools_tabs_history__">
       <SplitViewCol noPaddings minWidth={190}>
         <List<HistoryItem | Array<HistoryItem>>
           items={historyList}

@@ -1,6 +1,6 @@
-import React from "react";
+import React, { MouseEventHandler } from "react";
+import "@compiled/react";
 import { Dock } from "react-dock";
-import styled from "@emotion/styled";
 import { Tab, Tabs, TabList, TabPanel } from "./components/tabs";
 import {
   devToolsOpenedAtom,
@@ -21,35 +21,34 @@ import { useAtom, useAtomValue } from "jotai";
 import { useNodePicker } from "./state/node-picker";
 import type { rollbackHistoryFn } from "./hooks/use-rollback-history";
 
-const DockContainer = styled("div")({
-  width: "100%",
-  height: "100%",
-  overflow: "hidden",
-  background: theme.mainBg,
-  fontFamily: "Helvetica Neue, Calibri Light, Roboto, sans-serif",
-  fontSize: "13px",
-});
-DockContainer.displayName = "DockContainer";
+const CloseButton: React.FC<{
+  onClick: MouseEventHandler<HTMLButtonElement>;
+}> = ({ children, onClick }) => (
+  <button
+    data-test-id="__prosemirror_devtools_close_button__"
+    onClick={onClick}
+    css={{
+      background: "none",
+      border: "none",
+      position: "absolute",
+      right: 0,
+      color: theme.white60,
+      fontSize: "18px",
 
-const CloseButton = styled("button")({
-  background: "none",
-  border: "none",
-  position: "absolute",
-  right: 0,
-  color: theme.white60,
-  fontSize: "18px",
+      "&:hover": {
+        cursor: "pointer",
+        background: theme.white05,
+        color: theme.white,
+      },
 
-  "&:hover": {
-    cursor: "pointer",
-    background: theme.white05,
-    color: theme.white,
-  },
-
-  "&:focus": {
-    outline: "none",
-  },
-});
-CloseButton.displayName = "CloseButton";
+      "&:focus": {
+        outline: "none",
+      },
+    }}
+  >
+    {children}
+  </button>
+);
 
 type DevToolsExpandedProps = {
   rollbackHistory: rollbackHistoryFn;
@@ -93,7 +92,17 @@ export default function DevToolsExpanded({
 
   const renderDockContent = React.useCallback(() => {
     return (
-      <DockContainer>
+      <div
+        data-test-id="__prosemirror_devtools_container__"
+        css={{
+          width: "100%",
+          height: "100%",
+          overflow: "hidden",
+          background: theme.mainBg,
+          fontFamily: "Helvetica Neue, Calibri Light, Roboto, sans-serif",
+          fontSize: "13px",
+        }}
+      >
         <CloseButton onClick={toggleOpen}>×</CloseButton>
         <NodePickerTrigger
           onClick={nodePickerAPI.activate}
@@ -113,27 +122,22 @@ export default function DevToolsExpanded({
 
           <TabPanel>{renderTab}</TabPanel>
         </Tabs>
-      </DockContainer>
+      </div>
     );
   }, [nodePicker, nodePickerAPI, tabIndex, isOpen, renderTab]);
 
   return (
     <CSSReset>
-      <NodePicker
-        nodePicker={nodePicker}
-        onClose={nodePickerAPI.deactivate}
-        onMouseMove={nodePickerAPI.updatePosition}
-        onSelect={(target) => {
-          nodePickerAPI.select(target);
-          setTabIndex("state");
-        }}
-      />
+      <NodePicker />
       <Dock
         position="bottom"
         dimMode="none"
         isVisible
         defaultSize={defaultSize}
         onSizeChange={updateBodyMargin}
+        zIndex={1}
+        fluid={true}
+        duration={0}
       >
         {renderDockContent}
       </Dock>

@@ -27,6 +27,11 @@ type JSONTreeProps = {
 };
 export default function JSONTreeWrapper(props: JSONTreeProps) {
   return (
-    <JSONTree invertTheme={false} theme={jsonTreeTheme} hideRoot {...props} />
+    <JSONTree
+      invertTheme={false}
+      theme={jsonTreeTheme}
+      hideRoot
+      {...(props as any)}
+    />
   );
 }

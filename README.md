@@ -110,14 +110,9 @@ stored in local storage.
 
 ## TODO
 
-- [ ] TypeScript
-- [ ] Github actions build with changesets for releases
 - [ ] New theme
 - [ ] Playwright tests
 - [ ] Debug unnecessary renders
-- [ ] Update to react 18
-- [ ] Node picker to functional component
-- [ ] No runtime css-in-js
 
 ## Contributing
 

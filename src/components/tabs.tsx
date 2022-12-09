@@ -1,109 +1,120 @@
-import React from "react";
-import styled from "@emotion/styled";
-import PropTypes from "prop-types";
+import React, { MouseEventHandler, useContext } from "react";
+import "@compiled/react";
 import theme from "../theme";
 
-export const TabList = styled("div")({
-  display: "flex",
-  listStyle: "none",
-  borderBottom: `1px solid ${theme.main20}`,
+const TabsContextProvider = React.createContext({
+  selectedIndex: "state",
+  // eslint-disable-next-line
+  onSelect: (_index: string) => {},
 });
-TabList.displayName = "TabList";
 
-export const TabsStled = styled("div")({
-  height: "100%",
-  width: "100%",
-});
-TabsStled.displayName = "TabsStyled";
-
-type TabStyledProps = { isSelected: boolean };
-export const TabStyled = styled("div")<TabStyledProps>(
-  {
-    color: theme.white,
-    textTransform: "uppercase",
-    fontSize: "13px",
-    padding: "16px 24px 14px",
-    boxSizing: "border-box",
-    userSelect: "none",
-
-    "&:hover": {
-      cursor: "pointer",
-      background: theme.white05,
-    },
-
-    "&:focus": {
-      outline: "none",
-    },
-  },
-  (props: TabStyledProps) => ({
-    borderBottom: props.isSelected ? `2px solid ${theme.main}` : "none",
-  })
+export const TabList: React.FC = ({ children }) => (
+  <div
+    data-test-id="__prosemirror_devtools_tabs_buttons_container__"
+    css={{
+      display: "flex",
+      listStyle: "none",
+      borderBottom: `1px solid ${theme.main20}`,
+    }}
+  >
+    {children}
+  </div>
 );
-TabStyled.displayName = "TabStyled";
 
-export class Tab extends React.Component<{ index: string }> {
-  render() {
-    return (
-      <TabStyled
-        isSelected={this.props.index === this.context.tabs.selectedIndex}
-        onClick={() => {
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
-          (this.context.tabs.onSelect || (() => {}))(this.props.index);
-        }}
-      >
-        {this.props.children}
-      </TabStyled>
-    );
-  }
-}
-// @ts-expect-error skipping for now until switch to new context
-Tab.contextTypes = {
-  tabs: PropTypes.object.isRequired,
+const TabsStyled: React.FC = ({ children }) => (
+  <div
+    data-test-id="__prosemirror_devtools_tabs_container__"
+    css={{
+      height: "100%",
+      width: "100%",
+    }}
+  >
+    {children}
+  </div>
+);
+
+type TabStyledProps = {
+  isSelected: boolean;
+  onClick: MouseEventHandler<HTMLDivElement>;
 };
+const TabStyled: React.FC<TabStyledProps> = ({
+  children,
+  isSelected,
+  onClick,
+}) => (
+  <div
+    css={{
+      color: theme.white,
+      textTransform: "uppercase",
+      fontSize: "13px",
+      padding: "16px 24px 14px",
+      boxSizing: "border-box",
+      userSelect: "none",
+      borderBottom: isSelected ? `2px solid ${theme.main}` : "none",
 
-export const TabPanelStyled = styled("div")({
-  width: "100%",
-  height: "calc(100% - 48px)",
-  boxSizing: "border-box",
-});
-TabPanelStyled.displayName = "TabPanelStyled";
+      "&:hover": {
+        cursor: "pointer",
+        background: theme.white05,
+      },
 
-export class TabPanel extends React.Component<{
-  children: (prop: { index: number }) => React.ReactNode;
-}> {
-  render() {
-    return (
-      <TabPanelStyled>
-        {this.props.children({ index: this.context.tabs.selectedIndex })}
-      </TabPanelStyled>
-    );
-  }
+      "&:focus": {
+        outline: "none",
+      },
+    }}
+    onClick={onClick}
+  >
+    {children}
+  </div>
+);
+
+export function Tab({
+  index,
+  children,
+}: {
+  index: string;
+  children: React.ReactNode;
+}) {
+  const tabs = useContext(TabsContextProvider);
+  return (
+    <TabStyled
+      isSelected={index === tabs.selectedIndex}
+      onClick={() => tabs.onSelect(index)}
+    >
+      {children}
+    </TabStyled>
+  );
 }
 
-// @ts-expect-error skipping for now until switch to new context
-TabPanel.contextTypes = {
-  tabs: PropTypes.object.isRequired,
-};
+export function TabPanel(props: {
+  children: (prop: { index: string }) => React.ReactNode;
+}) {
+  const tabs = useContext(TabsContextProvider);
+  return (
+    <div
+      css={{
+        width: "100%",
+        height: "calc(100% - 48px)",
+        boxSizing: "border-box",
+      }}
+    >
+      {props.children({ index: tabs.selectedIndex })}
+    </div>
+  );
+}
 
-export class Tabs extends React.Component<{
+export function Tabs(props: {
   onSelect: (index: string) => void;
   selectedIndex: string;
-}> {
-  getChildContext() {
-    return {
-      tabs: {
-        onSelect: this.props.onSelect,
-        selectedIndex: this.props.selectedIndex,
-      },
-    };
-  }
-
-  render() {
-    return <TabsStled>{this.props.children}</TabsStled>;
-  }
+  children: React.ReactNode;
+}) {
+  return (
+    <TabsContextProvider.Provider
+      value={{
+        onSelect: props.onSelect,
+        selectedIndex: props.selectedIndex,
+      }}
+    >
+      <TabsStyled>{props.children}</TabsStyled>
+    </TabsContextProvider.Provider>
+  );
 }
-
-// @ts-expect-error skipping for now until switch to new context
-Tabs.childContextTypes = {
-  tabs: PropTypes.object,
-};

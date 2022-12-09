@@ -1,7 +1,11 @@
 /node_modules/
 /dist/
-package-lock.json
 out
 .cache
 .parcel-cache
+yarn.lock
 pnpm-lock.yaml
+package-lock.json
+/test-results/
+/playwright-report/
+/playwright/.cache/

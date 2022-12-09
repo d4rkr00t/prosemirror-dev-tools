@@ -28,7 +28,7 @@ export default function SchemaTab() {
   if (!schema) return null;
 
   return (
-    <SplitView>
+    <SplitView testId="__prosemirror_devtools_tabs_schema__">
       <SplitViewCol grow>
         <Heading>Nodes</Heading>
         <JSONTree

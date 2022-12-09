@@ -1,8 +1,9 @@
-import React from "react";
-import styled from "@emotion/styled";
+import React, { MouseEventHandler } from "react";
+import { css } from "@compiled/react";
 import theme from "./theme";
 
-const FloattingButton = styled("div")({
+const floatingButtonStyles = css({
+  appearance: "none",
   position: "fixed",
   bottom: "16px",
   right: "16px",
@@ -11,6 +12,7 @@ const FloattingButton = styled("div")({
   borderRadius: "50%",
   padding: "4px 6px",
   transition: "opacity 0.3s",
+  border: "none",
   zIndex: 99999,
 
   "&:hover": {
@@ -25,14 +27,17 @@ const FloattingButton = styled("div")({
     bottom: "-2px",
   },
 });
-FloattingButton.displayName = "FloattingButton";
 
 type DevToolsCollapsedProps = {
-  onClick: () => void;
+  onClick: MouseEventHandler<HTMLButtonElement>;
 };
 export default function DevToolsCollapsed(props: DevToolsCollapsedProps) {
   return (
-    <FloattingButton onClick={props.onClick}>
+    <button
+      data-test-id="__prosemirror_devtools_collapsed_button__"
+      css={floatingButtonStyles}
+      onClick={props.onClick}
+    >
       <svg
         width="530"
         height="530"
@@ -100,6 +105,6 @@ export default function DevToolsCollapsed(props: DevToolsCollapsedProps) {
           />
         </defs>
       </svg>
-    </FloattingButton>
+    </button>
   );
 }

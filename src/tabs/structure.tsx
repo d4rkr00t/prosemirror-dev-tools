@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "@emotion/styled";
+import React, { MouseEventHandler } from "react";
+import "@compiled/react";
 import { atom, useAtom, useAtomValue } from "jotai";
 import type { Node } from "prosemirror-model";
 import theme from "../theme";
@@ -14,91 +14,133 @@ import { nodeColorsAtom } from "../state/node-colors";
 import { editorStateAtom } from "../state/editor-state";
 import { ExtendedFragment } from "../types/prosemirror";
 
-const GraphWrapper = styled("div")({
-  marginTop: "12px",
-});
-GraphWrapper.displayName = "GraphWrapper";
-
-const BlockNodeWrapper = styled("div")({});
-BlockNodeWrapper.displayName = "BlockNodeWrapper";
-
-const BlockNodeContentView = styled("div")({
-  padding: "0 12px",
-  boxSizing: "border-box",
-  borderLeft: `1px solid ${theme.white20}`,
-  borderRight: `1px solid ${theme.white20}`,
-});
-BlockNodeContentView.displayName = "BlockNodeContentView";
-
-const BlockNodeContentViewWithInline = styled("div")({
-  padding: "0 12px",
-  display: "flex",
-  width: "100%",
-  boxSizing: "border-box",
-  borderLeft: `1px solid ${theme.white20}`,
-  borderRight: `1px solid ${theme.white20}`,
-  flexWrap: "wrap",
-});
-BlockNodeContentViewWithInline.displayName = "BlockNodeContentViewWithInline";
-
-type BlockNodeViewProps = { bg: string };
-const BlockNodeView = styled("div")<BlockNodeViewProps>(
-  {
-    width: "100%",
-    marginBottom: "3px",
-    boxSizing: "border-box",
-    display: "flex",
-
-    "&:hover": {
-      cursor: "pointer",
-    },
-  },
-  ({ bg }: BlockNodeViewProps) => ({
-    background: bg,
-  })
+const GraphWrapper: React.FC = ({ children }) => (
+  <div
+    css={{
+      marginTop: "12px",
+    }}
+  >
+    {children}
+  </div>
 );
-BlockNodeView.displayName = "BlockNodeView";
 
-const Side = styled("div")({
-  padding: "3px 6px",
-  background: "rgba(255, 255, 255, 0.3)",
-});
-Side.displayName = "Side";
-
-const StartSide = styled("div")({
-  padding: "3px 6px",
-  background: "rgba(255, 255, 255, 0.3)",
-});
-StartSide.displayName = "Side";
-
-const Bar = styled("div")({
-  flexGrow: 1,
-})
-Bar.displayName = "Bar"
-
-const Center = styled("div")({
-  padding: "3px 9px",
-  whiteSpace: "pre",
-});
-Center.displayName = "Center";
-
-type InlineNodeViewProps = { bg: string };
-const InlineNodeView = styled("div")<InlineNodeViewProps>(
-  {
-    flexGrow: 1,
-    marginBottom: "3px",
-    display: "flex",
-    boxSizing: "border-box",
-
-    "&:hover": {
-      cursor: "pointer",
-    },
-  },
-  ({ bg }: InlineNodeViewProps) => ({
-    background: bg,
-  })
+const BlockNodeContentView: React.FC = ({ children }) => (
+  <div
+    css={{
+      padding: "0 12px",
+      boxSizing: "border-box",
+      borderLeft: `1px solid ${theme.white20}`,
+      borderRight: `1px solid ${theme.white20}`,
+    }}
+  >
+    {children}
+  </div>
 );
-InlineNodeView.displayName = "InlineNodeView";
+
+const BlockNodeContentViewWithInline: React.FC = ({ children }) => (
+  <div
+    css={{
+      padding: "0 12px",
+      display: "flex",
+      width: "100%",
+      boxSizing: "border-box",
+      borderLeft: `1px solid ${theme.white20}`,
+      borderRight: `1px solid ${theme.white20}`,
+      flexWrap: "wrap",
+    }}
+  >
+    {children}
+  </div>
+);
+
+const BlockNodeView: React.FC<{
+  bg: string;
+  onClick?: MouseEventHandler<HTMLDivElement>;
+}> = ({ children, bg, onClick }) => (
+  <div
+    onClick={onClick}
+    css={{
+      width: "100%",
+      marginBottom: "3px",
+      boxSizing: "border-box",
+      display: "flex",
+      background: bg,
+
+      "&:hover": {
+        cursor: "pointer",
+      },
+    }}
+  >
+    {children}
+  </div>
+);
+
+const Side: React.FC<{tooltip:string}> = ({ tooltip, children }) => (
+  <div
+    title={tooltip}
+    css={{
+      padding: "3px 6px",
+      background: "rgba(255, 255, 255, 0.3)",
+    }}
+  >
+    {children}
+  </div>
+);
+
+const StartSide: React.FC = ({ children }) => (
+  <div
+    css={{
+      padding: "3px 6px",
+      whiteSpace: "pre",
+    }}
+  >
+    {children}
+  </div>
+);
+
+const Bar: React.FC = ({ children }) => (
+  <div
+    css={{
+      flexGrow: 1,
+    }}
+  >
+    {children}
+  </div>
+);
+
+const Center: React.FC = ({ children }) => (
+  <div
+    css={{
+      flexGrow: 1,
+      padding: "3px 9px",
+      whiteSpace: "pre",
+    }}
+  >
+    {children}
+  </div>
+);
+
+const InlineNodeView: React.FC<{
+  bg: string;
+  onClick?: MouseEventHandler<HTMLDivElement>;
+}> = ({ children, bg, onClick }) => (
+  <div
+    onClick={onClick}
+    css={{
+      flexGrow: 1,
+      marginBottom: "3px",
+      display: "flex",
+      boxSizing: "border-box",
+      background: bg,
+
+      "&:hover": {
+        cursor: "pointer",
+      },
+    }}
+  >
+    {children}
+  </div>
+);
 
 export function BlockNodeContent(props: {
   content: Node["content"];
@@ -164,13 +206,13 @@ export function BlockNode(props: {
   const { colors, node, startPos } = props;
   const color = colors[node.type.name];
   return (
-    <BlockNodeWrapper>
+    <div>
       <BlockNodeView bg={color} onClick={() => props.onNodeSelected({ node })}>
-    {startPos > 0 && <Side title={`Pos: ${startPos - 1} (before ${node.type.name} opening tag)`}>{startPos -1}</Side>}
-        <Center>{node.type.name}</Center>
-        <Side title={`Pos: ${startPos} (after ${node.type.name} opening tag)`}>{startPos}</Side>
+    {startPos > 0 && <Side tooltip={`Pos: ${startPos - 1} (before ${node.type.name} opening tag)`}>{startPos -1}</Side>}
+        <StartSide>{node.type.name}</StartSide>
+        <Side tooltip={`Pos: ${startPos} (after ${node.type.name} opening tag)`}>{startPos}</Side>
         <Bar />
-        <Side title={`Pos: ${startPos + node.nodeSize - 1} (after ${node.type.name} closing tag)`}>{startPos + node.nodeSize - 1}</Side>
+        <Side tooltip={`Pos: ${startPos + node.nodeSize - 1} (after ${node.type.name} closing tag)`}>{startPos + node.nodeSize - 1}</Side>
       </BlockNodeView>
       <BlockNodeContent
         content={node.content}
@@ -178,7 +220,7 @@ export function BlockNode(props: {
         onNodeSelected={props.onNodeSelected}
         startPos={startPos}
       />
-    </BlockNodeWrapper>
+    </div>
   );
 }
 
@@ -198,12 +240,12 @@ export function InlineNode(props: {
       : "";
   return (
     <InlineNodeView onClick={() => props.onNodeSelected({ node })} bg={bg}>
-      {index === 0 ? <Side title={`Pos: ${startPos} (before ${node.type.name} opening tag)`}>{startPos}</Side> : null}
+      {index === 0 ? <Side tooltip={`Pos: ${startPos} (before ${node.type.name} opening tag)`}>{startPos}</Side> : null}
       <Center>
         {node.type.name} {marks}
       </Center>
       <Bar />
-      <Side title={`Pos: ${startPos + node.nodeSize} (before ${node.type.name} closing tag)`}>{startPos + node.nodeSize}</Side>
+      <Side tooltip={`Pos: ${startPos + node.nodeSize} (before ${node.type.name} closing tag)`}>{startPos + node.nodeSize}</Side>
     </InlineNodeView>
   );
 }
@@ -223,7 +265,7 @@ export default function GraphTab() {
   const selected = selectedNode ? selectedNode : state.doc;
 
   return (
-    <SplitView>
+    <SplitView testId="__prosemirror_devtools_tabs_structure__">
       <SplitViewCol grow>
         <Heading>Current Doc</Heading>
         <GraphWrapper>
