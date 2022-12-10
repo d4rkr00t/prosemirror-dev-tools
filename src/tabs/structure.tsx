@@ -75,11 +75,33 @@ const BlockNodeView: React.FC<{
   </div>
 );
 
-const Side: React.FC = ({ children }) => (
+const Side: React.FC<{tooltip:string}> = ({ tooltip, children }) => (
   <div
+    title={tooltip}
     css={{
       padding: "3px 6px",
       background: "rgba(255, 255, 255, 0.3)",
+    }}
+  >
+    {children}
+  </div>
+);
+
+const StartSide: React.FC = ({ children }) => (
+  <div
+    css={{
+      padding: "3px 6px",
+      whiteSpace: "pre",
+    }}
+  >
+    {children}
+  </div>
+);
+
+const Bar: React.FC = ({ children }) => (
+  <div
+    css={{
+      flexGrow: 1,
     }}
   >
     {children}
@@ -186,9 +208,11 @@ export function BlockNode(props: {
   return (
     <div>
       <BlockNodeView bg={color} onClick={() => props.onNodeSelected({ node })}>
-        <Side>{startPos}</Side>
-        <Center>{node.type.name}</Center>
-        <Side>{startPos + node.nodeSize - 1}</Side>
+    {startPos > 0 && <Side tooltip={`Pos: ${startPos - 1} (before ${node.type.name} opening tag)`}>{startPos -1}</Side>}
+        <StartSide>{node.type.name}</StartSide>
+        <Side tooltip={`Pos: ${startPos} (after ${node.type.name} opening tag)`}>{startPos}</Side>
+        <Bar />
+        <Side tooltip={`Pos: ${startPos + node.nodeSize - 1} (after ${node.type.name} closing tag)`}>{startPos + node.nodeSize - 1}</Side>
       </BlockNodeView>
       <BlockNodeContent
         content={node.content}
@@ -216,11 +240,12 @@ export function InlineNode(props: {
       : "";
   return (
     <InlineNodeView onClick={() => props.onNodeSelected({ node })} bg={bg}>
-      {index === 0 ? <Side>{startPos}</Side> : null}
+      {index === 0 ? <Side tooltip={`Pos: ${startPos} (before ${node.type.name} opening tag)`}>{startPos}</Side> : null}
       <Center>
         {node.type.name} {marks}
       </Center>
-      <Side>{startPos + node.nodeSize}</Side>
+      <Bar />
+      <Side tooltip={`Pos: ${startPos + node.nodeSize} (before ${node.type.name} closing tag)`}>{startPos + node.nodeSize}</Side>
     </InlineNodeView>
   );
 }
