@@ -11,7 +11,7 @@ const Updated: React.FC = ({ children }) => (
 );
 
 const whiteStyles = css({
-  color: theme.white,
+  color: theme.text,
 });
 const White: React.FC = ({ children }) => (
   <span css={whiteStyles}>{children}</span>
