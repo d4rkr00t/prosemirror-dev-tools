@@ -1,6 +1,7 @@
 import { prettyPrint } from "html";
 import { atom } from "jotai";
-import { nanoid } from "nanoid";
+// @ts-expect-error package doesn't provide types
+import nanoid from "nanoid";
 import { DOMSerializer } from "prosemirror-model";
 import type { EditorState, Selection, Transaction } from "prosemirror-state";
 import type { JsonDiffMain } from "./json-diff-main";
