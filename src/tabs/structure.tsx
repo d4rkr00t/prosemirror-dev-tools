@@ -205,6 +205,7 @@ export function BlockNode(props: {
 }) {
   const { colors, node, startPos } = props;
   const color = colors[node.type.name];
+  const marks = getMarksText(node);
   return (
     <div>
       <BlockNodeView bg={color} onClick={() => props.onNodeSelected({ node })}>
@@ -217,7 +218,9 @@ export function BlockNode(props: {
             {startPos - 1}
           </Side>
         )}
-        <StartSide>{node.type.name}</StartSide>
+        <StartSide>
+          {node.type.name} {marks}
+        </StartSide>
         <Side
           tooltip={`Pos: ${startPos} (after ${node.type.name} opening tag)`}
         >
@@ -250,12 +253,7 @@ export function InlineNode(props: {
   onNodeSelected: (data: { node: Node }) => void;
 }) {
   const { node, bg, startPos, index } = props;
-  const marks =
-    node.marks.length === 1
-      ? ` - [${node.marks[0].type.name}]`
-      : node.marks.length > 1
-      ? ` - [${node.marks.length} marks]`
-      : "";
+  const marks = getMarksText(node);
   return (
     <InlineNodeView onClick={() => props.onNodeSelected({ node })} bg={bg}>
       {index === 0 ? (
@@ -322,4 +320,12 @@ export default function GraphTab() {
       </SplitViewCol>
     </SplitView>
   );
+}
+
+function getMarksText(node: Node) {
+  return node.marks.length === 1
+    ? ` - [${node.marks[0].type.name}]`
+    : node.marks.length > 1
+    ? ` - [${node.marks.length} marks]`
+    : "";
 }
