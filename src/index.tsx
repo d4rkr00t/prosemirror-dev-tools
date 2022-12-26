@@ -27,6 +27,10 @@ function applyDevTools(editorView: EditorView, props: DevToolsProps) {
     <DevTools editorView={editorView} diffWorker={props?.diffWorker} />,
     place
   );
+
+  return () => {
+    ReactDOM.unmountComponentAtNode(place);
+  };
 }
 
 export default applyDevTools;
