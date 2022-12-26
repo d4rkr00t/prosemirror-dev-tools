@@ -97,7 +97,7 @@ const LogNodeButton: React.FC<{
       "&:hover": {
         cursor: "pointer",
         background: theme.main40,
-        color: theme.white,
+        color: theme.text,
       },
 
       "&:focus": {

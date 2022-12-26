@@ -36,7 +36,7 @@ const headingButtonStyles = css({
 
   "&:hover": {
     background: theme.main40,
-    color: theme.white,
+    color: theme.text,
     cursor: "pointer",
   },
 

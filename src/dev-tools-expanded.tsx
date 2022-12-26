@@ -38,7 +38,7 @@ const CloseButton: React.FC<{
       "&:hover": {
         cursor: "pointer",
         background: theme.white05,
-        color: theme.white,
+        color: theme.text,
       },
 
       "&:focus": {

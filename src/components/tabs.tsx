@@ -44,7 +44,7 @@ const TabStyled: React.FC<TabStyledProps> = ({
 }) => (
   <div
     css={{
-      color: theme.white,
+      color: theme.text,
       textTransform: "uppercase",
       fontSize: "13px",
       padding: "16px 24px 14px",
