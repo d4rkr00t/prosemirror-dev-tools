@@ -9,6 +9,7 @@ export default defineConfig({
   },
   plugins: [
     react({
+      jsxRuntime: "classic",
       babel: {
         plugins: ["@compiled/babel-plugin"],
       },
