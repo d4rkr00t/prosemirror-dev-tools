@@ -108,12 +108,6 @@ stored in local storage.
 
 - [Demo & Example Setup](https://codesandbox.io/s/l9n6667ooz)
 
-## TODO
-
-- [ ] New theme
-- [ ] Playwright tests
-- [ ] Debug unnecessary renders
-
 ## Contributing
 
 Contributions are highly welcome! This repo is commitizen friendly — please read
