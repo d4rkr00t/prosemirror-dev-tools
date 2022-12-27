@@ -33,7 +33,6 @@ const ListItem: React.FC<ListItemProps> = (props) => {
       css={{
         background: background,
         border: "none",
-        borderTop: `1px solid ${theme.main20}`,
         boxSizing: "border-box",
         color: theme.white80,
         display: "flex",
@@ -51,8 +50,8 @@ const ListItem: React.FC<ListItemProps> = (props) => {
         transition: "background .3s",
         width: "100%",
 
-        "&:first-of-type": {
-          borderTop: "none",
+        "& + &": {
+          borderTop: `1px solid ${theme.main20}`,
         },
 
         "&:hover": {
