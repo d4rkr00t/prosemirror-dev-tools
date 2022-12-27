@@ -40,7 +40,7 @@ const mainTheme = {
   black30: "#11111B",
 
   // For diffs and structure
-  lightYellow: "#F9E2AF",
+  lightYellow: "rgba(205, 214, 244, .2)",
   lightPink: "#F38BA8",
   darkGreen: "#A6E3A1",
 
