@@ -24,6 +24,7 @@ type JSONTreeProps = {
   valueRenderer?: (value: any) => string | React.ReactNode;
   labelRenderer?: (value: any) => string | React.ReactNode;
   isCustomNode?: (node: any) => boolean;
+  sortObjectKeys?: boolean | ((...args: any[]) => any);
 };
 export default function JSONTreeWrapper(props: JSONTreeProps) {
   return (
