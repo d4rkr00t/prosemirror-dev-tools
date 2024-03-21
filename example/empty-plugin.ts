@@ -3,6 +3,12 @@ import { Plugin, PluginKey } from "prosemirror-state";
 function createPluginState() {
   return {
     doSomething() {},
+    apple: "apple",
+    cherry: "cherry",
+    dog: "dog",
+    elephant: "elephant",
+    frog: "frog",
+    banana: "banana",
   };
 }
 
