@@ -13,6 +13,7 @@ function createPlace() {
     place.className = DEVTOOLS_CLASS_NAME;
     document.body.appendChild(place);
   } else {
+    // eslint-disable-next-line react/no-deprecated
     ReactDOM.unmountComponentAtNode(place);
     place.innerHTML = "";
   }
@@ -23,12 +24,14 @@ function createPlace() {
 type DevToolsProps = { diffWorker?: Worker };
 function applyDevTools(editorView: EditorView, props: DevToolsProps) {
   const place = createPlace();
+  // eslint-disable-next-line react/no-deprecated
   ReactDOM.render(
     <DevTools editorView={editorView} diffWorker={props?.diffWorker} />,
     place
   );
 
   return () => {
+    // eslint-disable-next-line react/no-deprecated
     ReactDOM.unmountComponentAtNode(place);
   };
 }
