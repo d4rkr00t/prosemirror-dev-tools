@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import type { Plugin } from "prosemirror-state";
 import { InfoPanel } from "../components/info-panel";
 import { Heading } from "../components/heading";
@@ -46,14 +46,19 @@ export default function PluginsTab() {
 
   const selectedPluginState = selectedPlugin.getState(state);
 
-  const handleSearch = (input: string) => {
-    const filteredPlugins = (state.plugins as any as Plugin<any>[]).filter(
-      (plugin) => {
-        return (plugin as any).key.toLowerCase().includes(input.toLowerCase());
-      }
-    );
-    setPluginsLocal(filteredPlugins);
-  };
+  const handleSearch = useCallback(
+    (input: string) => {
+      const filteredPlugins = (state.plugins as any as Plugin<any>[]).filter(
+        (plugin) => {
+          return (plugin as any).key
+            .toLowerCase()
+            .includes(input.toLowerCase());
+        }
+      );
+      setPluginsLocal(filteredPlugins);
+    },
+    [state.plugins]
+  );
 
   const handleClickSort = () => {
     setSortOrder(!sortAsc);

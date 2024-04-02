@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import theme from "../theme";
 import { css } from "@compiled/react";
 
@@ -35,14 +35,17 @@ const searchBarWrapperStyles = css({
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const [query, setQuery] = useState("");
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(event.target.value);
-    onSearch(event.target.value);
-  };
+  const handleInputChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setQuery(event.target.value);
+      onSearch(event.target.value);
+    },
+    [onSearch]
+  );
 
-  const handleSearch = () => {
+  const handleSearch = useCallback(() => {
     onSearch(query);
-  };
+  }, [query, onSearch]);
 
   return (
     <div css={searchBarWrapperStyles}>
