@@ -1,6 +1,6 @@
 {
   "name": "prosemirror-dev-tools",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "Dev Tools for ProseMirror",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
