@@ -1,6 +1,5 @@
 import type { Delta } from "jsondiffpatch";
-// @ts-expect-error package doesn't provide types
-import nanoid from "nanoid";
+import { nanoid } from "nanoid";
 import { IdleScheduler } from "./idle-scheduler";
 
 export class JsonDiffWorker {
