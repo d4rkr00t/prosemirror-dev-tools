@@ -22,7 +22,7 @@ type JSONTreeProps = {
   shouldExpandNode?: (nodePath: Array<string | number>) => boolean;
   postprocessValue?: (data: Record<string, unknown>) => Record<string, unknown>;
   valueRenderer?: (value: any) => string | React.ReactNode;
-  labelRenderer?: (value: any) => string | React.ReactNode;
+  labelRenderer?: ([label]: (string | number)[]) => React.ReactNode;
   isCustomNode?: (node: any) => boolean;
   sortObjectKeys?: boolean | ((...args: any[]) => any);
 };

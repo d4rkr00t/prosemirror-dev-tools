@@ -10,7 +10,10 @@ const customPreStyles = css({
     color: theme.main,
   },
 });
-const CustomPre: React.FC<{ __html: string }> = ({ children, __html }) => (
+const CustomPre: React.FC<{
+  __html: string;
+  children?: React.ReactNode;
+}> = ({ children, __html }) => (
   <pre css={customPreStyles} dangerouslySetInnerHTML={{ __html }}>
     {children}
   </pre>

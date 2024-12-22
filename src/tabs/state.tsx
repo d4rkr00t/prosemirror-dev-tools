@@ -19,7 +19,7 @@ import { editorStateAtom } from "../state/editor-state";
 import { logNodeFromJSON } from "../utils/log-node-from-json";
 import type { JSONMark, JSONNode } from "../types/prosemirror";
 
-const JSONTreeWrapper: React.FC = ({ children }) => (
+const JSONTreeWrapper: React.FC<React.PropsWithChildren> = ({ children }) => (
   <div
     css={{
       padding: "0 0 9px 0",
@@ -30,7 +30,7 @@ const JSONTreeWrapper: React.FC = ({ children }) => (
   </div>
 );
 
-const Section: React.FC = ({ children }) => (
+const Section: React.FC<React.PropsWithChildren> = ({ children }) => (
   <div
     css={{
       minWidth: "180px",
@@ -45,11 +45,11 @@ const Section: React.FC = ({ children }) => (
   </div>
 );
 
-const Group: React.FC = ({ children }) => (
+const Group: React.FC<React.PropsWithChildren> = ({ children }) => (
   <div css={{ margin: "0.5em 0px 0.5em 1em" }}>{children}</div>
 );
 
-const GroupRow: React.FC = ({ children }) => (
+const GroupRow: React.FC<React.PropsWithChildren> = ({ children }) => (
   <div
     css={{
       paddingTop: "0.25em",
@@ -59,7 +59,7 @@ const GroupRow: React.FC = ({ children }) => (
   </div>
 );
 
-const Key: React.FC = ({ children }) => (
+const Key: React.FC<React.PropsWithChildren> = ({ children }) => (
   <div
     css={{
       display: "inline-block",
@@ -71,7 +71,7 @@ const Key: React.FC = ({ children }) => (
   </div>
 );
 
-const ValueNum: React.FC = ({ children }) => (
+const ValueNum: React.FC<React.PropsWithChildren> = ({ children }) => (
   <div
     css={{
       color: theme.syntax.base09,
@@ -83,6 +83,7 @@ const ValueNum: React.FC = ({ children }) => (
 
 const LogNodeButton: React.FC<{
   onClick: MouseEventHandler<HTMLButtonElement>;
+  children: React.ReactNode;
 }> = ({ children, onClick }) => (
   <button
     data-test-id="__prosemirror_devtools_log_node_button__"
@@ -142,7 +143,9 @@ export function getItemString(
 
     return (
       <span>
-        {defaultView} {keysCount} {logButton}
+        <>
+          {defaultView} {keysCount} {logButton}
+        </>
       </span>
     );
   };
@@ -165,7 +168,9 @@ function getItemStringForMark(
 
   return (
     <span>
-      {defaultView} {keysCount}
+      <>
+        {defaultView} {keysCount}
+      </>
     </span>
   );
 }

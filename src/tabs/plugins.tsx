@@ -40,7 +40,7 @@ export default function PluginsTab() {
   const [sortAsc, setSortOrder] = useState(true);
 
   const handleOnListItemClick = React.useCallback(
-    (_plugin) => setSelectedPlugin(_plugin),
+    (_plugin: Plugin) => setSelectedPlugin(_plugin),
     []
   );
 

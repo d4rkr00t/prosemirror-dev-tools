@@ -23,6 +23,7 @@ import type { rollbackHistoryFn } from "./hooks/use-rollback-history";
 
 const CloseButton: React.FC<{
   onClick: MouseEventHandler<HTMLButtonElement>;
+  children: React.ReactNode;
 }> = ({ children, onClick }) => (
   <button
     data-test-id="__prosemirror_devtools_close_button__"
@@ -59,7 +60,7 @@ export default function DevToolsExpanded({
   const [isOpen, setIsOpen] = useAtom(devToolsOpenedAtom);
   const defaultSize = useAtomValue(devToolsSizeAtom);
   const [tabIndex, setTabIndex] = useAtom(devToolTabIndexAtom);
-  const updateBodyMargin = React.useCallback((devToolsSize) => {
+  const updateBodyMargin = React.useCallback((devToolsSize: number) => {
     const size = devToolsSize * window.innerHeight;
     document.querySelector("html")!.style.marginBottom = `${size}px`;
   }, []);
@@ -69,7 +70,7 @@ export default function DevToolsExpanded({
   }, [isOpen]);
 
   const renderTab = React.useCallback(
-    ({ index }) => {
+    ({ index }: { index: string }) => {
       switch (index) {
         case "state":
           return <StateTab />;

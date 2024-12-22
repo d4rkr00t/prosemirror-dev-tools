@@ -1,9 +1,10 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import type { EditorView } from "prosemirror-view";
 import DevTools from "./dev-tools";
+import { createRoot, Root } from "react-dom/client";
 
 const DEVTOOLS_CLASS_NAME = "__prosemirror-dev-tools__";
+let root: Root;
 
 function createPlace() {
   let place = document.querySelector(`.${DEVTOOLS_CLASS_NAME}`);
@@ -14,7 +15,7 @@ function createPlace() {
     document.body.appendChild(place);
   } else {
     // eslint-disable-next-line react/no-deprecated
-    ReactDOM.unmountComponentAtNode(place);
+    root.unmount();
     place.innerHTML = "";
   }
 
@@ -24,15 +25,13 @@ function createPlace() {
 type DevToolsProps = { diffWorker?: Worker };
 function applyDevTools(editorView: EditorView, props: DevToolsProps) {
   const place = createPlace();
-  // eslint-disable-next-line react/no-deprecated
-  ReactDOM.render(
-    <DevTools editorView={editorView} diffWorker={props?.diffWorker} />,
-    place
+  root = createRoot(place);
+  root.render(
+    <DevTools editorView={editorView} diffWorker={props?.diffWorker} />
   );
 
   return () => {
-    // eslint-disable-next-line react/no-deprecated
-    ReactDOM.unmountComponentAtNode(place);
+    root.unmount();
   };
 }
 

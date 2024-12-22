@@ -14,7 +14,7 @@ import { nodeColorsAtom } from "../state/node-colors";
 import { editorStateAtom } from "../state/editor-state";
 import { ExtendedFragment } from "../types/prosemirror";
 
-const GraphWrapper: React.FC = ({ children }) => (
+const GraphWrapper: React.FC<React.PropsWithChildren> = ({ children }) => (
   <div
     css={{
       marginTop: "12px",
@@ -24,7 +24,9 @@ const GraphWrapper: React.FC = ({ children }) => (
   </div>
 );
 
-const BlockNodeContentView: React.FC = ({ children }) => (
+const BlockNodeContentView: React.FC<React.PropsWithChildren> = ({
+  children,
+}) => (
   <div
     css={{
       padding: "0 12px",
@@ -37,7 +39,9 @@ const BlockNodeContentView: React.FC = ({ children }) => (
   </div>
 );
 
-const BlockNodeContentViewWithInline: React.FC = ({ children }) => (
+const BlockNodeContentViewWithInline: React.FC<React.PropsWithChildren> = ({
+  children,
+}) => (
   <div
     css={{
       padding: "0 12px",
@@ -56,6 +60,7 @@ const BlockNodeContentViewWithInline: React.FC = ({ children }) => (
 const BlockNodeView: React.FC<{
   bg: string;
   onClick?: MouseEventHandler<HTMLDivElement>;
+  children: React.ReactNode;
 }> = ({ children, bg, onClick }) => (
   <div
     onClick={onClick}
@@ -75,7 +80,10 @@ const BlockNodeView: React.FC<{
   </div>
 );
 
-const Side: React.FC<{ tooltip: string }> = ({ tooltip, children }) => (
+const Side: React.FC<{ tooltip: string; children: React.ReactNode }> = ({
+  tooltip,
+  children,
+}) => (
   <div
     title={tooltip}
     css={{
@@ -87,7 +95,7 @@ const Side: React.FC<{ tooltip: string }> = ({ tooltip, children }) => (
   </div>
 );
 
-const StartSide: React.FC = ({ children }) => (
+const StartSide: React.FC<React.PropsWithChildren> = ({ children }) => (
   <div
     css={{
       padding: "3px 6px",
@@ -98,7 +106,7 @@ const StartSide: React.FC = ({ children }) => (
   </div>
 );
 
-const Bar: React.FC = ({ children }) => (
+const Bar: React.FC<React.PropsWithChildren> = ({ children }) => (
   <div
     css={{
       flexGrow: 1,
@@ -108,7 +116,7 @@ const Bar: React.FC = ({ children }) => (
   </div>
 );
 
-const Center: React.FC = ({ children }) => (
+const Center: React.FC<React.PropsWithChildren> = ({ children }) => (
   <div
     css={{
       flexGrow: 1,
@@ -123,6 +131,7 @@ const Center: React.FC = ({ children }) => (
 const InlineNodeView: React.FC<{
   bg: string;
   onClick?: MouseEventHandler<HTMLDivElement>;
+  children: React.ReactNode;
 }> = ({ children, bg, onClick }) => (
   <div
     onClick={onClick}
@@ -278,12 +287,12 @@ export function InlineNode(props: {
   );
 }
 
-const structureTabSelectedNode = atom(null);
+const structureTabSelectedNode = atom<Node | null>(null);
 
 export default function GraphTab() {
   const [selectedNode, setSelectedNode] = useAtom(structureTabSelectedNode);
   const handleNodeSelect = React.useCallback(
-    ({ node }) => setSelectedNode(node),
+    ({ node }: { node: Node }) => setSelectedNode(node),
     []
   );
   const nodeColors = useAtomValue(nodeColorsAtom);
