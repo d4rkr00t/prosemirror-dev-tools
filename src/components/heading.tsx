@@ -12,12 +12,12 @@ const headingStyles = css({
   textTransform: "uppercase",
   flexGrow: 1,
 });
-const Heading: React.FC = ({ children }) => (
+const Heading: React.FC<React.PropsWithChildren> = ({ children }) => (
   <h2 css={headingStyles}>{children}</h2>
 );
 
 const headingWithButtonStyles = css({ display: "flex" });
-const HeadingWithButton: React.FC = ({ children }) => (
+const HeadingWithButton: React.FC<React.PropsWithChildren> = ({ children }) => (
   <div css={headingWithButtonStyles}>{children}</div>
 );
 
@@ -50,6 +50,7 @@ const headingButtonStyles = css({
 });
 const HeadingButton: React.FC<{
   onClick: MouseEventHandler<HTMLButtonElement>;
+  children: React.ReactNode;
 }> = ({ children, onClick }) => (
   <button onClick={onClick} css={headingButtonStyles}>
     {children}

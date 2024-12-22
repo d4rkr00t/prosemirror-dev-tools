@@ -45,8 +45,8 @@
     "react-json-tree": "^0.17.0"
   },
   "peerDependencies": {
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "react": "^17.0.0 || ^18.0.0 || ^19.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0 || ^19.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.19.3",
@@ -59,8 +59,8 @@
     "@compiled/babel-plugin": "^0.17.1",
     "@playwright/test": "^1.28.1",
     "@types/html": "^1.0.1",
-    "@types/react": "^16.8.0",
-    "@types/react-dom": "^16.8.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^5.44.0",
     "@typescript-eslint/parser": "^5.44.0",
     "@vitejs/plugin-react": "^3.0.0",
@@ -75,8 +75,8 @@
     "prosemirror-example-setup": "*",
     "prosemirror-schema-basic": "*",
     "prosemirror-view": "*",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
     "rimraf": "^3.0.2",
     "typescript": "^4.9.3",
     "vite": "^4.0.3"

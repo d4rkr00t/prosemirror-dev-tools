@@ -10,7 +10,7 @@ const cssResetStyles = css({
   },
 });
 
-const CSSReset: React.FC = ({ children }) => {
+const CSSReset: React.FC<React.PropsWithChildren> = ({ children }) => {
   return <div css={cssResetStyles}>{children}</div>;
 };
 

@@ -16,6 +16,7 @@ type ListItemProps = {
   isPrevious?: boolean;
   onClick?: MouseEventHandler<HTMLDivElement>;
   onDoubleClick?: MouseEventHandler<HTMLDivElement>;
+  children: React.ReactNode;
 };
 const ListItem: React.FC<ListItemProps> = (props) => {
   const background = props.background

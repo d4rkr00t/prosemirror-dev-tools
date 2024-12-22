@@ -13,6 +13,7 @@ import { historyWriteAtom } from "../state/history";
 
 const ActionButton: React.FC<{
   onClick?: MouseEventHandler<HTMLButtonElement>;
+  children: React.ReactNode;
 }> = ({ children, onClick }) => (
   <button
     onClick={onClick}
@@ -51,7 +52,7 @@ const ActionButton: React.FC<{
   </button>
 );
 
-const ListItem: React.FC = ({ children }) => (
+const ListItem: React.FC<React.PropsWithChildren> = ({ children }) => (
   <div
     css={{
       height: "24px",
@@ -64,7 +65,7 @@ const ListItem: React.FC = ({ children }) => (
   </div>
 );
 
-const ListItemTitle: React.FC = ({ children }) => (
+const ListItemTitle: React.FC<React.PropsWithChildren> = ({ children }) => (
   <div
     css={{
       flexGrow: 1,
@@ -111,7 +112,7 @@ export default function SnapshotTab() {
   const [editorState, setEditorState] = useAtom(editorStateAtom);
   const historyDispatcher = useSetAtom(historyWriteAtom);
   const loadSnapshot = React.useCallback(
-    (snapshot) => {
+    (snapshot: Snapshot) => {
       const EditorState = getEditorStateClass();
 
       if (!editorState) return;
@@ -120,6 +121,8 @@ export default function SnapshotTab() {
       const newState = EditorState.create({
         schema: editorState.schema,
         plugins: editorState.plugins,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         doc: editorState.schema.nodeFromJSON(snapshot.snapshot),
       });
 
@@ -133,7 +136,7 @@ export default function SnapshotTab() {
     [editorView, editorState]
   );
   const deleteSnapshot = React.useCallback(
-    (snapshot) => {
+    (snapshot: Snapshot) => {
       snapshotsDispatch({ type: "delete", payload: { snapshot } });
     },
     [snapshotsDispatch]

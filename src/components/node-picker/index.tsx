@@ -79,6 +79,7 @@ function NodePicker() {
 const NodePickerTrigger: React.FC<{
   onClick: MouseEventHandler<HTMLButtonElement>;
   isActive: boolean;
+  children?: React.ReactNode;
 }> = ({ children, isActive, onClick }) => (
   <button
     onClick={onClick}

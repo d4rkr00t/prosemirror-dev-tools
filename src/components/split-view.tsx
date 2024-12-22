@@ -2,10 +2,10 @@ import React from "react";
 import { css } from "@compiled/react";
 import theme from "../theme";
 
-export const SplitView: React.FC<{ testId?: string }> = ({
-  children,
-  testId,
-}) => (
+export const SplitView: React.FC<{
+  testId?: string;
+  children: React.ReactNode;
+}> = ({ children, testId }) => (
   <div
     data-test-id={testId}
     css={{
@@ -23,6 +23,7 @@ type SplitViewColProps = {
   minWidth?: number;
   noPaddings?: boolean;
   sep?: boolean;
+  children: React.ReactNode;
 };
 
 const splitViewColStyles = css({

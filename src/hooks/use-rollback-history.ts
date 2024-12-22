@@ -14,7 +14,7 @@ export function useRollbackHistory(editorView: EditorView): rollbackHistoryFn {
   const setHistoryRolledBackTo = useSetAtom(historyRolledBackToAtom);
   const setEditorState = useSetAtom(editorStateAtom);
   const rollbackHistory = React.useCallback(
-    (historyItem, historyItemIndex) => {
+    (historyItem: HistoryItem, historyItemIndex: number) => {
       const EditorState = getEditorStateClass();
       const { state } = historyItem;
       const newState = EditorState.create({

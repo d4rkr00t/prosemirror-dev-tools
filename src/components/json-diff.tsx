@@ -6,14 +6,14 @@ import theme from "../theme";
 const updatedStyles = css({
   color: theme.main,
 });
-const Updated: React.FC = ({ children }) => (
+const Updated: React.FC<React.PropsWithChildren> = ({ children }) => (
   <span css={updatedStyles}>{children}</span>
 );
 
 const whiteStyles = css({
   color: theme.text,
 });
-const White: React.FC = ({ children }) => (
+const White: React.FC<React.PropsWithChildren> = ({ children }) => (
   <span css={whiteStyles}>{children}</span>
 );
 
@@ -26,7 +26,7 @@ const deletedStyles = css({
   textDecoration: "line-through",
   minHeight: "1ex",
 });
-const Deleted: React.FC = ({ children }) => (
+const Deleted: React.FC<React.PropsWithChildren> = ({ children }) => (
   <span css={deletedStyles}>{children}</span>
 );
 
@@ -38,7 +38,7 @@ const addedStyles = css({
   textIndent: 0,
   minHeight: "1ex",
 });
-const Added: React.FC = ({ children }) => (
+const Added: React.FC<React.PropsWithChildren> = ({ children }) => (
   <span css={addedStyles}>{children}</span>
 );
 
@@ -62,7 +62,7 @@ function postprocessValue(value: Record<string, any>) {
   return value;
 }
 
-function labelRenderer(raw: Array<unknown>) {
+function labelRenderer(raw: Array<string | number>) {
   return raw[0];
 }
 
@@ -165,7 +165,9 @@ export function getItemString(
     default:
       return (
         <span>
-          {defaultView} {keysCount}
+          <>
+            {defaultView} {keysCount}
+          </>
         </span>
       );
   }
