@@ -121,8 +121,6 @@ export default function SnapshotTab() {
       const newState = EditorState.create({
         schema: editorState.schema,
         plugins: editorState.plugins,
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         doc: editorState.schema.nodeFromJSON(snapshot.snapshot),
       });
 

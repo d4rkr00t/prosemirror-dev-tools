@@ -10,6 +10,7 @@ type SnapshotReducerAction =
 export type Snapshot = {
   name: string;
   timestamp: number;
+  snapshot: any;
 };
 
 function snapshotReducer(prev: Array<Snapshot>, action: SnapshotReducerAction) {
