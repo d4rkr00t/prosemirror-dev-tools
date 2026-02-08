@@ -7,7 +7,11 @@ import {
 } from "../utils/format-selection-object";
 import { SplitView, SplitViewCol } from "../components/split-view";
 import JSONTree from "../components/json-tree";
-import { Heading, HeadingWithButton, HeadingButton } from "../components/heading";
+import {
+  Heading,
+  HeadingWithButton,
+  HeadingButton,
+} from "../components/heading";
 import theme from "../theme";
 import { activeMarksAtom } from "../state/active-marks";
 import { expandPathAtom } from "../state/expand-path";
@@ -209,7 +213,9 @@ export default function StateTab() {
       <SplitViewCol grow>
         <HeadingWithButton>
           <Heading>Current Doc</Heading>
-          <HeadingButton onClick={() => console.log(state)}>Log State</HeadingButton>
+          <HeadingButton onClick={() => console.log(state)}>
+            Log State
+          </HeadingButton>
         </HeadingWithButton>
         <JSONTree
           data={doc}
@@ -243,7 +249,11 @@ export default function StateTab() {
           <Heading>Active Marks</Heading>
           <JSONTreeWrapper>
             {activeMarks.length ? (
-              <JSONTree data={activeMarks} hideRoot getItemString={getItemStringForMark} />
+              <JSONTree
+                data={activeMarks}
+                hideRoot
+                getItemString={getItemStringForMark}
+              />
             ) : (
               <Group>
                 <GroupRow>
