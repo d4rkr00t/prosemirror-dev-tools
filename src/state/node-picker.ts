@@ -42,7 +42,7 @@ export function useNodePicker() {
       if (node) {
         const path = findNodeIn(
           editorState.doc,
-          editorState.doc.nodeAt(node.pmViewDesc!.posAtStart)!
+          editorState.doc.nodeAt(node.pmViewDesc!.posAtStart)!,
         );
 
         if (!path) return;

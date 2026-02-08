@@ -31,7 +31,7 @@ const highlight = (str: string) =>
     .replace(/>/g, "&gt;")
     .replace(
       regexp,
-      "<span class='prosemirror-dev-tools-highlighter-tag'>$&</span>"
+      "<span class='prosemirror-dev-tools-highlighter-tag'>$&</span>",
     );
 
 export const Highlighter = (props: { children: string }) => {

@@ -8,17 +8,17 @@ import subscribeOnUpdates from "../utils/subscribe-on-updates";
 
 export function useSubscribeToEditorView(
   editorView: EditorView,
-  diffWorkerInstance?: Worker
+  diffWorkerInstance?: Worker,
 ) {
   const setEditorView = useSetAtom(editorViewAtom);
   const historyDispatcher = useSetAtom(historyWriteAtom);
   const setEditorState = useSetAtom(editorStateAtom);
   const diffWorker = diffWorkerInstance
     ? import("../state/json-diff-worker").then(
-        ({ JsonDiffWorker }) => new JsonDiffWorker(diffWorkerInstance)
+        ({ JsonDiffWorker }) => new JsonDiffWorker(diffWorkerInstance),
       )
     : import("../state/json-diff-main").then(
-        ({ JsonDiffMain }) => new JsonDiffMain()
+        ({ JsonDiffMain }) => new JsonDiffMain(),
       );
 
   React.useEffect(() => {

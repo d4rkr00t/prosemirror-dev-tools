@@ -45,7 +45,7 @@ function NodePicker() {
     (e: MouseEvent) => {
       nodePickerApi.updatePosition(e.target as HTMLElement);
     },
-    [nodePickerApi]
+    [nodePickerApi],
   );
   const handleNodeClick = React.useCallback(
     (e: MouseEvent) => {
@@ -53,7 +53,7 @@ function NodePicker() {
       nodePickerApi.select(e.target as HTMLElement);
       setTabIndex("state");
     },
-    [nodePickerApi]
+    [nodePickerApi],
   );
 
   React.useEffect(() => {

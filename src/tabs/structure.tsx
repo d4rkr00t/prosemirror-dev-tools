@@ -304,7 +304,7 @@ export default function GraphTab() {
   const [selectedNode, setSelectedNode] = useAtom(structureTabSelectedNode);
   const handleNodeSelect = React.useCallback(
     ({ node }: { node: Node }) => setSelectedNode(node),
-    []
+    [],
   );
   const nodeColors = useAtomValue(nodeColorsAtom);
   const state = useAtomValue(editorStateAtom);
@@ -346,6 +346,6 @@ function getMarksText(node: Node) {
   return node.marks.length === 1
     ? ` - [${node.marks[0].type.name}]`
     : node.marks.length > 1
-    ? ` - [${node.marks.length} marks]`
-    : "";
+      ? ` - [${node.marks.length} marks]`
+      : "";
 }

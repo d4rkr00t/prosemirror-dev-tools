@@ -4,7 +4,7 @@ import type { ExtendedFragment, JSONNode } from "../types/prosemirror";
 function findNode(
   fullPath: Array<string | number>,
   currentNode: Node,
-  nodeToFind: Node
+  nodeToFind: Node,
 ): Array<string | number> | null {
   if (nodeToFind === currentNode) {
     return fullPath;
@@ -16,7 +16,7 @@ function findNode(
 
   const res = fragment.content
     .map((currentNode: Node, i: number) =>
-      findNode([...fullPath, "content", i], currentNode, nodeToFind)
+      findNode([...fullPath, "content", i], currentNode, nodeToFind),
     )
     .filter((res) => Array.isArray(res) && res.length)[0];
 
@@ -43,7 +43,7 @@ export default function findNodeIn(doc: Node, node: Node) {
 export function findNodeJSON(
   fullPath: Array<string | number>,
   currentNode: JSONNode,
-  nodeToFind: JSONNode | Array<JSONNode>
+  nodeToFind: JSONNode | Array<JSONNode>,
 ): Array<string | number> {
   if (nodeToFind === currentNode) {
     return fullPath;
@@ -57,7 +57,7 @@ export function findNodeJSON(
 
   const res = currentNode.content
     .map((currentNode, i) =>
-      findNodeJSON([...fullPath, "content", i], currentNode, nodeToFind)
+      findNodeJSON([...fullPath, "content", i], currentNode, nodeToFind),
     )
     .filter((res) => Array.isArray(res) && res.length)[0];
 

@@ -25,18 +25,18 @@ export class PlaywrightDevPage {
   constructor(page: Page) {
     this.page = page;
     this.collapsedButton = page.locator(
-      "[data-test-id=__prosemirror_devtools_collapsed_button__]"
+      "[data-test-id=__prosemirror_devtools_collapsed_button__]",
     );
     this.devToolsContainer = page.locator(
-      "[data-test-id=__prosemirror_devtools_container__]"
+      "[data-test-id=__prosemirror_devtools_container__]",
     );
     this.closeButton = page.locator(
-      "[data-test-id=__prosemirror_devtools_close_button__]"
+      "[data-test-id=__prosemirror_devtools_close_button__]",
     );
 
     // tabs
     this.tabButtonsConatiner = page.locator(
-      "[data-test-id=__prosemirror_devtools_tabs_buttons_container__]"
+      "[data-test-id=__prosemirror_devtools_tabs_buttons_container__]",
     );
     this.tabStateButton = this.tabButtonsConatiner.getByText("State", {
       exact: true,
@@ -54,16 +54,16 @@ export class PlaywrightDevPage {
 
     // log buttons
     this.stateLogNodeButtons = page.locator(
-      "[data-test-id=__prosemirror_devtools_log_node_button__]"
+      "[data-test-id=__prosemirror_devtools_log_node_button__]",
     );
 
     this.saveSnapshotButton = page.getByText("Save snapshots", { exact: true });
 
     this.listItemActive = page.locator(
-      "[data-test-id=__prosemirror_devtools_list_item__]"
+      "[data-test-id=__prosemirror_devtools_list_item__]",
     );
     this.listItemInactive = page.locator(
-      "[data-test-id=__prosemirror_devtools_list_item_inactive__]"
+      "[data-test-id=__prosemirror_devtools_list_item_inactive__]",
     );
   }
 
@@ -72,10 +72,10 @@ export class PlaywrightDevPage {
   }
 
   locateTab(
-    id: "history" | "state" | "plugins" | "schema" | "snapshots" | "structure"
+    id: "history" | "state" | "plugins" | "schema" | "snapshots" | "structure",
   ) {
     return this.page.locator(
-      `[data-test-id=__prosemirror_devtools_tabs_${id}__]`
+      `[data-test-id=__prosemirror_devtools_tabs_${id}__]`,
     );
   }
 }

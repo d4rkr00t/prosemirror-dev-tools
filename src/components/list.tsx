@@ -22,8 +22,8 @@ const ListItem = (props: ListItemProps) => {
   const background = props.background
     ? props.background(props)
     : props.isSelected
-    ? theme.main40
-    : "transparent";
+      ? theme.main40
+      : "transparent";
   return (
     <div
       data-test-id={`__prosemirror_devtools_list_item${
@@ -92,7 +92,7 @@ type ListProps<Item> = {
 };
 
 function ListItemGroup<Item>(
-  props: ListProps<Item> & { children: React.ReactNode }
+  props: ListProps<Item> & { children: React.ReactNode },
 ) {
   const [collapsed, setCollapsed] = React.useState(false);
   const {
@@ -192,6 +192,6 @@ type OnListItemDoubleClickHandler<T> = (item: T, index: number) => void;
 type GetKey<T> = (item: T) => string;
 type GetTitle<T> = (
   item: T,
-  index: number
+  index: number,
 ) => string | undefined | React.ReactNode;
 type GetGroupTitle<T> = (item: T, index: number) => string | undefined;

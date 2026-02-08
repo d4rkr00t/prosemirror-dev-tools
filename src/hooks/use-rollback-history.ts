@@ -8,7 +8,7 @@ import getEditorStateClass from "../state/get-editor-state";
 
 export type rollbackHistoryFn = (
   historyItem: HistoryItem,
-  historyItemIndex: number
+  historyItemIndex: number,
 ) => void;
 export function useRollbackHistory(editorView: EditorView): rollbackHistoryFn {
   const setHistoryRolledBackTo = useSetAtom(historyRolledBackToAtom);
@@ -26,7 +26,7 @@ export function useRollbackHistory(editorView: EditorView): rollbackHistoryFn {
       editorView.dom.focus();
       const selection = Selection.fromJSON(
         editorView.state.doc,
-        state.selection.toJSON()
+        state.selection.toJSON(),
       );
       const tr = editorView.state.tr
         .setSelection(selection)
@@ -38,7 +38,7 @@ export function useRollbackHistory(editorView: EditorView): rollbackHistoryFn {
       setEditorState(editorView.state);
       setHistoryRolledBackTo(historyItemIndex);
     },
-    [editorView]
+    [editorView],
   );
 
   return rollbackHistory;

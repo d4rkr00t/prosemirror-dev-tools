@@ -41,7 +41,7 @@ export default function PluginsTab() {
 
   const handleOnListItemClick = React.useCallback(
     (_plugin: Plugin) => setSelectedPlugin(_plugin),
-    []
+    [],
   );
 
   const selectedPluginState = selectedPlugin.getState(state);
@@ -53,11 +53,11 @@ export default function PluginsTab() {
           return (plugin as any).key
             .toLowerCase()
             .includes(input.toLowerCase());
-        }
+        },
       );
       setPluginsLocal(filteredPlugins);
     },
-    [state.plugins]
+    [state.plugins],
   );
 
   const handleClickSort = () => {

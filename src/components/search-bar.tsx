@@ -40,7 +40,7 @@ const SearchBar = ({ onSearch }: SearchBarProps) => {
       setQuery(event.target.value);
       onSearch(event.target.value);
     },
-    [onSearch]
+    [onSearch],
   );
 
   const handleSearch = useCallback(() => {

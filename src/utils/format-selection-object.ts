@@ -24,7 +24,7 @@ const isNode = ["nodeAfter", "nodeBefore", "parent"];
 function filterProps(
   selection: Selection,
   props: Array<string>,
-  subProps?: Record<string, Array<string>>
+  subProps?: Record<string, Array<string>>,
 ) {
   return props.reduce<Record<string, any>>((acc, prop) => {
     if (subProps && subProps[prop]) {
@@ -36,7 +36,7 @@ function filterProps(
               : (selection[prop as keyof Selection] as any)[subProp].toJSON();
           return subAcc;
         },
-        {}
+        {},
       );
     } else {
       acc[prop === "jsonID" ? "type" : prop] =

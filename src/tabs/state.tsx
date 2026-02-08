@@ -115,13 +115,13 @@ const LogNodeButton = ({
 
 export function getItemString(
   doc: JSONNode,
-  action: (args: { doc: JSONNode; node: JSONNode }) => void
+  action: (args: { doc: JSONNode; node: JSONNode }) => void,
 ) {
   return function getItemStringWithBindedDoc(
     type: string,
     value: JSONNode,
     defaultView: unknown,
-    keysCount: string
+    keysCount: string,
   ) {
     const logButton = (
       <LogNodeButton
@@ -158,7 +158,7 @@ function getItemStringForMark(
   type: string,
   value: JSONMark,
   defaultView: unknown,
-  keysCount: string
+  keysCount: string,
 ) {
   if (type === "Object" && value.type) {
     return (
@@ -180,7 +180,7 @@ function getItemStringForMark(
 
 export function shouldExpandNode(
   expandPath: Array<string | number>,
-  nodePath: Array<string | number>
+  nodePath: Array<string | number>,
 ) {
   const path = ([] as Array<string | number>).concat(nodePath).reverse();
 

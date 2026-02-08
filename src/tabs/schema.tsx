@@ -9,7 +9,7 @@ const ignoreFields = ["schema", "contentExpr", "schema", "parseDOM", "toDOM"];
 
 export function postprocessValue(
   ignore: Array<string>,
-  data: Record<string, unknown>
+  data: Record<string, unknown>,
 ) {
   if (!data || Object.prototype.toString.call(data) !== "[object Object]") {
     return data;
@@ -17,10 +17,13 @@ export function postprocessValue(
 
   return Object.keys(data)
     .filter((key) => ignore.indexOf(key) === -1)
-    .reduce((res, key) => {
-      res[key] = data[key];
-      return res;
-    }, {} as Record<string, unknown>);
+    .reduce(
+      (res, key) => {
+        res[key] = data[key];
+        return res;
+      },
+      {} as Record<string, unknown>,
+    );
 }
 
 export default function SchemaTab() {

@@ -95,7 +95,7 @@ export default function HistoryView({
   rollbackHistory: (item: HistoryItem, index: number) => void;
 }) {
   const [selectedHistoryItem, setSelectedHistoryItem] = useAtom(
-    selectedHistoryItemAtom
+    selectedHistoryItemAtom,
   );
   const historyRolledBackTo = useAtomValue(historyRolledBackToAtom);
   const history = useAtomValue(historyAtom);
@@ -177,8 +177,8 @@ export default function HistoryView({
             props.isSelected
               ? theme.main40
               : props.isPrevious
-              ? theme.main20
-              : "transparent"
+                ? theme.main20
+                : "transparent"
           }
           onListItemClick={(item) => {
             if (Array.isArray(item)) return;

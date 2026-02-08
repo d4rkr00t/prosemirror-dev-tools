@@ -9,7 +9,7 @@ type GetItemString = (
   data: any,
   itemType: React.ReactNode,
   itemString: string,
-  keyPath: (string | number)[]
+  keyPath: (string | number)[],
 ) => React.ReactNode | string;
 type JSONTreeProps = {
   data:

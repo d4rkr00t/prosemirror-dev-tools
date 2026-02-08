@@ -91,7 +91,7 @@ export default function DevToolsExpanded({
           return <StateTab />;
       }
     },
-    [rollbackHistory]
+    [rollbackHistory],
   );
 
   const renderDockContent = React.useCallback(() => {
