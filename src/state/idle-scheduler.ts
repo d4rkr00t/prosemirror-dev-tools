@@ -11,8 +11,7 @@ export class IdleScheduler {
 
   cancel() {
     const cancel =
-      (window as unknown as ExtendedWindow).cancelIdleCallack ||
-      window.cancelAnimationFrame;
+      (window as unknown as ExtendedWindow).cancelIdleCallack || window.cancelAnimationFrame;
     if (this.task) {
       cancel(this.task);
     }

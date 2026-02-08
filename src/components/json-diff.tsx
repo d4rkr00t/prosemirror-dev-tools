@@ -94,11 +94,7 @@ function parseTextDiff(textDiff: string) {
   const diffByLines = textDiff.split(/\n/gm).slice(1);
 
   return diffByLines.map((line) => {
-    const type = line.startsWith("-")
-      ? "delete"
-      : line.startsWith("+")
-        ? "add"
-        : "raw";
+    const type = line.startsWith("-") ? "delete" : line.startsWith("+") ? "add" : "raw";
 
     return { [type]: replaceSpacesWithNonBreakingSpace(line.substr(1)) };
   });
@@ -113,8 +109,7 @@ function valueRenderer(raw: Array<any> | string) {
     if (raw.length === 2) {
       return (
         <Updated>
-          <Deleted>{getValueString(raw[0])}</Deleted> =&gt;{" "}
-          <Added>{getValueString(raw[1])}</Added>
+          <Deleted>{getValueString(raw[0])}</Deleted> =&gt; <Added>{getValueString(raw[1])}</Added>
         </Updated>
       );
     }
@@ -129,9 +124,7 @@ function valueRenderer(raw: Array<any> | string) {
           &quot;
           {parseTextDiff(raw[0]).map((item) => {
             if (item.delete) {
-              return (
-                <Deleted key={item.delete + "delete"}>{item.delete}</Deleted>
-              );
+              return <Deleted key={item.delete + "delete"}>{item.delete}</Deleted>;
             }
 
             if (item.add) {

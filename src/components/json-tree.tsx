@@ -12,11 +12,7 @@ type GetItemString = (
   keyPath: (string | number)[],
 ) => React.ReactNode | string;
 type JSONTreeProps = {
-  data:
-    | JSONNode
-    | Record<string, NodeType>
-    | Record<string, MarkType>
-    | Array<Mark>;
+  data: JSONNode | Record<string, NodeType> | Record<string, MarkType> | Array<Mark>;
   hideRoot?: boolean;
   getItemString?: GetItemString;
   shouldExpandNode?: (nodePath: Array<string | number>) => boolean;
@@ -27,12 +23,5 @@ type JSONTreeProps = {
   sortObjectKeys?: boolean | ((...args: any[]) => any);
 };
 export default function JSONTreeWrapper(props: JSONTreeProps) {
-  return (
-    <JSONTree
-      invertTheme={false}
-      theme={jsonTreeTheme}
-      hideRoot
-      {...(props as any)}
-    />
-  );
+  return <JSONTree invertTheme={false} theme={jsonTreeTheme} hideRoot {...(props as any)} />;
 }

@@ -12,13 +12,7 @@ const customPreStyles = css({
   },
 });
 
-const CustomPre = ({
-  children,
-  __html,
-}: {
-  __html: string;
-  children?: React.ReactNode;
-}) => (
+const CustomPre = ({ children, __html }: { __html: string; children?: React.ReactNode }) => (
   <pre css={customPreStyles} dangerouslySetInnerHTML={{ __html }}>
     {children}
   </pre>
@@ -29,10 +23,7 @@ const highlight = (str: string) =>
   str
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
-    .replace(
-      regexp,
-      "<span class='prosemirror-dev-tools-highlighter-tag'>$&</span>",
-    );
+    .replace(regexp, "<span class='prosemirror-dev-tools-highlighter-tag'>$&</span>");
 
 export const Highlighter = (props: { children: string }) => {
   if (!props.children) return null;

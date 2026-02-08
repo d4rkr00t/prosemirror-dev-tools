@@ -56,9 +56,7 @@ export function findNodeJSON(
   }
 
   const res = currentNode.content
-    .map((currentNode, i) =>
-      findNodeJSON([...fullPath, "content", i], currentNode, nodeToFind),
-    )
+    .map((currentNode, i) => findNodeJSON([...fullPath, "content", i], currentNode, nodeToFind))
     .filter((res) => Array.isArray(res) && res.length)[0];
 
   return res;

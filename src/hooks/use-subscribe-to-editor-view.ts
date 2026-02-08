@@ -6,10 +6,7 @@ import { editorViewAtom } from "../state/editor-view";
 import { historyWriteAtom } from "../state/history";
 import subscribeOnUpdates from "../utils/subscribe-on-updates";
 
-export function useSubscribeToEditorView(
-  editorView: EditorView,
-  diffWorkerInstance?: Worker,
-) {
+export function useSubscribeToEditorView(editorView: EditorView, diffWorkerInstance?: Worker) {
   const setEditorView = useSetAtom(editorViewAtom);
   const historyDispatcher = useSetAtom(historyWriteAtom);
   const setEditorState = useSetAtom(editorStateAtom);
@@ -17,9 +14,7 @@ export function useSubscribeToEditorView(
     ? import("../state/json-diff-worker").then(
         ({ JsonDiffWorker }) => new JsonDiffWorker(diffWorkerInstance),
       )
-    : import("../state/json-diff-main").then(
-        ({ JsonDiffMain }) => new JsonDiffMain(),
-      );
+    : import("../state/json-diff-main").then(({ JsonDiffMain }) => new JsonDiffMain());
 
   React.useEffect(() => {
     // set initial editor state

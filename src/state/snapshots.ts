@@ -24,8 +24,5 @@ function snapshotReducer(prev: Array<Snapshot>, action: SnapshotReducerAction) {
 }
 
 export function useSnapshots() {
-  return useReducerAtom<Array<Snapshot>, SnapshotReducerAction>(
-    snapshotsAtom,
-    snapshotReducer,
-  );
+  return useReducerAtom<Array<Snapshot>, SnapshotReducerAction>(snapshotsAtom, snapshotReducer);
 }

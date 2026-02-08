@@ -48,32 +48,12 @@ export default function DevToolsCollapsed(props: DevToolsCollapsedProps) {
         <title>prosemirror</title>
         <desc>Created using Figma</desc>
         <use xlinkHref="#a" transform="matrix(2 0 0 2 118 116)" fill="#FFF" />
-        <use
-          xlinkHref="#b"
-          transform="rotate(16 59.054 420.192) scale(2)"
-          fill="#FFF"
-        />
-        <use
-          xlinkHref="#c"
-          transform="matrix(2 0 0 2 154.024 141.58)"
-          fill="#363755"
-        />
+        <use xlinkHref="#b" transform="rotate(16 59.054 420.192) scale(2)" fill="#FFF" />
+        <use xlinkHref="#c" transform="matrix(2 0 0 2 154.024 141.58)" fill="#363755" />
         <use xlinkHref="#d" transform="matrix(2 0 0 2 220 334.8)" fill="#FFF" />
-        <use
-          xlinkHref="#e"
-          transform="matrix(2 0 0 2 218.826 262.052)"
-          fill="#363755"
-        />
-        <use
-          xlinkHref="#f"
-          transform="matrix(2 0 0 2 197.108 184.998)"
-          fill="#FFF"
-        />
-        <use
-          xlinkHref="#g"
-          transform="matrix(2 0 0 2 221.8 216)"
-          fill="#363755"
-        />
+        <use xlinkHref="#e" transform="matrix(2 0 0 2 218.826 262.052)" fill="#363755" />
+        <use xlinkHref="#f" transform="matrix(2 0 0 2 197.108 184.998)" fill="#FFF" />
+        <use xlinkHref="#g" transform="matrix(2 0 0 2 221.8 216)" fill="#363755" />
         <defs>
           <path
             id="a"

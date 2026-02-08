@@ -28,19 +28,15 @@ function filterProps(
 ) {
   return props.reduce<Record<string, any>>((acc, prop) => {
     if (subProps && subProps[prop]) {
-      acc[prop] = subProps[prop].reduce<Record<string, any>>(
-        (subAcc, subProp) => {
-          subAcc[subProp] =
-            isNode.indexOf(subProp) === -1 || !(selection as any)[prop][subProp]
-              ? (selection as any)[prop][subProp]
-              : (selection[prop as keyof Selection] as any)[subProp].toJSON();
-          return subAcc;
-        },
-        {},
-      );
+      acc[prop] = subProps[prop].reduce<Record<string, any>>((subAcc, subProp) => {
+        subAcc[subProp] =
+          isNode.indexOf(subProp) === -1 || !(selection as any)[prop][subProp]
+            ? (selection as any)[prop][subProp]
+            : (selection[prop as keyof Selection] as any)[subProp].toJSON();
+        return subAcc;
+      }, {});
     } else {
-      acc[prop === "jsonID" ? "type" : prop] =
-        selection[prop as keyof Selection];
+      acc[prop === "jsonID" ? "type" : prop] = selection[prop as keyof Selection];
     }
 
     return acc;

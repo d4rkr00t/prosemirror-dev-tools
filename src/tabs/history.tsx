@@ -49,9 +49,7 @@ const formatTimestamp = (timestamp: number) => {
   ].join(":");
 };
 
-export function SelectionContentSection(props: {
-  selectionContent?: string[] | string;
-}) {
+export function SelectionContentSection(props: { selectionContent?: string[] | string }) {
   if (!props.selectionContent) return null;
 
   const content = Array.isArray(props.selectionContent)
@@ -94,9 +92,7 @@ export default function HistoryView({
 }: {
   rollbackHistory: (item: HistoryItem, index: number) => void;
 }) {
-  const [selectedHistoryItem, setSelectedHistoryItem] = useAtom(
-    selectedHistoryItemAtom,
-  );
+  const [selectedHistoryItem, setSelectedHistoryItem] = useAtom(selectedHistoryItemAtom);
   const historyRolledBackTo = useAtomValue(historyRolledBackToAtom);
   const history = useAtomValue(historyAtom);
   const historyDiffs = useAtomValue(historyDiffsAtom);
@@ -142,9 +138,7 @@ export default function HistoryView({
   };
   const isDimmed = (item: HistoryItem | HistoryItem[]) => {
     if (Array.isArray(item)) return false;
-    return historyRolledBackToItem
-      ? item.timestamp > historyRolledBackToItem.timestamp
-      : false;
+    return historyRolledBackToItem ? item.timestamp > historyRolledBackToItem.timestamp : false;
   };
 
   return (
@@ -174,11 +168,7 @@ export default function HistoryView({
           isPrevious={isPrevious}
           isDimmed={isDimmed}
           customItemBackground={(props) =>
-            props.isSelected
-              ? theme.main40
-              : props.isPrevious
-                ? theme.main20
-                : "transparent"
+            props.isSelected ? theme.main40 : props.isPrevious ? theme.main20 : "transparent"
           }
           onListItemClick={(item) => {
             if (Array.isArray(item)) return;
@@ -193,12 +183,8 @@ export default function HistoryView({
       <SplitViewCol grow sep>
         <DocDiffSection diff={selectedDiff} />
         <SelectionSection selection={selectedItem.selection} />
-        <SelectionContentSection
-          selectionContent={selectedItem.selectionContent}
-        />
-        {!selectedDiff && !selectedItem.selectionContent && (
-          <InfoPanel>Docs are equal.</InfoPanel>
-        )}
+        <SelectionContentSection selectionContent={selectedItem.selectionContent} />
+        {!selectedDiff && !selectedItem.selectionContent && <InfoPanel>Docs are equal.</InfoPanel>}
       </SplitViewCol>
     </SplitView>
   );

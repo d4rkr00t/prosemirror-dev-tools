@@ -64,27 +64,16 @@ const TabStyled = ({ children, isSelected, onClick }: TabStyledProps) => (
   </div>
 );
 
-export function Tab({
-  index,
-  children,
-}: {
-  index: string;
-  children: React.ReactNode;
-}) {
+export function Tab({ index, children }: { index: string; children: React.ReactNode }) {
   const tabs = useContext(TabsContextProvider);
   return (
-    <TabStyled
-      isSelected={index === tabs.selectedIndex}
-      onClick={() => tabs.onSelect(index)}
-    >
+    <TabStyled isSelected={index === tabs.selectedIndex} onClick={() => tabs.onSelect(index)}>
       {children}
     </TabStyled>
   );
 }
 
-export function TabPanel(props: {
-  children: (prop: { index: string }) => React.ReactNode;
-}) {
+export function TabPanel(props: { children: (prop: { index: string }) => React.ReactNode }) {
   const tabs = useContext(TabsContextProvider);
   return (
     <div

@@ -7,10 +7,7 @@ import { schemaAtom } from "../state/schema";
 
 const ignoreFields = ["schema", "contentExpr", "schema", "parseDOM", "toDOM"];
 
-export function postprocessValue(
-  ignore: Array<string>,
-  data: Record<string, unknown>,
-) {
+export function postprocessValue(ignore: Array<string>, data: Record<string, unknown>) {
   if (!data || Object.prototype.toString.call(data) !== "[object Object]") {
     return data;
   }

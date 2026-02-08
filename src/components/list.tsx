@@ -8,10 +8,7 @@ const noop = () => undefined;
 type ListItemProps = {
   isDimmed?: boolean;
   nested?: boolean;
-  background?: (props: {
-    isSelected?: boolean;
-    isPrevious?: boolean;
-  }) => string | undefined;
+  background?: (props: { isSelected?: boolean; isPrevious?: boolean }) => string | undefined;
   isSelected?: boolean;
   isPrevious?: boolean;
   onClick?: MouseEventHandler<HTMLDivElement>;
@@ -26,9 +23,7 @@ const ListItem = (props: ListItemProps) => {
       : "transparent";
   return (
     <div
-      data-test-id={`__prosemirror_devtools_list_item${
-        props.isDimmed ? "_inactive" : ""
-      }__`}
+      data-test-id={`__prosemirror_devtools_list_item${props.isDimmed ? "_inactive" : ""}__`}
       onClick={props.onClick}
       onDoubleClick={props.onDoubleClick}
       css={{
@@ -91,9 +86,7 @@ type ListProps<Item> = {
   }) => string | undefined;
 };
 
-function ListItemGroup<Item>(
-  props: ListProps<Item> & { children: React.ReactNode },
-) {
+function ListItemGroup<Item>(props: ListProps<Item> & { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = React.useState(false);
   const {
     items,
@@ -190,8 +183,5 @@ type isDimmedHandler<T> = (item: T, index: number) => boolean | undefined;
 type OnListItemClickHandler<T> = (item: T, index: number) => void;
 type OnListItemDoubleClickHandler<T> = (item: T, index: number) => void;
 type GetKey<T> = (item: T) => string;
-type GetTitle<T> = (
-  item: T,
-  index: number,
-) => string | undefined | React.ReactNode;
+type GetTitle<T> = (item: T, index: number) => string | undefined | React.ReactNode;
 type GetGroupTitle<T> = (item: T, index: number) => string | undefined;

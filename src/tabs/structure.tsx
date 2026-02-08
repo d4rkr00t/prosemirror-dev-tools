@@ -5,11 +5,7 @@ import type { Node } from "prosemirror-model";
 import theme from "../theme";
 import { SplitView, SplitViewCol } from "../components/split-view";
 import JSONTree from "../components/json-tree";
-import {
-  Heading,
-  HeadingWithButton,
-  HeadingButton,
-} from "../components/heading";
+import { Heading, HeadingWithButton, HeadingButton } from "../components/heading";
 import { nodeColorsAtom } from "../state/node-colors";
 import { editorStateAtom } from "../state/editor-state";
 import { ExtendedFragment } from "../types/prosemirror";
@@ -37,11 +33,7 @@ const BlockNodeContentView = ({ children }: { children: React.ReactNode }) => (
   </div>
 );
 
-const BlockNodeContentViewWithInline = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => (
+const BlockNodeContentViewWithInline = ({ children }: { children: React.ReactNode }) => (
   <div
     css={{
       padding: "0 12px",
@@ -84,13 +76,7 @@ const BlockNodeView = ({
   </div>
 );
 
-const Side = ({
-  tooltip,
-  children,
-}: {
-  tooltip: string;
-  children: React.ReactNode;
-}) => (
+const Side = ({ tooltip, children }: { tooltip: string; children: React.ReactNode }) => (
   <div
     title={tooltip}
     css={{
@@ -230,27 +216,17 @@ export function BlockNode(props: {
     <div>
       <BlockNodeView bg={color} onClick={() => props.onNodeSelected({ node })}>
         {startPos > 0 && (
-          <Side
-            tooltip={`Pos: ${startPos - 1} (before ${
-              node.type.name
-            } opening tag)`}
-          >
+          <Side tooltip={`Pos: ${startPos - 1} (before ${node.type.name} opening tag)`}>
             {startPos - 1}
           </Side>
         )}
         <StartSide>
           {node.type.name} {marks}
         </StartSide>
-        <Side
-          tooltip={`Pos: ${startPos} (after ${node.type.name} opening tag)`}
-        >
-          {startPos}
-        </Side>
+        <Side tooltip={`Pos: ${startPos} (after ${node.type.name} opening tag)`}>{startPos}</Side>
         <Bar />
         <Side
-          tooltip={`Pos: ${startPos + node.nodeSize - 1} (after ${
-            node.type.name
-          } closing tag)`}
+          tooltip={`Pos: ${startPos + node.nodeSize - 1} (after ${node.type.name} closing tag)`}
         >
           {startPos + node.nodeSize - 1}
         </Side>
@@ -277,21 +253,13 @@ export function InlineNode(props: {
   return (
     <InlineNodeView onClick={() => props.onNodeSelected({ node })} bg={bg}>
       {index === 0 ? (
-        <Side
-          tooltip={`Pos: ${startPos} (before ${node.type.name} opening tag)`}
-        >
-          {startPos}
-        </Side>
+        <Side tooltip={`Pos: ${startPos} (before ${node.type.name} opening tag)`}>{startPos}</Side>
       ) : null}
       <Center>
         {node.type.name} {marks}
       </Center>
       <Bar />
-      <Side
-        tooltip={`Pos: ${startPos + node.nodeSize} (before ${
-          node.type.name
-        } closing tag)`}
-      >
+      <Side tooltip={`Pos: ${startPos + node.nodeSize} (before ${node.type.name} closing tag)`}>
         {startPos + node.nodeSize}
       </Side>
     </InlineNodeView>
@@ -328,9 +296,7 @@ export default function GraphTab() {
       <SplitViewCol sep minWidth={200} maxWidth={300}>
         <HeadingWithButton>
           <Heading>Node Info</Heading>
-          <HeadingButton onClick={() => console.log(selected)}>
-            Log Node
-          </HeadingButton>
+          <HeadingButton onClick={() => console.log(selected)}>Log Node</HeadingButton>
         </HeadingWithButton>
         <JSONTree
           data={selected.toJSON()}

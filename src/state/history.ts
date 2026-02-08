@@ -10,9 +10,7 @@ const HISTORY_SIZE = 200;
 
 export const historyAtom = atom<Array<HistoryItem>>([]);
 export const historyRolledBackToAtom = atom<null | number>(null);
-export const historyDiffsAtom = atom<
-  Record<string, { diff: unknown; selection: unknown }>
->({});
+export const historyDiffsAtom = atom<Record<string, { diff: unknown; selection: unknown }>>({});
 
 type HistoryAction =
   | { type: "reset"; payload: { state: EditorState } }
@@ -25,78 +23,71 @@ type HistoryAction =
         diffWorker: Promise<JsonDiffMain | JsonDiffWorker>;
       };
     };
-export const historyWriteAtom = atom(
-  null,
-  async (get, set, action: HistoryAction) => {
-    if (action.type === "reset") {
-      set(historyAtom, [
-        {
-          id: nanoid(),
-          state: action.payload.state,
-          timestamp: Date.now(),
-          diffPending: false,
-          diff: null,
-          selectionContent: [],
-        },
-      ]);
-      set(historyRolledBackToAtom, null);
-      set(historyDiffsAtom, {});
+export const historyWriteAtom = atom(null, async (get, set, action: HistoryAction) => {
+  if (action.type === "reset") {
+    set(historyAtom, [
+      {
+        id: nanoid(),
+        state: action.payload.state,
+        timestamp: Date.now(),
+        diffPending: false,
+        diff: null,
+        selectionContent: [],
+      },
+    ]);
+    set(historyRolledBackToAtom, null);
+    set(historyDiffsAtom, {});
+    return;
+  }
+
+  if (action.type === "update") {
+    const rolledBackTo = get(historyRolledBackToAtom);
+    const history = get(historyAtom);
+
+    // TODO: figure out why this is called 2 times
+    if (history[0].state === action.payload.newState) {
       return;
     }
 
-    if (action.type === "update") {
-      const rolledBackTo = get(historyRolledBackToAtom);
-      const history = get(historyAtom);
+    const { oldState, newState, tr } = action.payload;
+    const updatedHistory = updateEditorHistory([...history], rolledBackTo, tr, newState);
+    if (!updatedHistory) {
+      return;
+    }
+    set(historyAtom, updatedHistory);
 
-      // TODO: figure out why this is called 2 times
-      if (history[0].state === action.payload.newState) {
-        return;
-      }
-
-      const { oldState, newState, tr } = action.payload;
-      const updatedHistory = updateEditorHistory(
-        [...history],
-        rolledBackTo,
-        tr,
-        newState,
-      );
-      if (!updatedHistory) {
-        return;
-      }
-      set(historyAtom, updatedHistory);
-
-      if (rolledBackTo !== null) {
-        const historyDiff = get(historyDiffsAtom);
-        set(historyRolledBackToAtom, null);
-        const newDiffs = updatedHistory.reduce<
-          Record<string, { diff: unknown; selection: unknown }>
-        >((acc, item) => {
+    if (rolledBackTo !== null) {
+      const historyDiff = get(historyDiffsAtom);
+      set(historyRolledBackToAtom, null);
+      const newDiffs = updatedHistory.reduce<Record<string, { diff: unknown; selection: unknown }>>(
+        (acc, item) => {
           acc[item.id] = historyDiff[item.id];
           return acc;
-        }, {});
-        // TODO: cleanup diffs
-        set(historyDiffsAtom, newDiffs);
-      }
-
-      const historyDiff = get(historyDiffsAtom);
-      const [{ id }] = updatedHistory;
-      const diffWorker = await action.payload.diffWorker;
-      const [{ delta: diff }, { delta: selection }] = await Promise.all([
-        diffWorker.diff({
-          a: oldState.doc.toJSON(),
-          b: newState.doc.toJSON(),
-          id,
-        }),
-        diffWorker.diff({
-          a: buildSelection(oldState.selection),
-          b: buildSelection(newState.selection),
-          id,
-        }),
-      ]);
-      set(historyDiffsAtom, { ...historyDiff, [id]: { diff, selection } });
+        },
+        {},
+      );
+      // TODO: cleanup diffs
+      set(historyDiffsAtom, newDiffs);
     }
-  },
-);
+
+    const historyDiff = get(historyDiffsAtom);
+    const [{ id }] = updatedHistory;
+    const diffWorker = await action.payload.diffWorker;
+    const [{ delta: diff }, { delta: selection }] = await Promise.all([
+      diffWorker.diff({
+        a: oldState.doc.toJSON(),
+        b: newState.doc.toJSON(),
+        id,
+      }),
+      diffWorker.diff({
+        a: buildSelection(oldState.selection),
+        b: buildSelection(newState.selection),
+        id,
+      }),
+    ]);
+    set(historyDiffsAtom, { ...historyDiff, [id]: { diff, selection } });
+  }
+});
 
 export function buildSelection(selection: Selection) {
   return {

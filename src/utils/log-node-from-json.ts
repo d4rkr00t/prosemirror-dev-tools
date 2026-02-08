@@ -9,10 +9,7 @@ export const logNodeFromJSON =
     const path = findNodeJSON([], doc, node);
     if (path) {
       console.log(
-        path.reduce(
-          (node, pathItem) => (node as any)[pathItem],
-          fullDoc.toJSON() as JSONNode,
-        ),
+        path.reduce((node, pathItem) => (node as any)[pathItem], fullDoc.toJSON() as JSONNode),
       );
     } else {
       console.log(node);

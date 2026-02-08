@@ -2,13 +2,7 @@ import React from "react";
 import { css } from "@compiled/react";
 import theme from "../theme";
 
-export const SplitView = ({
-  children,
-  testId,
-}: {
-  testId?: string;
-  children: React.ReactNode;
-}) => (
+export const SplitView = ({ children, testId }: { testId?: string; children: React.ReactNode }) => (
   <div
     data-test-id={testId}
     css={{

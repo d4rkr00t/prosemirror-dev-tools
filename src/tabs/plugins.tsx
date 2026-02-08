@@ -21,11 +21,7 @@ export function PluginState(props: { pluginState: any }) {
   return (
     <div>
       <Heading>Plugin State</Heading>
-      <JSONTree
-        data={props.pluginState}
-        valueRenderer={valueRenderer}
-        sortObjectKeys={true}
-      />
+      <JSONTree data={props.pluginState} valueRenderer={valueRenderer} sortObjectKeys={true} />
     </div>
   );
 }
@@ -48,13 +44,9 @@ export default function PluginsTab() {
 
   const handleSearch = useCallback(
     (input: string) => {
-      const filteredPlugins = (state.plugins as any as Plugin<any>[]).filter(
-        (plugin) => {
-          return (plugin as any).key
-            .toLowerCase()
-            .includes(input.toLowerCase());
-        },
-      );
+      const filteredPlugins = (state.plugins as any as Plugin<any>[]).filter((plugin) => {
+        return (plugin as any).key.toLowerCase().includes(input.toLowerCase());
+      });
       setPluginsLocal(filteredPlugins);
     },
     [state.plugins],
@@ -100,14 +92,10 @@ export default function PluginsTab() {
           }}
         >
           <SearchBar onSearch={handleSearch} />
-          <Button onClick={handleClickSort}>
-            SORT {sortAsc ? "DES" : "ASC"}
-          </Button>
+          <Button onClick={handleClickSort}>SORT {sortAsc ? "DES" : "ASC"}</Button>
         </div>
         <List
-          items={
-            sortAsc ? handleSortAsc(pluginsLocal) : handleSortDes(pluginsLocal)
-          }
+          items={sortAsc ? handleSortAsc(pluginsLocal) : handleSortDes(pluginsLocal)}
           getKey={(plugin: Plugin) => (plugin as any).key}
           title={(plugin: Plugin) => (plugin as any).key}
           isDimmed={(plugin: Plugin) => !plugin.getState(state)}

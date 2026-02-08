@@ -53,9 +53,5 @@ export default function SaveSnapshot() {
     snapshotsDispatch({ type: "save", payload: { snapshot } });
   }, [editorState]);
 
-  return (
-    <SaveSnapshotButton onClick={handleClick}>
-      Save snapshots
-    </SaveSnapshotButton>
-  );
+  return <SaveSnapshotButton onClick={handleClick}>Save snapshots</SaveSnapshotButton>;
 }

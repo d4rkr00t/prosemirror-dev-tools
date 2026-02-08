@@ -26,9 +26,7 @@ type DevToolsProps = { diffWorker?: Worker };
 function applyDevTools(editorView: EditorView, props: DevToolsProps) {
   const place = createPlace();
   root = createRoot(place);
-  root.render(
-    <DevTools editorView={editorView} diffWorker={props?.diffWorker} />,
-  );
+  root.render(<DevTools editorView={editorView} diffWorker={props?.diffWorker} />);
 
   return () => {
     root.unmount();

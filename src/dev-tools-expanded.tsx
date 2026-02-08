@@ -2,11 +2,7 @@ import React, { MouseEventHandler } from "react";
 import "@compiled/react";
 import { Dock } from "react-dock";
 import { Tab, Tabs, TabList, TabPanel } from "./components/tabs";
-import {
-  devToolsOpenedAtom,
-  devToolsSizeAtom,
-  devToolTabIndexAtom,
-} from "./state/global";
+import { devToolsOpenedAtom, devToolsSizeAtom, devToolTabIndexAtom } from "./state/global";
 import StateTab from "./tabs/state";
 import HistoryTab from "./tabs/history";
 import SchemaTab from "./tabs/schema";
@@ -57,9 +53,7 @@ const CloseButton = ({
 type DevToolsExpandedProps = {
   rollbackHistory: rollbackHistoryFn;
 };
-export default function DevToolsExpanded({
-  rollbackHistory,
-}: DevToolsExpandedProps) {
+export default function DevToolsExpanded({ rollbackHistory }: DevToolsExpandedProps) {
   const [isOpen, setIsOpen] = useAtom(devToolsOpenedAtom);
   const defaultSize = useAtomValue(devToolsSizeAtom);
   const [tabIndex, setTabIndex] = useAtom(devToolTabIndexAtom);
@@ -108,10 +102,7 @@ export default function DevToolsExpanded({
         }}
       >
         <CloseButton onClick={toggleOpen}>×</CloseButton>
-        <NodePickerTrigger
-          onClick={nodePickerAPI.activate}
-          isActive={nodePicker.active}
-        />
+        <NodePickerTrigger onClick={nodePickerAPI.activate} isActive={nodePicker.active} />
         <SaveSnapshotButton />
 
         <Tabs onSelect={setTabIndex} selectedIndex={tabIndex}>
