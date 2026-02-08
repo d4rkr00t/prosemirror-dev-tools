@@ -41,8 +41,8 @@
     "nanoid": "^3.3.8",
     "prosemirror-model": ">=1.0.0",
     "prosemirror-state": ">=1.0.0",
-    "react-dock": "^0.6.0",
-    "react-json-tree": "^0.17.0"
+    "react-dock": "^0.8.0",
+    "react-json-tree": "^0.20.0"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
