@@ -51,7 +51,7 @@ export default function SaveSnapshot() {
       snapshot: editorState.doc.toJSON(),
     };
     snapshotsDispatch({ type: "save", payload: { snapshot } });
-  }, [editorState]);
+  }, [editorState, snapshotsDispatch]);
 
   return <SaveSnapshotButton onClick={handleClick}>Save snapshots</SaveSnapshotButton>;
 }

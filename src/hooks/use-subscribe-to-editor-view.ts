@@ -38,5 +38,5 @@ export function useSubscribeToEditorView(editorView: EditorView, diffWorkerInsta
         },
       });
     });
-  }, [editorView, diffWorker]);
+  }, [editorView, diffWorker, setEditorView, historyDispatcher, setEditorState]);
 }

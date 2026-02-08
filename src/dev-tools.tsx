@@ -12,7 +12,7 @@ export default function DevTools(props: DevToolsProps) {
   const [isOpen, setIsOpen] = useAtom(devToolsOpenedAtom);
   const defaultSize = useAtomValue(devToolsSizeAtom);
   const editorView = props.editorView;
-  const toggleOpen = React.useCallback(() => setIsOpen(!isOpen), [isOpen]);
+  const toggleOpen = React.useCallback(() => setIsOpen(!isOpen), [isOpen, setIsOpen]);
 
   useResizeDocument(isOpen, defaultSize);
   useSubscribeToEditorView(editorView, props.diffWorker);

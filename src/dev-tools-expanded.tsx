@@ -64,7 +64,7 @@ export default function DevToolsExpanded({ rollbackHistory }: DevToolsExpandedPr
   const [nodePicker, nodePickerAPI] = useNodePicker();
   const toggleOpen = React.useCallback(() => {
     setIsOpen(!isOpen);
-  }, [isOpen]);
+  }, [isOpen, setIsOpen]);
 
   const renderTab = React.useCallback(
     ({ index }: { index: string }) => {
@@ -119,7 +119,7 @@ export default function DevToolsExpanded({ rollbackHistory }: DevToolsExpandedPr
         </Tabs>
       </div>
     );
-  }, [nodePicker, nodePickerAPI, tabIndex, isOpen, renderTab]);
+  }, [nodePicker, nodePickerAPI, tabIndex, renderTab, toggleOpen, setTabIndex]);
 
   return (
     <CSSReset>

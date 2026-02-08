@@ -53,7 +53,7 @@ function NodePicker() {
       nodePickerApi.select(e.target as HTMLElement);
       setTabIndex("state");
     },
-    [nodePickerApi],
+    [nodePickerApi, setTabIndex],
   );
 
   React.useEffect(() => {

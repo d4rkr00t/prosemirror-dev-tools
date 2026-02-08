@@ -272,7 +272,7 @@ export default function GraphTab() {
   const [selectedNode, setSelectedNode] = useAtom(structureTabSelectedNode);
   const handleNodeSelect = React.useCallback(
     ({ node }: { node: Node }) => setSelectedNode(node),
-    [],
+    [setSelectedNode],
   );
   const nodeColors = useAtomValue(nodeColorsAtom);
   const state = useAtomValue(editorStateAtom);

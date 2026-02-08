@@ -83,11 +83,7 @@ type SnapshotsListProps = {
   deleteSnapshot: (snapshot: Snapshot) => void;
   loadSnapshot: (snapshot: Snapshot) => void;
 };
-export function SnapshotsList({
-  snapshots,
-  deleteSnapshot,
-  loadSnapshot,
-}: SnapshotsListProps) {
+export function SnapshotsList({ snapshots, deleteSnapshot, loadSnapshot }: SnapshotsListProps) {
   return (
     <List
       getKey={(item: Snapshot) => item.name + item.timestamp}
@@ -96,12 +92,8 @@ export function SnapshotsList({
         <ListItem>
           <ListItemTitle>{item.name}</ListItemTitle>
           <div>
-            <ActionButton onClick={() => deleteSnapshot(item)}>
-              delete
-            </ActionButton>
-            <ActionButton onClick={() => loadSnapshot(item)}>
-              restore
-            </ActionButton>
+            <ActionButton onClick={() => deleteSnapshot(item)}>delete</ActionButton>
+            <ActionButton onClick={() => loadSnapshot(item)}>restore</ActionButton>
           </div>
         </ListItem>
       )}
@@ -134,7 +126,7 @@ export default function SnapshotTab() {
         payload: { state: editorView.state },
       });
     },
-    [editorView, editorState],
+    [editorView, editorState, setEditorState, historyDispatcher],
   );
   const deleteSnapshot = React.useCallback(
     (snapshot: Snapshot) => {
@@ -154,8 +146,7 @@ export default function SnapshotTab() {
           />
         ) : (
           <InfoPanel>
-            No saved snapshots yet. Press &quot;Save Snapshot&quot; button to
-            add one.
+            No saved snapshots yet. Press &quot;Save Snapshot&quot; button to add one.
           </InfoPanel>
         )}
       </SplitViewCol>

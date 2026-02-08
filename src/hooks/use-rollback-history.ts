@@ -32,7 +32,7 @@ export function useRollbackHistory(editorView: EditorView): rollbackHistoryFn {
       setEditorState(editorView.state);
       setHistoryRolledBackTo(historyItemIndex);
     },
-    [editorView],
+    [editorView, setHistoryRolledBackTo, setEditorState],
   );
 
   return rollbackHistory;
