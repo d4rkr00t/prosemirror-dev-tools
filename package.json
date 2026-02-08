@@ -13,7 +13,7 @@
     "build:esm": "cross-env BABEL_ENV=esm babel src --out-dir dist/esm --extensions '.ts,.tsx,.js,.jsx'",
     "build:types": "tsc --emitDeclarationOnly --declaration --isolatedModules false --outDir dist/types",
     "commit": "git-cz",
-    "lint": "oxlint ./src",
+    "lint": "./node_modules/.bin/oxlint ./src",
     "lint:staged": "lint-staged",
     "pmm:prepare": "npm run build",
     "prebuild": "rimraf ./dist",
