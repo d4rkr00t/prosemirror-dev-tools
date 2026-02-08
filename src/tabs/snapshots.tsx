@@ -134,13 +134,13 @@ export default function SnapshotTab() {
         payload: { state: editorView.state },
       });
     },
-    [editorView, editorState]
+    [editorView, editorState],
   );
   const deleteSnapshot = React.useCallback(
     (snapshot: Snapshot) => {
       snapshotsDispatch({ type: "delete", payload: { snapshot } });
     },
-    [snapshotsDispatch]
+    [snapshotsDispatch],
   );
 
   return (

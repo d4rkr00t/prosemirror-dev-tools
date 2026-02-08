@@ -11,8 +11,8 @@ export const logNodeFromJSON =
       console.log(
         path.reduce(
           (node, pathItem) => (node as any)[pathItem],
-          fullDoc.toJSON() as JSONNode
-        )
+          fullDoc.toJSON() as JSONNode,
+        ),
       );
     } else {
       console.log(node);

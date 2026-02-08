@@ -58,7 +58,7 @@ export const historyWriteAtom = atom(
         [...history],
         rolledBackTo,
         tr,
-        newState
+        newState,
       );
       if (!updatedHistory) {
         return;
@@ -95,7 +95,7 @@ export const historyWriteAtom = atom(
       ]);
       set(historyDiffsAtom, { ...historyDiff, [id]: { diff, selection } });
     }
-  }
+  },
 );
 
 export function buildSelection(selection: Selection) {
@@ -138,7 +138,7 @@ export function createHistoryEntry(editorState: EditorState): HistoryItem {
 
 export function shrinkEditorHistory(
   history: Array<HistoryItem>,
-  historyRolledBackTo: number | null
+  historyRolledBackTo: number | null,
 ) {
   const startIndex = historyRolledBackTo !== null ? historyRolledBackTo : 0;
   return history.slice(startIndex, HISTORY_SIZE);
@@ -148,7 +148,7 @@ export function updateEditorHistory(
   history: Array<HistoryItem>,
   historyRolledBackTo: null | number,
   tr: Transaction,
-  newState: EditorState
+  newState: EditorState,
 ) {
   const skipHistory = tr.getMeta("_skip-dev-tools-history_");
 

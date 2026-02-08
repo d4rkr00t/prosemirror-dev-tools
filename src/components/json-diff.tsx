@@ -97,8 +97,8 @@ function parseTextDiff(textDiff: string) {
     const type = line.startsWith("-")
       ? "delete"
       : line.startsWith("+")
-      ? "add"
-      : "raw";
+        ? "add"
+        : "raw";
 
     return { [type]: replaceSpacesWithNonBreakingSpace(line.substr(1)) };
   });
@@ -157,7 +157,7 @@ export function getItemString(
   type: string,
   _value: unknown,
   defaultView: unknown,
-  keysCount: string
+  keysCount: string,
 ) {
   switch (type) {
     case "Object":

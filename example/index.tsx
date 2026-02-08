@@ -19,7 +19,7 @@ const worker = new Worker(
   new URL("../src/json-diff.worker.ts", import.meta.url),
   {
     type: "module",
-  }
+  },
 );
 
 applyDevTools(view, { diffWorker: worker });

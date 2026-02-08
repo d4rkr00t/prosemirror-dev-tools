@@ -44,6 +44,6 @@ function buildColors(schema: Schema) {
       acc[node] = nodesColors[safeIndex];
       return acc;
     },
-    {}
+    {},
   );
 }
