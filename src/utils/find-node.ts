@@ -75,5 +75,5 @@ export function findPMNode(domNode: HTMLElement) {
     target = target.parentNode as HTMLElement;
   }
 
-  return node;
+  return node as (HTMLElement & { pmViewDesc: any }) | undefined;
 }

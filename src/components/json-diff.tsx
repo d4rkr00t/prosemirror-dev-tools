@@ -6,14 +6,14 @@ import theme from "../theme";
 const updatedStyles = css({
   color: theme.main,
 });
-const Updated: React.FC<React.PropsWithChildren> = ({ children }) => (
+const Updated = ({ children }: { children: React.ReactNode }) => (
   <span css={updatedStyles}>{children}</span>
 );
 
 const whiteStyles = css({
   color: theme.text,
 });
-const White: React.FC<React.PropsWithChildren> = ({ children }) => (
+const White = ({ children }: { children: React.ReactNode }) => (
   <span css={whiteStyles}>{children}</span>
 );
 
@@ -26,7 +26,7 @@ const deletedStyles = css({
   textDecoration: "line-through",
   minHeight: "1ex",
 });
-const Deleted: React.FC<React.PropsWithChildren> = ({ children }) => (
+const Deleted = ({ children }: { children: React.ReactNode }) => (
   <span css={deletedStyles}>{children}</span>
 );
 
@@ -38,7 +38,7 @@ const addedStyles = css({
   textIndent: 0,
   minHeight: "1ex",
 });
-const Added: React.FC<React.PropsWithChildren> = ({ children }) => (
+const Added = ({ children }: { children: React.ReactNode }) => (
   <span css={addedStyles}>{children}</span>
 );
 

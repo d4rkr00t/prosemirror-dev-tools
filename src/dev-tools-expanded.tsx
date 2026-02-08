@@ -21,10 +21,13 @@ import { useAtom, useAtomValue } from "jotai";
 import { useNodePicker } from "./state/node-picker";
 import type { rollbackHistoryFn } from "./hooks/use-rollback-history";
 
-const CloseButton: React.FC<{
+const CloseButton = ({
+  children,
+  onClick,
+}: {
   onClick: MouseEventHandler<HTMLButtonElement>;
   children: React.ReactNode;
-}> = ({ children, onClick }) => (
+}) => (
   <button
     data-test-id="__prosemirror_devtools_close_button__"
     onClick={onClick}

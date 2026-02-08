@@ -8,7 +8,7 @@ const TabsContextProvider = React.createContext({
   onSelect: (_index: string) => {},
 });
 
-export const TabList: React.FC<React.PropsWithChildren> = ({ children }) => (
+export const TabList = ({ children }: { children: React.ReactNode }) => (
   <div
     data-test-id="__prosemirror_devtools_tabs_buttons_container__"
     css={{
@@ -21,7 +21,7 @@ export const TabList: React.FC<React.PropsWithChildren> = ({ children }) => (
   </div>
 );
 
-const TabsStyled: React.FC<React.PropsWithChildren> = ({ children }) => (
+const TabsStyled = ({ children }: { children: React.ReactNode }) => (
   <div
     data-test-id="__prosemirror_devtools_tabs_container__"
     css={{
@@ -38,11 +38,7 @@ type TabStyledProps = {
   onClick: MouseEventHandler<HTMLDivElement>;
   children: React.ReactNode;
 };
-const TabStyled: React.FC<TabStyledProps> = ({
-  children,
-  isSelected,
-  onClick,
-}) => (
+const TabStyled = ({ children, isSelected, onClick }: TabStyledProps) => (
   <div
     css={{
       color: theme.text,
@@ -108,14 +104,19 @@ export function Tabs(props: {
   selectedIndex: string;
   children: React.ReactNode;
 }) {
+  const Component = TabsContextProvider.Provider as (props: {
+    value: any;
+    children: React.ReactNode;
+  }) => React.ReactElement;
+
   return (
-    <TabsContextProvider.Provider
+    <Component
       value={{
         onSelect: props.onSelect,
         selectedIndex: props.selectedIndex,
       }}
     >
       <TabsStyled>{props.children}</TabsStyled>
-    </TabsContextProvider.Provider>
+    </Component>
   );
 }

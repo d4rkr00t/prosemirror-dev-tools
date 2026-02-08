@@ -1,5 +1,6 @@
 import React from "react";
 import { css } from "@compiled/react";
+
 import theme from "../theme";
 
 const customPreStyles = css({
@@ -10,10 +11,14 @@ const customPreStyles = css({
     color: theme.main,
   },
 });
-const CustomPre: React.FC<{
+
+const CustomPre = ({
+  children,
+  __html,
+}: {
   __html: string;
   children?: React.ReactNode;
-}> = ({ children, __html }) => (
+}) => (
   <pre css={customPreStyles} dangerouslySetInnerHTML={{ __html }}>
     {children}
   </pre>
@@ -29,8 +34,7 @@ const highlight = (str: string) =>
       "<span class='prosemirror-dev-tools-highlighter-tag'>$&</span>"
     );
 
-type HighlighterFC = React.FC<{ children: string }>;
-export const Highlighter: HighlighterFC = (props) => {
+export const Highlighter = (props: { children: string }) => {
   if (!props.children) return null;
   return <CustomPre __html={highlight(props.children)} />;
 };

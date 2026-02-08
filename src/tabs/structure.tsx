@@ -14,7 +14,7 @@ import { nodeColorsAtom } from "../state/node-colors";
 import { editorStateAtom } from "../state/editor-state";
 import { ExtendedFragment } from "../types/prosemirror";
 
-const GraphWrapper: React.FC<React.PropsWithChildren> = ({ children }) => (
+const GraphWrapper = ({ children }: { children: React.ReactNode }) => (
   <div
     css={{
       marginTop: "12px",
@@ -24,9 +24,7 @@ const GraphWrapper: React.FC<React.PropsWithChildren> = ({ children }) => (
   </div>
 );
 
-const BlockNodeContentView: React.FC<React.PropsWithChildren> = ({
-  children,
-}) => (
+const BlockNodeContentView = ({ children }: { children: React.ReactNode }) => (
   <div
     css={{
       padding: "0 12px",
@@ -39,8 +37,10 @@ const BlockNodeContentView: React.FC<React.PropsWithChildren> = ({
   </div>
 );
 
-const BlockNodeContentViewWithInline: React.FC<React.PropsWithChildren> = ({
+const BlockNodeContentViewWithInline = ({
   children,
+}: {
+  children: React.ReactNode;
 }) => (
   <div
     css={{
@@ -57,11 +57,15 @@ const BlockNodeContentViewWithInline: React.FC<React.PropsWithChildren> = ({
   </div>
 );
 
-const BlockNodeView: React.FC<{
+const BlockNodeView = ({
+  children,
+  bg,
+  onClick,
+}: {
   bg: string;
   onClick?: MouseEventHandler<HTMLDivElement>;
   children: React.ReactNode;
-}> = ({ children, bg, onClick }) => (
+}) => (
   <div
     onClick={onClick}
     css={{
@@ -80,9 +84,12 @@ const BlockNodeView: React.FC<{
   </div>
 );
 
-const Side: React.FC<{ tooltip: string; children: React.ReactNode }> = ({
+const Side = ({
   tooltip,
   children,
+}: {
+  tooltip: string;
+  children: React.ReactNode;
 }) => (
   <div
     title={tooltip}
@@ -95,7 +102,7 @@ const Side: React.FC<{ tooltip: string; children: React.ReactNode }> = ({
   </div>
 );
 
-const StartSide: React.FC<React.PropsWithChildren> = ({ children }) => (
+const StartSide = ({ children }: { children: React.ReactNode }) => (
   <div
     css={{
       padding: "3px 6px",
@@ -106,7 +113,7 @@ const StartSide: React.FC<React.PropsWithChildren> = ({ children }) => (
   </div>
 );
 
-const Bar: React.FC<React.PropsWithChildren> = ({ children }) => (
+const Bar = ({ children }: { children?: React.ReactNode }) => (
   <div
     css={{
       flexGrow: 1,
@@ -116,7 +123,7 @@ const Bar: React.FC<React.PropsWithChildren> = ({ children }) => (
   </div>
 );
 
-const Center: React.FC<React.PropsWithChildren> = ({ children }) => (
+const Center = ({ children }: { children: React.ReactNode }) => (
   <div
     css={{
       flexGrow: 1,
@@ -128,11 +135,15 @@ const Center: React.FC<React.PropsWithChildren> = ({ children }) => (
   </div>
 );
 
-const InlineNodeView: React.FC<{
+const InlineNodeView = ({
+  children,
+  bg,
+  onClick,
+}: {
   bg: string;
   onClick?: MouseEventHandler<HTMLDivElement>;
   children: React.ReactNode;
-}> = ({ children, bg, onClick }) => (
+}) => (
   <div
     onClick={onClick}
     css={{

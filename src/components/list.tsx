@@ -18,7 +18,7 @@ type ListItemProps = {
   onDoubleClick?: MouseEventHandler<HTMLDivElement>;
   children: React.ReactNode;
 };
-const ListItem: React.FC<ListItemProps> = (props) => {
+const ListItem = (props: ListItemProps) => {
   const background = props.background
     ? props.background(props)
     : props.isSelected
