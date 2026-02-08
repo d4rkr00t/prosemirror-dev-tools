@@ -90,9 +90,9 @@ export function SnapshotsList({
 }: SnapshotsListProps) {
   return (
     <List
-      getKey={(item) => item.name + item.timestamp}
+      getKey={(item: Snapshot) => item.name + item.timestamp}
       items={snapshots}
-      title={(item) => (
+      title={(item: Snapshot) => (
         <ListItem>
           <ListItemTitle>{item.name}</ListItemTitle>
           <div>

@@ -2,7 +2,7 @@ import { DiffPatcher } from "jsondiffpatch";
 
 const diffPatcher = new DiffPatcher({
   arrays: { detectMove: false, includeValueOnMove: false },
-  textDiff: { minLength: 1 },
+  textDiff: { minLength: 1, diffMatchPatch: undefined },
 });
 
 self.addEventListener("message", (e) => {
