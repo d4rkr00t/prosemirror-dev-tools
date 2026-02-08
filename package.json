@@ -57,7 +57,7 @@
     "@babel/preset-react": "^7.28.5",
     "@babel/preset-typescript": "^7.28.5",
     "@compiled/babel-plugin": "^0.38.1",
-    "@playwright/test": "^1.28.1",
+    "@playwright/test": "^1.58.2",
     "@types/html": "^1.0.4",
     "@types/react": "^19.2.13",
     "@types/react-dom": "^19.2.3",
