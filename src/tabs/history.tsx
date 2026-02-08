@@ -49,7 +49,9 @@ const formatTimestamp = (timestamp: number) => {
   ].join(":");
 };
 
-export function SelectionContentSection(props: { selectionContent?: string[] | string }) {
+export function SelectionContentSection(props: {
+  selectionContent?: string[] | string;
+}) {
   if (!props.selectionContent) return null;
 
   const content = Array.isArray(props.selectionContent)
@@ -92,7 +94,9 @@ export default function HistoryView({
 }: {
   rollbackHistory: (item: HistoryItem, index: number) => void;
 }) {
-  const [selectedHistoryItem, setSelectedHistoryItem] = useAtom(selectedHistoryItemAtom);
+  const [selectedHistoryItem, setSelectedHistoryItem] = useAtom(
+    selectedHistoryItemAtom,
+  );
   const historyRolledBackTo = useAtomValue(historyRolledBackToAtom);
   const history = useAtomValue(historyAtom);
   const historyDiffs = useAtomValue(historyDiffsAtom);
@@ -138,7 +142,9 @@ export default function HistoryView({
   };
   const isDimmed = (item: HistoryItem | HistoryItem[]) => {
     if (Array.isArray(item)) return false;
-    return historyRolledBackToItem ? item.timestamp > historyRolledBackToItem.timestamp : false;
+    return historyRolledBackToItem
+      ? item.timestamp > historyRolledBackToItem.timestamp
+      : false;
   };
 
   return (
@@ -146,19 +152,19 @@ export default function HistoryView({
       <SplitViewCol noPaddings minWidth={190}>
         <List<HistoryItem | Array<HistoryItem>>
           items={historyList}
-          getKey={(item) => {
+          getKey={(item: HistoryItem | Array<HistoryItem>) => {
             if (Array.isArray(item)) {
               return "" + item[0].timestamp;
             }
             return "" + item.timestamp;
           }}
-          title={(item) => {
+          title={(item: HistoryItem | Array<HistoryItem>) => {
             if (Array.isArray(item)) {
               return formatTimestamp(item[0].timestamp);
             }
             return formatTimestamp(item.timestamp);
           }}
-          groupTitle={(item) => {
+          groupTitle={(item: HistoryItem | Array<HistoryItem>) => {
             if (Array.isArray(item)) {
               return formatTimestamp(item[0].timestamp) + ` [${item.length}]`;
             }
@@ -167,14 +173,21 @@ export default function HistoryView({
           isSelected={isSelected}
           isPrevious={isPrevious}
           isDimmed={isDimmed}
-          customItemBackground={(props) =>
-            props.isSelected ? theme.main40 : props.isPrevious ? theme.main20 : "transparent"
+          customItemBackground={(props: {
+            isSelected: boolean;
+            isPrevious: boolean;
+          }) =>
+            props.isSelected
+              ? theme.main40
+              : props.isPrevious
+                ? theme.main20
+                : "transparent"
           }
-          onListItemClick={(item) => {
+          onListItemClick={(item: HistoryItem | Array<HistoryItem>) => {
             if (Array.isArray(item)) return;
             setSelectedHistoryItem(item.index!);
           }}
-          onListItemDoubleClick={(item) => {
+          onListItemDoubleClick={(item: HistoryItem | Array<HistoryItem>) => {
             if (Array.isArray(item)) return;
             rollbackHistory(item, item.index!);
           }}
@@ -183,8 +196,12 @@ export default function HistoryView({
       <SplitViewCol grow sep>
         <DocDiffSection diff={selectedDiff} />
         <SelectionSection selection={selectedItem.selection} />
-        <SelectionContentSection selectionContent={selectedItem.selectionContent} />
-        {!selectedDiff && !selectedItem.selectionContent && <InfoPanel>Docs are equal.</InfoPanel>}
+        <SelectionContentSection
+          selectionContent={selectedItem.selectionContent}
+        />
+        {!selectedDiff && !selectedItem.selectionContent && (
+          <InfoPanel>Docs are equal.</InfoPanel>
+        )}
       </SplitViewCol>
     </SplitView>
   );

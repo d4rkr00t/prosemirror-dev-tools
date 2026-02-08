@@ -83,17 +83,25 @@ type SnapshotsListProps = {
   deleteSnapshot: (snapshot: Snapshot) => void;
   loadSnapshot: (snapshot: Snapshot) => void;
 };
-export function SnapshotsList({ snapshots, deleteSnapshot, loadSnapshot }: SnapshotsListProps) {
+export function SnapshotsList({
+  snapshots,
+  deleteSnapshot,
+  loadSnapshot,
+}: SnapshotsListProps) {
   return (
     <List
-      getKey={(item) => item.name + item.timestamp}
+      getKey={(item: Snapshot) => item.name + item.timestamp}
       items={snapshots}
-      title={(item) => (
+      title={(item: Snapshot) => (
         <ListItem>
           <ListItemTitle>{item.name}</ListItemTitle>
           <div>
-            <ActionButton onClick={() => deleteSnapshot(item)}>delete</ActionButton>
-            <ActionButton onClick={() => loadSnapshot(item)}>restore</ActionButton>
+            <ActionButton onClick={() => deleteSnapshot(item)}>
+              delete
+            </ActionButton>
+            <ActionButton onClick={() => loadSnapshot(item)}>
+              restore
+            </ActionButton>
           </div>
         </ListItem>
       )}
@@ -146,7 +154,8 @@ export default function SnapshotTab() {
           />
         ) : (
           <InfoPanel>
-            No saved snapshots yet. Press &quot;Save Snapshot&quot; button to add one.
+            No saved snapshots yet. Press &quot;Save Snapshot&quot; button to
+            add one.
           </InfoPanel>
         )}
       </SplitViewCol>

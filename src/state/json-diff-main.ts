@@ -4,7 +4,7 @@ import { IdleScheduler } from "./idle-scheduler";
 export class JsonDiffMain {
   diffPatcher = new DiffPatcher({
     arrays: { detectMove: false, includeValueOnMove: false },
-    textDiff: { minLength: 1 },
+    textDiff: { minLength: 1, diffMatchPatch: undefined },
   });
 
   scheduler = new IdleScheduler();
