@@ -19,7 +19,7 @@ import { editorStateAtom } from "../state/editor-state";
 import { logNodeFromJSON } from "../utils/log-node-from-json";
 import type { JSONMark, JSONNode } from "../types/prosemirror";
 
-const JSONTreeWrapper: React.FC<React.PropsWithChildren> = ({ children }) => (
+const JSONTreeWrapper = ({ children }: { children: React.ReactNode }) => (
   <div
     css={{
       padding: "0 0 9px 0",
@@ -30,7 +30,7 @@ const JSONTreeWrapper: React.FC<React.PropsWithChildren> = ({ children }) => (
   </div>
 );
 
-const Section: React.FC<React.PropsWithChildren> = ({ children }) => (
+const Section = ({ children }: { children: React.ReactNode }) => (
   <div
     css={{
       minWidth: "180px",
@@ -45,11 +45,11 @@ const Section: React.FC<React.PropsWithChildren> = ({ children }) => (
   </div>
 );
 
-const Group: React.FC<React.PropsWithChildren> = ({ children }) => (
+const Group = ({ children }: { children: React.ReactNode }) => (
   <div css={{ margin: "0.5em 0px 0.5em 1em" }}>{children}</div>
 );
 
-const GroupRow: React.FC<React.PropsWithChildren> = ({ children }) => (
+const GroupRow = ({ children }: { children: React.ReactNode }) => (
   <div
     css={{
       paddingTop: "0.25em",
@@ -59,7 +59,7 @@ const GroupRow: React.FC<React.PropsWithChildren> = ({ children }) => (
   </div>
 );
 
-const Key: React.FC<React.PropsWithChildren> = ({ children }) => (
+const Key = ({ children }: { children: React.ReactNode }) => (
   <div
     css={{
       display: "inline-block",
@@ -71,7 +71,7 @@ const Key: React.FC<React.PropsWithChildren> = ({ children }) => (
   </div>
 );
 
-const ValueNum: React.FC<React.PropsWithChildren> = ({ children }) => (
+const ValueNum = ({ children }: { children: React.ReactNode }) => (
   <div
     css={{
       color: theme.syntax.base09,
@@ -81,10 +81,13 @@ const ValueNum: React.FC<React.PropsWithChildren> = ({ children }) => (
   </div>
 );
 
-const LogNodeButton: React.FC<{
+const LogNodeButton = ({
+  children,
+  onClick,
+}: {
   onClick: MouseEventHandler<HTMLButtonElement>;
   children: React.ReactNode;
-}> = ({ children, onClick }) => (
+}) => (
   <button
     data-test-id="__prosemirror_devtools_log_node_button__"
     onClick={onClick}

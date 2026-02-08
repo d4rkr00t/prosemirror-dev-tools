@@ -16,7 +16,7 @@ import {
 } from "../state/history";
 import type { Selection } from "prosemirror-state";
 
-const Section: React.FC<React.PropsWithChildren> = ({ children }) => (
+const Section = ({ children }: { children: React.ReactNode }) => (
   <div
     css={{
       minWidth: "180px",

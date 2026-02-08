@@ -8,13 +8,19 @@ import { devToolTabIndexAtom } from "../../state/global";
 const icon =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAAmCAQAAAACNCElAAAAxklEQVRIx+2Vuw3DMAxEXWUD9VrKvTYJRzAygWpPkSVcBlDtJS6Fg8AQqQ+lAEECXU08iid+pmnoTwWDKzbU6IEbLnkYQaMlD9uA6iqAUArQwDBgX4T1Z+uF4Q4PB/sZmH/1e1BCRZiLhqgWKsJsYjJLUPkDEJKjvmPWwnwCtcKoW4O5VnpTFmaVb8o3LXONOiZAcI3aYe5UIFXiUmv77doOc7oUpDoozLU5iiPFqYtcW4W01LJP3FEiwzXBLG9SUBNq6Ef0BJ8IApq+rItIAAAAAElFTkSuQmCC";
 
-const NodePickerHighlight: React.FC<{
+const NodePickerHighlight = ({
+  visible,
+  width,
+  height,
+  left,
+  top,
+}: {
   visible: boolean;
   width: number;
   height: number;
   left: number;
   top: number;
-}> = ({ visible, width, height, left, top }) => (
+}) => (
   <div
     css={{
       position: "absolute",
@@ -76,11 +82,15 @@ function NodePicker() {
   );
 }
 
-const NodePickerTrigger: React.FC<{
+const NodePickerTrigger = ({
+  children,
+  isActive,
+  onClick,
+}: {
   onClick: MouseEventHandler<HTMLButtonElement>;
   isActive: boolean;
   children?: React.ReactNode;
-}> = ({ children, isActive, onClick }) => (
+}) => (
   <button
     onClick={onClick}
     css={{

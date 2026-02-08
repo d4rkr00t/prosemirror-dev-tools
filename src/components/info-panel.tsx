@@ -10,7 +10,7 @@ const infoPanelStyles = css({
   color: theme.main,
   fontSize: "14px",
 });
-const InfoPanel: React.FC<React.PropsWithChildren> = ({ children }) => (
+const InfoPanel = ({ children }: { children: React.ReactNode }) => (
   <div css={infoPanelStyles}>{children}</div>
 );
 

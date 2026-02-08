@@ -2,10 +2,13 @@ import React from "react";
 import { css } from "@compiled/react";
 import theme from "../theme";
 
-export const SplitView: React.FC<{
+export const SplitView = ({
+  children,
+  testId,
+}: {
   testId?: string;
   children: React.ReactNode;
-}> = ({ children, testId }) => (
+}) => (
   <div
     data-test-id={testId}
     css={{
@@ -42,14 +45,14 @@ const splitViewColSepStyles = css({
 const splitViewColNoPaddingStyles = css({
   padding: "0",
 });
-export const SplitViewCol: React.FC<SplitViewColProps> = ({
+export const SplitViewCol = ({
   children,
   sep,
   grow,
   noPaddings,
   minWidth,
   maxWidth,
-}) => {
+}: SplitViewColProps) => {
   return (
     <div
       css={[

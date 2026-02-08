@@ -27,10 +27,13 @@ const saveSnapshotButtonStyles = css({
     cursor: "pointer",
   },
 });
-const SaveSnapshotButton: React.FC<{
+const SaveSnapshotButton = ({
+  children,
+  onClick,
+}: {
   onClick: MouseEventHandler<HTMLButtonElement>;
   children: React.ReactNode;
-}> = ({ children, onClick }) => (
+}) => (
   <button css={saveSnapshotButtonStyles} onClick={onClick}>
     {children}
   </button>

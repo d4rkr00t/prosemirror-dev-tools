@@ -32,7 +32,7 @@ const searchBarWrapperStyles = css({
   margin: 4,
 });
 
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
+const SearchBar = ({ onSearch }: SearchBarProps) => {
   const [query, setQuery] = useState("");
 
   const handleInputChange = useCallback(

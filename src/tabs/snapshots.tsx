@@ -11,10 +11,13 @@ import { editorViewAtom } from "../state/editor-view";
 import { editorStateAtom } from "../state/editor-state";
 import { historyWriteAtom } from "../state/history";
 
-const ActionButton: React.FC<{
+const ActionButton = ({
+  children,
+  onClick,
+}: {
   onClick?: MouseEventHandler<HTMLButtonElement>;
   children: React.ReactNode;
-}> = ({ children, onClick }) => (
+}) => (
   <button
     onClick={onClick}
     css={{
@@ -52,7 +55,7 @@ const ActionButton: React.FC<{
   </button>
 );
 
-const ListItem: React.FC<React.PropsWithChildren> = ({ children }) => (
+const ListItem = ({ children }: { children: React.ReactNode }) => (
   <div
     css={{
       height: "24px",
@@ -65,7 +68,7 @@ const ListItem: React.FC<React.PropsWithChildren> = ({ children }) => (
   </div>
 );
 
-const ListItemTitle: React.FC<React.PropsWithChildren> = ({ children }) => (
+const ListItemTitle = ({ children }: { children: React.ReactNode }) => (
   <div
     css={{
       flexGrow: 1,
