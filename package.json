@@ -37,7 +37,7 @@
     "@compiled/react": "^0.11.1",
     "html": "^1.0.0",
     "jotai": "^1.10.0",
-    "jsondiffpatch": "^0.4.1",
+    "jsondiffpatch": "^0.7.3",
     "nanoid": "^3.3.8",
     "prosemirror-model": ">=1.0.0",
     "prosemirror-state": ">=1.0.0",
